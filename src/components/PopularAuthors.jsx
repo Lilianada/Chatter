@@ -45,7 +45,7 @@ const authors = [
 
 export default function PopularAuthors() {
   return (
-    <div className="relative  rounded-xl h-fit w-96 border">
+    <div className="relative  rounded-xl h-fit  border">
       <div className="sticky top-0 z-10 border-b border-b-gray-200 border-t-gray-100 bg-gray-50 px-3 py-1.5 font-semibold leading-6 text-gray-900 text-base rounded-t-xl">
         <h3>Popular Authors</h3>
       </div>

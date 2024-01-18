@@ -7,6 +7,7 @@ import PopularAuthors from "../components/PopularAuthors";
 import SmallCtaUnauthorized from "../components/SmallCta";
 import VerifiedAuthors from "../components/VerifiedAuthors";
 import BigCta from "../components/BigCta";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -61,6 +62,7 @@ export default function Home() {
       </div>
       <VerifiedAuthors />
       <BigCta/>
+      <Footer/>
     </div>
   );
 }

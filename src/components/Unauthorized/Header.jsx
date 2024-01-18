@@ -20,7 +20,7 @@ export default function Header() {
         >
           <div className="flex flex-1 items-center">
             <div className="flex w-full items-center justify-between md:w-auto">
-              <Link to="#">
+              <Link to="/">
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto sm:h-10"
@@ -50,7 +50,7 @@ export default function Header() {
           </div>
           <div className="hidden md:flex">
             <Link
-              to="#"
+              to="/login"
               className="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
             >
               Log in

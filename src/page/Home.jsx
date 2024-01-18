@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Stats from "../components/Stats";
+import FeaturedPosts from "../components/FeaturePosts";
 
 export default function Home() {
   return (
@@ -41,6 +42,22 @@ export default function Home() {
         <Hero />
       </div>
       <Stats />
+
+      <div className="flex flex-1 items-stretch overflow-hidden">
+        <main className="flex-1 overflow-y-auto">
+          <section
+            aria-labelledby="primary-heading"
+            className="flex h-full min-w-0 flex-1 flex-col lg:order-last"
+          >
+            <FeaturedPosts />
+          </section>
+        </main>
+
+        {/* Secondary column (hidden on smaller screens) */}
+        <aside className="hidden w-96 overflow-y-auto bg-white lg:block">
+          {/* Your content */}
+        </aside>
+      </div>
     </div>
   );
 }

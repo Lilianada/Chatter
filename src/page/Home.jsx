@@ -4,7 +4,8 @@ import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import FeaturedPosts from "../components/FeaturePosts";
 import PopularAuthors from "../components/PopularAuthors";
-import CtaUnauthorized from "../components/Cta";
+import CtaUnauthorized from "../components/SmallCta";
+import VerifiedAuthors from "../components/VerifiedAuthors";
 
 export default function Home() {
   return (
@@ -57,6 +58,7 @@ export default function Home() {
             <CtaUnauthorized/>
         </aside>
       </div>
+      <VerifiedAuthors />
     </div>
   );
 }

@@ -4,8 +4,9 @@ import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import FeaturedPosts from "../components/FeaturePosts";
 import PopularAuthors from "../components/PopularAuthors";
-import CtaUnauthorized from "../components/SmallCta";
+import SmallCtaUnauthorized from "../components/SmallCta";
 import VerifiedAuthors from "../components/VerifiedAuthors";
+import BigCta from "../components/BigCta";
 
 export default function Home() {
   return (
@@ -55,10 +56,11 @@ export default function Home() {
         <aside className="hidden w-80 overflow-y-auto bg-white lg:block mx-6">
             {/* Popular Authors */}
             <PopularAuthors />
-            <CtaUnauthorized/>
+            <SmallCtaUnauthorized/>
         </aside>
       </div>
       <VerifiedAuthors />
+      <BigCta/>
     </div>
   );
 }

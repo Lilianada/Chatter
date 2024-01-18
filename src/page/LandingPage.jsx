@@ -9,7 +9,7 @@ import VerifiedAuthors from "../components/VerifiedAuthors";
 import BigCta from "../components/BigCta";
 import Footer from "../components/Footer";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <div>
       <div className="relative overflow-hidden bg-gray-800">

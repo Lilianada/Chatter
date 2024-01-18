@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import logo from '../../assets/ChatterLogo.svg'
 
 import { Popover, Transition } from "@headlessui/react";
 
@@ -24,7 +25,7 @@ export default function Header() {
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto sm:h-10"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                  src={logo}
                   alt=""
                 />
               </Link>
@@ -76,7 +77,7 @@ export default function Header() {
                 <div>
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                    src={logo}
                     alt=""
                   />
                 </div>

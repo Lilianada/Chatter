@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import FeaturedPosts from "../components/FeaturePosts";
+import PopularAuthors from "../components/PopularAuthors";
 
 export default function Home() {
   return (
@@ -45,17 +46,13 @@ export default function Home() {
 
       <div className="flex flex-1 items-stretch overflow-hidden">
         <main className="flex-1 overflow-y-auto">
-          <section
-            aria-labelledby="primary-heading"
-            className="flex h-full min-w-0 flex-1 flex-col lg:order-last"
-          >
-            <FeaturedPosts />
-          </section>
+          <FeaturedPosts />
         </main>
 
-        {/* Secondary column (hidden on smaller screens) */}
-        <aside className="hidden w-96 overflow-y-auto bg-white lg:block">
-          {/* Your content */}
+        {/* Aside */}
+        <aside className="hidden w-96 overflow-y-auto bg-white lg:block mx-6">
+            {/* Popular Authors */}
+            <PopularAuthors />
         </aside>
       </div>
     </div>

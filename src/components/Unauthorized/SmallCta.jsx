@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export default function SmallCtaUnauthorized() {
+export default function SmallCta() {
     return (
       <div className="bg-white border mt-8 rounded-xl">
         <div className="mx-auto py-4 sm:px-4 sm:py-4 lg:px-4">

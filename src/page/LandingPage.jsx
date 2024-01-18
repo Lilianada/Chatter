@@ -1,13 +1,13 @@
 import React from "react";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import Stats from "../components/Stats";
-import FeaturedPosts from "../components/FeaturePosts";
-import PopularAuthors from "../components/PopularAuthors";
-import SmallCtaUnauthorized from "../components/SmallCta";
-import VerifiedAuthors from "../components/VerifiedAuthors";
-import BigCta from "../components/BigCta";
-import Footer from "../components/Footer";
+import Header from "../components/Unauthorized/Header";
+import Hero from "../components/Unauthorized/Hero";
+import Stats from "../components/Unauthorized/Stats";
+import FeaturedPosts from "../components/Unauthorized/FeaturePosts";
+import PopularAuthors from "../components/Unauthorized/PopularAuthors";
+import SmallCta from "../components/Unauthorized/SmallCta";
+import VerifiedAuthors from "../components/Unauthorized/VerifiedAuthors";
+import BigCta from "../components/Unauthorized/BigCta";
+import Footer from "../components/Unauthorized/Footer";
 
 export default function LandingPage() {
   return (
@@ -57,7 +57,7 @@ export default function LandingPage() {
         <aside className="hidden w-80 overflow-y-auto bg-white lg:block mx-6">
             {/* Popular Authors */}
             <PopularAuthors />
-            <SmallCtaUnauthorized/>
+            <SmallCta/>
         </aside>
       </div>
       <VerifiedAuthors />

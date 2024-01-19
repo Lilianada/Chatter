@@ -182,7 +182,7 @@ export default function ProfileSettings() {
                           </label>
                           <div className="mt-2 flex items-center">
                             <img
-                              className="inline-block h-12 w-12 rounded-full"
+                              className="inline-block h-16 w-16 rounded-full"
                               src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80"
                               alt=""
                             />

@@ -21,34 +21,8 @@ export default function Header() {
                   <img
                     className="h-8 w-auto"
                     src={logo}
-                    alt="Your Company"
+                    alt="Chatter"
                   />
-                </div>
-                <div className="hidden lg:ml-6 lg:block">
-                  <div className="flex space-x-4">
-                    {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                    {/* <Link to="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">
-                      Dashboard
-                    </Link> */}
-                    {/* <Link
-                      to="#"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      Team
-                    </Link>
-                    <Link
-                      to="#"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      Projects
-                    </Link>
-                    <Link
-                      to="#"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      Calendar
-                    </Link> */}
-                  </div>
                 </div>
               </div>
               <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
@@ -119,7 +93,7 @@ export default function Header() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="/profile"
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
@@ -145,7 +119,7 @@ export default function Header() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="/settings"
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
@@ -158,7 +132,7 @@ export default function Header() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="/signout"
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
@@ -177,36 +151,6 @@ export default function Header() {
           </div>
 
           <Disclosure.Panel className="lg:hidden">
-            {/* <div className="space-y-1 px-2 pb-3 pt-2">
-              <Disclosure.Button
-                as="a"
-                to="#"
-                className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-              >
-                Dashboard
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                to="#"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Team
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                to="#"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Projects
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                to="#"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Calendar
-              </Disclosure.Button>
-            </div> */}
             <div className="border-t border-gray-700 pb-3 pt-4">
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
@@ -232,7 +176,7 @@ export default function Header() {
               <div className="mt-3 space-y-1 px-2">
                 <Disclosure.Button
                   as="a"
-                  to="#"
+                  to="/profile"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   Your Profile
@@ -246,14 +190,14 @@ export default function Header() {
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
-                  to="#"
+                  to="/settings"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   Settings
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
-                  to="#"
+                  to="/signout"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   Sign out

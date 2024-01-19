@@ -5,6 +5,7 @@ import Login from './page/Login';
 import ErrorPage from './page/404';
 import Home from './page/Home';
 import NewArticle from './page/NewArticle';
+import ProfileSettings from './page/ProfileSettings';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/newArticle' element={<NewArticle/>}/>
+        <Route path='/profileSettings' element={<ProfileSettings/>}/>
       </Routes>
     </Router>
   );

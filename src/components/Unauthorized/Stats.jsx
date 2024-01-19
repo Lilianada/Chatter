@@ -1,13 +1,13 @@
 const stats = [
-    { id: 1, name: 'Writers on the platform', value: '8,000+' },
-    { id: 2, name: 'Flat platform fee', value: '3%' },
-    { id: 3, name: 'Uptime guarantee', value: '99.9%' },
+    { id: 1, name: 'Writers on the platform', value: '800K+' },
+    { id: 2, name: 'Articles published', value: '1M' },
+    { id: 3, name: 'Total articles read', value: '100M' },
     { id: 4, name: 'Paid out to writers', value: '$70M' },
   ]
   
-  export default function Hero() {
+  export default function Stats() {
     return (
-      <div className="bg-white py-20 sm:py-32">
+      <div className="bg-white py-20 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:max-w-none">
             <div className="text-center">
@@ -15,7 +15,7 @@ const stats = [
                 Trusted by writers worldwide
               </h2>
               <p className="mt-4 text-lg leading-8 text-gray-600">
-                Lorem ipsum dolor sit amet consect adipisicing possimus.
+              The go-to platform for top writers from all over the world.
               </p>
             </div>
             <dl className="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">

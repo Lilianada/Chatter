@@ -8,11 +8,12 @@ import SmallCta from "../components/Unauthorized/SmallCta";
 import VerifiedAuthors from "../components/Unauthorized/VerifiedAuthors";
 import BigCta from "../components/Unauthorized/BigCta";
 import Footer from "../components/Unauthorized/Footer";
+import Features from "../components/Unauthorized/Features";
 
 export default function LandingPage() {
   return (
     <div>
-      <div className="relative overflow-hidden bg-gray-800">
+      <div className="relative overflow-hidden bg-gray-900">
         <div
           className="hidden sm:absolute sm:inset-0 sm:block"
           aria-hidden="true"
@@ -47,19 +48,18 @@ export default function LandingPage() {
         <Hero />
       </div>
       <Stats />
+      <Features/>
 
-      <div className="flex flex-1 items-stretch overflow-hidden">
+      {/* <div className="flex flex-1 items-stretch overflow-hidden">
         <main className="flex-1 overflow-y-auto">
           <FeaturedPosts />
         </main>
-
-        {/* Aside */}
         <aside className="hidden w-80 overflow-y-auto bg-white lg:block mx-6">
-            {/* Popular Authors */}
             <PopularAuthors />
             <SmallCta/>
         </aside>
-      </div>
+      </div> */}
+
       <VerifiedAuthors />
       <BigCta/>
       <Footer/>

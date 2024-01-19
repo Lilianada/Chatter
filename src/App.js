@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './page/Login';
 import ErrorPage from './page/404';
 import Home from './page/Home';
-import NewArticle from './page/NewArticle';
+import ArticleList from './page/ArticleList';
 import Profile from './page/Profile';
 import Settings from './page/Settings';
 
@@ -16,7 +16,7 @@ function App() {
         <Route path='*' element={<ErrorPage /> }/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/newArticle' element={<NewArticle/>}/>
+        <Route path='/newArticle' element={<ArticleList/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='settings' element={<Settings/>}/>
       </Routes>

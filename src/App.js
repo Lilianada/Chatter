@@ -7,6 +7,7 @@ import Home from './page/Home';
 import ArticlesList from './page/ArticlesList';
 import Profile from './page/Profile';
 import Settings from './page/Settings';
+import NewArticle from './page/NewArticle';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Route path='*' element={<ErrorPage /> }/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/newArticle' element={<ArticlesList/>}/>
+        <Route path='/newArticle' element={<NewArticle/>}/>
+        <Route path='/articles' element={<ArticlesList/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='settings' element={<Settings/>}/>
       </Routes>

@@ -88,13 +88,13 @@ export default function TextArea() {
             <Tab.Panels className="mt-2">
               <Tab.Panel className="-m-0.5 rounded-lg p-0.5">
                 <label htmlFor="comment" className="sr-only">
-                  Comment
+                  Article
                 </label>
                 <div>
                   <textarea
                     rows={15}
-                    name="comment"
-                    id="comment"
+                    name="article"
+                    id="article"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="Start writing..."
                     defaultValue={""}

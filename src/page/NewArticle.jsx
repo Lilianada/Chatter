@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Authorized/Header';
 import TextArea from '../components/Authorized/TextArea';
 import UploadCoverImage from '../components/Authorized/UploadCoverImage';
+import Footer from '../components/Unauthorized/Footer';
 
 
 export default function NewArticle() {
@@ -13,6 +14,7 @@ export default function NewArticle() {
        <TextArea/>
 
       </div>
+      <Footer/>
     </>
   )
 }

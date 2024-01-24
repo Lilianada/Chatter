@@ -175,28 +175,28 @@ export default function Header() {
               </div>
               <div className="mt-3 space-y-1 px-2">
                 <Disclosure.Button
-                  as="a"
+                  as="profile"
                   to="/profile"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   Your Profile
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
+                  as="newArticle"
                   to="/newArticle"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   New Article
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
+                  as="settings"
                   to="/settings"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   Settings
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
+                  as="signout"
                   to="/signout"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >

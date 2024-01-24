@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Authorized/Header";
+import Footer from "../components/Unauthorized/Footer";
 
 export default function Profile() {
 
@@ -269,6 +270,7 @@ export default function Profile() {
           </main>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

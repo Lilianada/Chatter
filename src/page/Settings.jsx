@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Authorized/Header";
+import Footer from "../components/Unauthorized/Footer";
 
 export default function Settings() {
 
@@ -118,6 +119,7 @@ export default function Settings() {
           </main>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

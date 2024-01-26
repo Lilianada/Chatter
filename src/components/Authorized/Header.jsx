@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom';
-import logo from '../../assets/ChatterLogo.svg'
+import React, { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import logo from "../../assets/ChatterLogo.svg";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
@@ -18,11 +18,7 @@ export default function Header() {
             <div className="relative flex h-16 items-center justify-between">
               <div className="flex items-center px-2 lg:px-0">
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-8 w-auto"
-                    src={logo}
-                    alt="Chatter"
-                  />
+                  <img className="h-8 w-auto" src={logo} alt="Chatter" />
                 </div>
               </div>
               <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
@@ -32,7 +28,10 @@ export default function Header() {
                   </label>
                   <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <MagnifyingGlassIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
                     </div>
                     <input
                       id="search"
@@ -95,8 +94,8 @@ export default function Header() {
                             <Link
                               to="/profile"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Your Profile
@@ -106,10 +105,10 @@ export default function Header() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="/newArticle"
+                              to="/new-article"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               New Article
@@ -121,8 +120,8 @@ export default function Header() {
                             <Link
                               to="/settings"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Settings
@@ -132,10 +131,10 @@ export default function Header() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="/signout"
+                              to="/sign-out"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Sign out
@@ -161,8 +160,12 @@ export default function Header() {
                   />
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-white">Tom Cook</div>
-                  <div className="text-sm font-medium text-gray-400">tom@example.com</div>
+                  <div className="text-base font-medium text-white">
+                    Tom Cook
+                  </div>
+                  <div className="text-sm font-medium text-gray-400">
+                    tom@example.com
+                  </div>
                 </div>
                 <button
                   type="button"
@@ -179,28 +182,68 @@ export default function Header() {
                   to="/profile"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
-                  Your Profile
+                  {({ active }) => (
+                    <Link
+                      to="/profile"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block text-gray-400"
+                      )}
+                    >
+                      Your Profile
+                    </Link>
+                  )}
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="newArticle"
-                  to="/newArticle"
+                  to="/new-article"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
-                  New Article
+                  {({ active }) => (
+                    <Link
+                      to="/new-article"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block text-gray-400"
+                      )}
+                    >
+                      New Article
+                    </Link>
+                  )}
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="settings"
                   to="/settings"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
-                  Settings
+                  {({ active }) => (
+                    <Link
+                      to="/settings"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block text-gray-400"
+                      )}
+                    >
+                      Settings
+                    </Link>
+                  )}
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="signout"
                   to="/signout"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
-                  Sign out
+                   {({ active }) => (
+                            <Link
+                              to="/sign-out"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block text-gray-400"
+                              )}
+                            >
+                              Sign out
+                            </Link>
+                          )}
                 </Disclosure.Button>
               </div>
             </div>
@@ -208,5 +251,5 @@ export default function Header() {
         </>
       )}
     </Disclosure>
-  )
+  );
 }

@@ -17,7 +17,7 @@ function App() {
         <Route path='*' element={<ErrorPage /> }/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/newArticle' element={<NewArticle/>}/>
+        <Route path='/new-article' element={<NewArticle/>}/>
         <Route path='/articles' element={<ArticlesList/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='settings' element={<Settings/>}/>

@@ -72,7 +72,7 @@ export default function Profile() {
                           </label>
                           <div className="mt-2 flex rounded-md shadow-sm">
                             <span className="inline-flex items-center rounded-l-md border border-r-0 border-slate-300 bg-white px-3 text-slate-500 sm:text-sm">
-                              workcation.com/
+                              chatter.com/
                             </span>
                             <input
                               type="text"

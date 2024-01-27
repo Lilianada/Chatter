@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
 
@@ -9,6 +9,22 @@ const navigation = [
 ]
 
 export default function Hero() {
+  const [isloading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  });
+  const { fullName, email, password } = formData
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+
+  const resgister = () => {
+    setIsLoading(true);
+    try {
+      
+    }
+  }
+  
   return (
     <div className=" relative overflow-hidden pb-16  sm:pb-24">
         <main className="mt-16 sm:mt-24">
@@ -91,15 +107,15 @@ export default function Hero() {
                         </div>
 
                         <div>
-                          <label htmlFor="mobile-or-email" className="sr-only">
-                            Mobile number or email
+                          <label htmlFor="email" className="sr-only">
+                            Email
                           </label>
                           <input
                             type="text"
-                            name="mobile-or-email"
-                            id="mobile-or-email"
+                            name="email"
+                            id="email"
                             autoComplete="email"
-                            placeholder="Mobile number or email"
+                            placeholder="Email"
                             required
                             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />

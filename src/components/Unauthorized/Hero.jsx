@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRouter } from "react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import { IoEye, IoEyeOff } from "react-icons/io5";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import { registerUser } from "../../config/authorization";
 import Spinner from "../Utils/Spinner";
-
-const navigation = [
-  { name: "Resources", to: "#" },
-  { name: "Features", to: "#" },
-  { name: "Career", to: "#" },
-];
+import Notification from "../Utils/Notification";
 
 export default function Hero() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,12 +14,17 @@ export default function Hero() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [notification, setNotification] = useState({
+    show: false,
+    type: "",
+    message: "",
+  });
+  const router = useRouter();
 
   // Function to toggle the showPassword state
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const [error, setError] = useState(null);
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,18 +36,16 @@ export default function Hero() {
 
   const register = async (e) => {
     e.preventDefault();
-    console.log("clicked");
     setIsLoading(true);
 
     // Validate password
     if (!validatePassword(formData.password)) {
-      // Assuming you have a way to display error messages to the user
-      setError(
-        "Password must be at least 8 characters long, must contain at least one number and a special character."
-      );
-      setTimeout (() => {
-        setError("");
-      }, 3000)
+      setNotification({
+        show: true,
+        type: "error",
+        message:
+          "Password must be at least 8 characters long, must contain at least one number and a special character.",
+      });
       setIsLoading(false);
       return;
     }
@@ -59,19 +57,35 @@ export default function Hero() {
         formData.fullName
       );
       if (user) {
-        // Assuming you have a way to handle successful registration (e.g., redirect or show success message)
-        console.log("Registration successful", user);
-        // Redirect or update UI accordingly
+        // Handle successful registration
+        setNotification({
+          show: true,
+          type: "success",
+          message: "Registration successful. You can now log in.",
+        });
+        setFormData({ fullName: "", email: "", password: "" });
+        router.push("/login");
       } else {
-        // Handle case where user is undefined or null
-        console.log("Registration failed");
+        // Handle undefined or null user case
+        setNotification({
+          show: true,
+          type: "error",
+          message: "Registration failed. Please try again.",
+        });
       }
     } catch (error) {
-      console.log("Registration error:", error);
-      // Assuming you have a way to display error messages to the user
-      setError("Failed to register. Please try again.");
+      // Handle registration error
+      setNotification({
+        show: true,
+        type: "error",
+        message: `Failed to register. ${error.message}`,
+      });
     } finally {
       setIsLoading(false);
+      // Automatically hide the notification after a delay
+      setTimeout(() => {
+        setNotification({ ...notification, show: false });
+      }, 3000); // Adjust the timeout duration as needed
     }
   };
 
@@ -204,13 +218,14 @@ export default function Hero() {
                             className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
                           >
                             {showPassword ? (
-                              <IoEye
-                                className="password_icon"
+                              <EyeIcon
+                              className="h-4 w-4 text-gray-500" 
+                              aria-hidden="true" 
                                 onClick={togglePasswordVisibility}
-                              />
+/>
                             ) : (
-                              <IoEyeOff
-                                className="password_icon"
+                              <EyeSlashIcon
+                                className="h-4 w-4 text-gray-500"
                                 onClick={togglePasswordVisibility}
                               />
                             )}
@@ -224,11 +239,8 @@ export default function Hero() {
                           className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           onClick={register}
                         >
-                          {isLoading ? ( <Spinner /> ) : "Create your account"}
+                          {isLoading ? <Spinner /> : "Create your account"}
                         </button>
-                        {error && (
-                          <p className="text-red-500 text-xs mt-2">{error}</p>
-                        )}
                       </div>
                     </form>
                   </div>
@@ -264,6 +276,17 @@ export default function Hero() {
           </div>
         </div>
       </main>
+      {notification.show && (
+        <Notification
+          title={
+            notification.type.charAt(0).toUpperCase() +
+            notification.type.slice(1)
+          }
+          message={notification.message}
+          type={notification.type}
+          timer={5000} // Auto-hide after 5 seconds
+        />
+      )}
     </div>
   );
 }

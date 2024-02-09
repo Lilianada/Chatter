@@ -4,10 +4,14 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'spin-slow': 'spin 2s linear infinite', // Customizing the spin speed
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
   ],
-}
+};
 

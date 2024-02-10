@@ -1,4 +1,5 @@
-import React, { useState, useRouter } from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
@@ -19,7 +20,7 @@ export default function Hero() {
     type: "",
     message: "",
   });
-  const router = useRouter();
+  const navigate = useNavigate();
 
   // Function to toggle the showPassword state
   const togglePasswordVisibility = () => {
@@ -64,7 +65,10 @@ export default function Hero() {
           message: "Registration successful. You can now log in.",
         });
         setFormData({ fullName: "", email: "", password: "" });
-        router.push("/login");
+        setTimeout(() => {
+
+          navigate("/login");
+        }, 4000)
       } else {
         // Handle undefined or null user case
         setNotification({

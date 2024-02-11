@@ -26,8 +26,8 @@ export async function registerUser(email, password, fullName) {
   }
 }
 
-// Login user
-export async function loginUser(email, password) {
+// signin user
+export async function signinUser(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,

@@ -51,7 +51,7 @@ export default function Header() {
           </div>
           <div className="hidden md:flex">
             <Link
-              to="/login"
+              to="/signin"
               className="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
             >
               Log in

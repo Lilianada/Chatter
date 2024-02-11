@@ -1,28 +1,67 @@
-import './App.css';
-import LandingPage from './page/LandingPage';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './page/Login';
-import ErrorPage from './page/404';
-import Home from './page/Home';
-import ArticlesList from './page/ArticlesList';
-import Profile from './page/Profile';
-import Settings from './page/Settings';
-import NewArticle from './page/NewArticle';
+import "./App.css";
+import LandingPage from "./page/LandingPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Signin from "./page/Signin";
+import ErrorPage from "./page/404";
+import Home from "./page/Home";
+import ArticlesList from "./page/ArticlesList";
+import Profile from "./page/Profile";
+import Settings from "./page/Settings";
+import NewArticle from "./page/NewArticle";
+import AuthContext from "./context/AuthContext";
+import ProtectedRoutes from "./config/protectedRoutes";
 
 function App() {
   return (
-    <Router className="App">
-      <Routes>
-        <Route path="/" element={<LandingPage/>}/>
-        <Route path='*' element={<ErrorPage /> }/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/home' element={<Home/>}/>
-        <Route path='/new-article' element={<NewArticle/>}/>
-        <Route path='/articles' element={<ArticlesList/>}/>
-        <Route path='/profile' element={<Profile/>}/>
-        <Route path='settings' element={<Settings/>}/>
-      </Routes>
-    </Router>
+    <AuthContext>
+      <Router className="App">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoutes>
+                <Home />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/new-article"
+            element={
+              <ProtectedRoutes>
+                <NewArticle />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/articles"
+            element={
+              <ProtectedRoutes>
+                <ArticlesList />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoutes>
+                <Profile />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="settings"
+            element={
+              <ProtectedRoutes>
+                <Settings />
+              </ProtectedRoutes>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthContext>
   );
 }
 

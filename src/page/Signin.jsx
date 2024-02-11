@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../assets/ChatterLogo.svg";
-import { loginUser } from "../config/authorization";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import Notification from "../components/Utils/Notification";
 import Spinner from "../components/Utils/Spinner";
+import { signinUser } from "../config/authorization";
 
-export default function Login() {
+export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState({
     show: false,
@@ -34,7 +34,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const user = await loginUser(formData.email, formData.password);
+      const user = await signinUser(formData.email, formData.password);
 
       if (user) {
         navigate("/home");
@@ -42,7 +42,7 @@ export default function Login() {
         setNotification({
           show: true,
           type: "error",
-          message: "Login failed. Check your details and try again.",
+          message: "Signin failed. Check your details and try again.",
         });
       }
     } catch (error) {

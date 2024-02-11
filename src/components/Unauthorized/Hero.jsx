@@ -67,7 +67,7 @@ export default function Hero() {
         setFormData({ fullName: "", email: "", password: "" });
         setTimeout(() => {
 
-          navigate("/login");
+          navigate("/signin");
         }, 4000)
       } else {
         // Handle undefined or null user case

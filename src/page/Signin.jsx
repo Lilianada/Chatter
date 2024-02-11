@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../assets/ChatterLogo.svg";
@@ -9,12 +9,13 @@ import { signinUser } from "../config/authorization";
 
 export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [notification, setNotification] = useState({
     show: false,
     type: "error",
     message: "",
   });
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,12 +30,31 @@ export default function Signin() {
     setShowPassword(!showPassword);
   };
 
+  useEffect(() => {
+    const rememberMe = localStorage.getItem("rememberMe") === "true";
+    const userEmail = rememberMe ? localStorage.getItem("userEmail") : "";
+    setFormData(
+      (prev) => ({ ...prev, email: userEmail }
+    )); 
+    setRememberMe(rememberMe);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const user = await signinUser(formData.email, formData.password);
+
+      if (rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+        // Optionally, store user-specific non-sensitive data for convenience
+        localStorage.setItem("userEmail", formData.email);
+      } else {
+        // If not checked, clear any previously set flags
+        localStorage.removeItem("rememberMe");
+        localStorage.removeItem("userEmail");
+      }
 
       if (user) {
         navigate("/home");
@@ -129,10 +149,12 @@ export default function Signin() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
-                    id="remember-me"
                     name="remember-me"
                     type="checkbox"
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    id="rememberMe"
                   />
                   <label
                     htmlFor="remember-me"
@@ -174,16 +196,16 @@ export default function Signin() {
           </p>
         </div>
         {notification.show && (
-        <Notification
-          title={
-            notification.type.charAt(0).toUpperCase() +
-            notification.type.slice(1)
-          }
-          message={notification.message}
-          type={notification.type}
-          timer={5000} // Auto-hide after 5 seconds
-        />
-      )}
+          <Notification
+            title={
+              notification.type.charAt(0).toUpperCase() +
+              notification.type.slice(1)
+            }
+            message={notification.message}
+            type={notification.type}
+            timer={5000} // Auto-hide after 5 seconds
+          />
+        )}
       </div>
     </>
   );

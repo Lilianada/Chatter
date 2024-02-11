@@ -5,8 +5,19 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        ping: {
+          '75%, 100%': { transform: 'scale(2)', opacity: '0' },
+        },
+      },
       animation: {
-        'spin-slow': 'spin 3s linear infinite', // Customizing the spin speed
+        'spin-slow': 'spin 3s linear infinite',
+        spin: 'spin 1s linear infinite',
+        ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
     },
   },

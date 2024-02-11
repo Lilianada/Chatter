@@ -41,7 +41,7 @@ export async function signinUser(email, password) {
 }
 
 // Logout user
-export async function logoutUser() {
+export async function signoutUser() {
   try {
     await auth.signOut();
   } catch (error) {

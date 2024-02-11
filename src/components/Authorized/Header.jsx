@@ -1,19 +1,40 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import logo from "../../assets/ChatterLogo.svg";
+import { signoutUser } from "../../config/authorization";
+import Loader from "../Utils/Loader";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignout = () => {
+    setIsLoading(true); // Start loading
+  
+    setTimeout(async () => {
+      try {
+        await signoutUser(); // Attempt to sign out the user
+        // Perform any additional actions upon successful signout, e.g., redirecting the user
+      } catch (error) {
+        console.error(error); // Handle any errors
+      } finally {
+        // setIsLoading(false); // Stop loading regardless of the outcome
+      }
+    }, 12000); // Wait for 2 seconds before executing the signout
+  };
+  
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
+        {isLoading && <Loader />}
           <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="flex items-center px-2 lg:px-0">
@@ -130,15 +151,15 @@ export default function Header() {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <Link
-                              to="/sign-out"
+                            <button
+                              onClick={handleSignout}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Sign out
-                            </Link>
+                            </button>
                           )}
                         </Menu.Item>
                       </Menu.Items>
@@ -230,19 +251,18 @@ export default function Header() {
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="signout"
-                  to="/signout"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                    {({ active }) => (
-                            <Link
-                              to="/sign-out"
+                            <button
+                             c
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block text-gray-400"
                               )}
                             >
                               Sign out
-                            </Link>
+                            </button>
                           )}
                 </Disclosure.Button>
               </div>

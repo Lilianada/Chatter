@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { Disclosure, Menu, Popover, Transition } from "@headlessui/react";
+import { Menu, Popover, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import logo from "../../assets/ChatterLogo.svg";
+import logoSmall from "../../assets/ChatterLogo.svg";
 import { signoutUser } from "../../config/authorization";
 import Loader from "../Utils/Loader";
 import {
@@ -31,28 +32,26 @@ const navigation = [
 const userNavigation = [
   { name: 'Your Profile', to: '/profile' },
   { name: 'Settings', to: '/settings' },
+  { name: 'New Article', to: '/new-article' },
 ]
 
 export default function Header() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSignOut = () => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true); 
   
     setTimeout(async () => {
       try {
-        await signoutUser(); // Attempt to sign out the user
-        // Perform any additional actions upon successful signout, e.g., redirecting the user
+        await signoutUser(); 
       } catch (error) {
-        console.error(error); // Handle any errors
+        console.error(error); 
       } finally {
-        // setIsLoading(false); // Stop loading regardless of the outcome
+        setIsLoading(false);
       }
-    }, 12000); // Wait for 2 seconds before executing the signout
+    }, 2000); 
   };
   
-  const imageUrl = 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-
   return (
     <Popover
     as="header"
@@ -65,16 +64,22 @@ export default function Header() {
   >
     {({ open }) => (
       <>
+      {isLoading && <Loader />}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
             <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
               <div className="flex flex-shrink-0 items-center">
                 <Link to="/home">
                   <img
-                    className="block h-8 w-auto"
+                    className="block h-8 w-auto sm:hidden"
                     src={logo}
-                    alt="Your Company"
+                    alt="Chatter App"
                   />
+                  <img
+                    className="hidden h-8 w-auto sm:block"
+                    src={logoSmall}
+                    alt="Chatter App"
+                    />
                 </Link>
               </div>
             </div>
@@ -154,6 +159,12 @@ export default function Header() {
                         )}
                       </Menu.Item>
                     ))}
+                     <button 
+                  className="block px-4 py-2 text-sm text-rose-500 hover:text-rose-700 cursor-pointer"
+                  onClick={onSignOut}
+                >
+                  Sign out
+                  </button>
                   </Menu.Items>
                 </Transition>
               </Menu>
@@ -176,12 +187,13 @@ export default function Header() {
                 to={item.to}
                 aria-current={item.current ? 'page' : undefined}
                 className={classNames(
-                  item.current ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-50',
+                  item.current ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-50 hover:text-gray-900 text-gray-200',
                   'block rounded-md py-2 px-3 text-base font-medium'
                 )}
               >
                 {item.name}
               </Link>
+
             ))}
           </div>
           <div className="border-t border-gray-200 pt-4">
@@ -190,7 +202,7 @@ export default function Header() {
                 <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
               </div>
               <div className="ml-3">
-                <div className="text-base font-medium text-gray-800">{user.name}</div>
+                <div className="text-base font-medium text-gray-200">{user.name}</div>
                 <div className="text-sm font-medium text-gray-500">{user.email}</div>
               </div>
               <button
@@ -207,7 +219,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   to={item.to}
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-200 hover:bg-gray-50 hover:text-gray-900"
                 >
                   {item.name}
                 </Link>
@@ -216,12 +228,19 @@ export default function Header() {
           </div>
 
           <div className="mx-auto mt-6 max-w-3xl px-4 sm:px-6">
-            <Link
+            {/* <Link
               to="/new-article"
               className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-800"
             >
               New Article
-            </Link>
+            </Link> */}
+
+            <button 
+                  className="flex w-full items-center justify-center rounded-md bg-rose-600 border border-transparent px-4 py-2 text-gray-100 font-medium text-base hover:bg-rose-400 hover:text-gray-200 cursor-pointer"
+                  onClick={onSignOut}
+                >
+                  Sign out
+                  </button>
           </div>
         </Popover.Panel>
       </>

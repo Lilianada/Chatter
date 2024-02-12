@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import logo from "../../assets/ChatterLogo.svg";
-import logoSmall from "../../assets/ChatterLogo.svg";
+import logoSmall from "../../assets/ChatterIcon.svg";
 import { signoutUser } from "../../config/authorization";
 import Loader from "../Utils/Loader";
 import {
@@ -71,12 +71,12 @@ export default function Header() {
               <div className="flex flex-shrink-0 items-center">
                 <Link to="/home">
                   <img
-                    className="block h-8 w-auto sm:hidden"
+                    className="block h-8 w-auto sm:hidden lg:block"
                     src={logo}
                     alt="Chatter App"
                   />
                   <img
-                    className="hidden h-8 w-auto sm:block"
+                    className="hidden h-8 w-auto sm:block lg:hidden"
                     src={logoSmall}
                     alt="Chatter App"
                     />

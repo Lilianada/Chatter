@@ -10,6 +10,7 @@ import Settings from "./page/Settings";
 import NewArticle from "./page/NewArticle";
 import AuthContext from "./context/AuthContext";
 import ProtectedRoutes from "./config/protectedRoutes";
+import Support from "./page/Support";
 
 function App() {
   return (
@@ -52,10 +53,18 @@ function App() {
             }
           />
           <Route
-            path="settings"
+            path="/settings"
             element={
               <ProtectedRoutes>
                 <Settings />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <ProtectedRoutes>
+                <Support />
               </ProtectedRoutes>
             }
           />

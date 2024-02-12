@@ -49,6 +49,7 @@ export default function TextArea() {
                   <div className="flex items-center">
                     <button
                       type="button"
+                      title="Attach a file"
                       className="-m-2.5 inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
                     >
                       <span className="sr-only">Attach a file</span>
@@ -58,6 +59,7 @@ export default function TextArea() {
                   <div className="flex items-center">
                     <button
                       type="button"
+                      title="Insert link"
                       className="-m-2.5 inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
                     >
                       <span className="sr-only">Insert link</span>
@@ -76,6 +78,7 @@ export default function TextArea() {
                   <div className="flex items-center">
                     <button
                       type="button"
+                      title="Mention someone"
                       className="-m-2.5 inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
                     >
                       <span className="sr-only">Mention someone</span>

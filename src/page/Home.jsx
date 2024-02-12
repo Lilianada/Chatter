@@ -19,6 +19,7 @@ import {
 } from '@heroicons/react/24/outline'
 import Header from "../components/Authorized/Header";
 import { Link } from "react-router-dom";
+import Footer from '../components/Authorized/Footer';
 
 
 const navigation = [
@@ -101,7 +102,7 @@ export default function Home() {
         {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
 
         <Header/>
-        <div className="py-10">
+        <div className="py-10 bg-gray-100">
           <div className="mx-auto max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-8 lg:px-8">
             <div className="hidden lg:col-span-3 lg:block xl:col-span-2">
               <nav aria-label="Sidebar" className="sticky top-4 divide-y divide-gray-300">
@@ -153,7 +154,7 @@ export default function Home() {
                   </label>
                   <select
                     id="question-tabs"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-rose-500"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                     defaultValue={tabs.find((tab) => tab.current).name}
                   >
                     {tabs.map((tab) => (
@@ -179,7 +180,7 @@ export default function Home() {
                         <span
                           aria-hidden="true"
                           className={classNames(
-                            tab.current ? 'bg-rose-500' : 'bg-transparent',
+                            tab.current ? 'bg-indigo-500' : 'bg-transparent',
                             'absolute inset-x-0 bottom-0 h-0.5'
                           )}
                         />
@@ -423,6 +424,7 @@ export default function Home() {
             </aside>
           </div>
         </div>
+        <Footer/>
       </div>
     
   )

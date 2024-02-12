@@ -218,7 +218,7 @@ export default function Header() {
           <div className="mx-auto mt-6 max-w-3xl px-4 sm:px-6">
             <Link
               to="/new-article"
-              className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+              className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-800"
             >
               New Article
             </Link>

@@ -5,7 +5,7 @@ import {
   updateCurrentUser,
 } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 
 // Register user
 export async function registerUser(email, password, fullName) {
@@ -67,4 +67,9 @@ export async function changePassword(password) {
   } catch (error) {
     throw error;
   }
+}
+
+export function deleteuser(uid) {
+  const userDoc = doc(db, 'users', uid);
+  return deleteDoc(userDoc);
 }

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 import { Tab } from "@headlessui/react";
 import {
   AtSymbolIcon,
@@ -17,13 +18,21 @@ export default function TextArea() {
   const [textValue, setTextValue] = useState("");
   const [preview, setPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 
   const auth = getAuth();
   const userId = auth.currentUser.uid;
 
+  const editorRef = useRef(null);
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
+  };
+
   const handleChange = (e) => {
     setTextValue(e.target.value);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,13 +41,13 @@ export default function TextArea() {
     try {
       const response = await postArticle(textValue, userId);
       setPreview(response);
-    } catch (error  ) {
+    } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }
-  
+  };
+
   return (
     <form action="#">
       <Tab.Group>
@@ -121,16 +130,44 @@ export default function TextArea() {
                   Article
                 </label>
                 <div>
-                  <textarea
-                    rows={15}
-                    name="article"
-                    id="article"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="Start writing..."
-                    defaultValue={""}
-                    value={textValue}
-                    onChange={handleChange}
+                  <Editor
+                    apiKey={apiKey}
+                    onInit={(evt, editor) => (editorRef.current = editor)}
+                    initialValue="<p>This is the initial content of the editor.</p>"
+                    onEditorChange={handleChange}
+                    // init={{
+                    //   height: 500,
+                    //   menubar: false,
+                    //   plugins: [
+                    //     "advlist",
+                    //     "autolink",
+                    //     "lists",
+                    //     "link",
+                    //     "image",
+                    //     "charmap",
+                    //     "preview",
+                    //     "anchor",
+                    //     "searchreplace",
+                    //     "visualblocks",
+                    //     "code",
+                    //     "fullscreen",
+                    //     "insertdatetime",
+                    //     "media",
+                    //     "table",
+                    //     "code",
+                    //     "help",
+                    //     "wordcount",
+                    //   ],
+                    //   toolbar:
+                    //     "undo redo | blocks | " +
+                    //     "bold italic forecolor | alignleft aligncenter " +
+                    //     "alignright alignjustify | bullist numlist outdent indent | " +
+                    //     "removeformat | help",
+                    //   content_style:
+                    //     "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                    // }}
                   />
+                  <button onClick={log}>Log editor content</button>
                 </div>
               </Tab.Panel>
               <Tab.Panel className="-m-0.5 rounded-lg p-0.5">

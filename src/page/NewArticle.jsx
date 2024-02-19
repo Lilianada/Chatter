@@ -13,55 +13,48 @@ export default function NewArticle() {
     title: "",
     category: "",
     content: "",
+    coverImage: "",
     author: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
   const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selected, setSelected] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
+    async function fetchCategories() {
+      setIsLoading(true);
+      try {
+        const response = await getCategories();
+        setCategories(response.categories); // Make sure getCategories returns just the categories array
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
     fetchCategories();
   }, []);
-  
-  const fetchCategories = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getCategories();
-      console.log(response);
-      setCategories(response);
-      // Handle success (e.g., showing success message or redirecting)
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-      // Handle error (e.g., showing error message)
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
-    }
+  const handleImageChange = (imageURL) => {
+    setSelectedImage(imageURL);
+    setArticleData({ ...articleData, coverImage: imageURL }); // Update article data with the cover image URL
   };
 
-  const auth = getAuth();
-  const userId = auth.currentUser ? auth.currentUser.uid : null;
-
-  const handleEditorChange = (content, editor) => {
+  const handleEditorChange = (content) => {
     setArticleData({ ...articleData, content });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setArticleData({ ...articleData, [name]: value });
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setArticleData({ ...articleData, category });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const auth = getAuth();
+    const userId = auth.currentUser ? auth.currentUser.uid : null;
     if (!userId) {
       console.error("User is not authenticated.");
       return;
@@ -69,16 +62,17 @@ export default function NewArticle() {
     setIsLoading(true);
 
     try {
-      const response = await postArticle({ ...articleData }, userId);
-      console.log(response);
-      // Handle success (e.g., showing success message or redirecting)
+      // Make sure to adjust your postArticle function to handle the cover image along with other article data
+      const response = await postArticle(articleData, userId);
+      console.log("Article posted successfully:", response);
+      // Handle post-submission logic here (e.g., redirect to the article page)
     } catch (error) {
       console.error("Error posting article:", error);
-      // Handle error (e.g., showing error message)
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <>
       <Header/>
@@ -89,15 +83,16 @@ export default function NewArticle() {
         />
         <SelectCategories 
           categories={categories}
-          selected={selected}
-          setSelected={setSelected}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          onChange={handleCategoryChange}
         />
        <TextArea 
         handleEditorChange={handleEditorChange}
         apiKey={apiKey}
         isLoading={isLoading}
         handleSubmit={handleSubmit}
-        handleChange={handleChange}
+        // handleChange={handleChange}
         />
       </div>
       <Footer/>

@@ -1,26 +1,27 @@
 import React, { useState, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Tab } from "@headlessui/react";
-import {
-  AtSymbolIcon,
-  CodeBracketIcon,
-  LinkIcon,
-  PaperClipIcon,
-} from "@heroicons/react/20/solid";
-import { postArticle } from "../../config/article";
-import { getAuth } from "firebase/auth";
-import SelectCategories from "./SelectCategories";
 import Spinner from "../Utils/Spinner";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function TextArea({handleEditorChange, apiKey, isLoading, handleSubmit}) {
-  
+export default function TextArea({handleEditorChange, apiKey, isLoading, handleSubmit,}) {
+  const [title, setTitle] = useState(""); // State to hold the title
+
+  // Handle change for the title input
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  // Adjusted handleSubmit to also pass title
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit({ title, content: '' }); // Pass the title along with content
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleFormSubmit}>
       <div className=" mb-6">
         <label
           htmlFor="about"
@@ -30,18 +31,20 @@ export default function TextArea({handleEditorChange, apiKey, isLoading, handleS
         </label>
         <div className="mt-2 w-full">
           <div className="flex w-full rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:w-full">
-            <input
-              type="text"
-              name="title"
-              id="title"
-              autoComplete="title"
-              className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-              placeholder="Title of article"
-            />
+          <input
+            type="text"
+            name="title"
+            id="title"
+            autoComplete="title"
+            className="block w-full flex-1 rounded-md border-0 bg-transparent py-1.5 pl-1 shadow-sm text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+            placeholder="Title of article"
+            required
+            value={title}
+            onChange={handleTitleChange}
+          />
           </div>
         </div>
       </div>
-      {/* <SelectCategories /> */}
       <Editor
         apiKey={apiKey}
         initialValue="<p>Type article here</p>"

@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { PhotoIcon } from "@heroicons/react/20/solid";
 
-function UploadCoverImage() {
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
-    }
-  };
+function UploadCoverImage({ selectedImage, handleImageChange}) {
+  
 
   return (
     <>

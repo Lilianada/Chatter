@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ChatBubbleLeftEllipsisIcon,
@@ -20,22 +20,13 @@ import {
 import Header from "../components/Authorized/Header";
 import { Link } from "react-router-dom";
 import Footer from "../components/Authorized/Footer";
+import CategoryTabs from "../components/Authorized/CategoryTabs";
 
 const navigation = [
   { name: "Home", to: "#", icon: HomeIcon, current: true },
   { name: "Popular", to: "#", icon: FireIcon, current: false },
   { name: "Communities", to: "#", icon: UserGroupIcon, current: false },
   { name: "Trending", to: "#", icon: ArrowTrendingUpIcon, current: false },
-];
-const categories = [
-  { name: "Food", to: "#" },
-  { name: "Sports", to: "#" },
-  { name: "Beauty", to: "#" },
-  { name: "Animals", to: "#" },
-  { name: "Science", to: "#" },
-  { name: "Lifestyle", to: "#" },
-  { name: "Tech", to: "#" },
-  { name: "Gaming", to: "#" },
 ];
 const questions = [
   {
@@ -89,6 +80,7 @@ function classNames(...classes) {
 }
 
 export default function Home() {
+
   return (
     <div className="min-h-full">
       <Header />
@@ -127,22 +119,9 @@ export default function Home() {
               </div>
             </nav>
           </div>
-          <main className="lg:col-span-9 xl:col-span-6">
+          <main className="lg:col-span-9 xl:col-span-6 ">
             <div className="">
-              <div
-                className="mt-6 mb-4 flex flex-row justify-between "
-                aria-labelledby="categories-headline"
-              >
-                {categories.map((category) => (
-                  <Link
-                    key={category.name}
-                    to={category.to}
-                    className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-indigo-700"
-                  >
-                    <span className="truncate">{category.name}</span>
-                  </Link>
-                ))}
-              </div>
+              <CategoryTabs />
               <h1 className="sr-only">All articles</h1>
               <ul className="space-y-4">
                 {questions.map((question) => (
@@ -420,7 +399,6 @@ export default function Home() {
                     </h2>
                     <div className="mt-6 flow-root">
                       <ul
-                        role="list"
                         className="-my-4 divide-y divide-gray-200"
                       >
                         {trendingPosts.map((post) => (

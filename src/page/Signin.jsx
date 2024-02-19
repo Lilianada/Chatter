@@ -57,7 +57,7 @@ export default function Signin() {
       }
 
       if (user) {
-        navigate("/home");
+        navigate("/articles");
       } else {
         setNotification({
           show: true,

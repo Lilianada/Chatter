@@ -63,7 +63,7 @@ const CategoryTabs = () => {
         {categories.map((category) => (
           <Link
             key={category.name}
-            to={category.href}
+            to={category.name}
             className={classNames(
               category.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
               'whitespace-nowrap border-b-2 py-4 px-4 text-sm font-medium cursor-pointer'

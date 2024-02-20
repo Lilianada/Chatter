@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ChatBubbleLeftEllipsisIcon,
   PlusIcon,
@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Authorized/Footer";
 import CategoryTabs from "../components/Authorized/CategoryTabs";
 import Articles from "../components/Authorized/Articles";
+import { getAllArticles, getCategories } from "../config/article";
+import { useCategories } from "../context/CategoriesContext";
 
 const navigation = [
   { name: "Home", to: "#", icon: HomeIcon, current: true },
@@ -51,7 +53,74 @@ function classNames(...classes) {
 }
 
 export default function Home() {
+  // const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filteredArticles, setFilteredArticles] = useState([]);
+  const containerRef = useRef(null);
+  const { categories } = useCategories();
+
+  useEffect(() => {
+    // fetchCategories();  
+    fetchArticles();
+  }, []);
+
+  useEffect(() => {
+    // Filter articles when articles or selectedCategory changes
+    if (selectedCategory) {
+      const filtered = articles.filter(article =>
+        article.categories.map(cat => cat.trim().toLowerCase()).includes(selectedCategory.trim().toLowerCase())
+      );      
+        console.log('selectedCategory', selectedCategory)
+      console.log("filtered", filtered);
+      setFilteredArticles(filtered);
+    } else {
+      setFilteredArticles(articles);
+    }
+  }, [articles, selectedCategory]);
   
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const fetchArticles = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getAllArticles();
+      if (response.success) {
+        setArticles(response.articles);
+      } else {
+        console.error("Failed to fetch articles:", response.message);
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const checkForScroll = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+    setShowLeftArrow(scrollLeft > 0);
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth);
+  };
+
+  // const fetchCategories = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await getCategories();
+  //     setCategories(response || []); 
+  //     checkForScroll();
+  //   } catch (error) {
+  //     console.error("Error fetching categories: ", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
   return (
     <div className="min-h-full">
@@ -93,9 +162,20 @@ export default function Home() {
           </div>
           <main className="lg:col-span-9 xl:col-span-6 ">
             <div className="">
-              <CategoryTabs />
+              <CategoryTabs
+                categories={categories}
+                checkForScroll={checkForScroll}
+                showLeftArrow={showLeftArrow}
+                showRightArrow={showRightArrow}
+                containerRef={containerRef}
+                onCategorySelect={handleCategorySelect}
+              />
               <h1 className="sr-only">All articles</h1>
-                <Articles/>
+              {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <Articles articles={filteredArticles} />
+          )}
             </div>
           </main>
           <aside className="hidden xl:col-span-4 xl:block">

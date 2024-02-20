@@ -24,7 +24,7 @@ export default function TextArea({handleEditorChange, apiKey, isLoading, handleS
     <form onSubmit={handleFormSubmit}>
       <div className=" mb-6">
         <label
-          htmlFor="about"
+          htmlFor="title"
           className="block text-sm font-medium leading-6 text-gray-900"
         >
           Title

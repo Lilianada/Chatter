@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ChatBubbleLeftEllipsisIcon,
@@ -10,47 +10,18 @@ import {
   ShareIcon,
   StarIcon,
 } from "@heroicons/react/20/solid";
-import { convertTimestampToDate, getAllArticles } from "../../config/article";
+import {
+  convertTimestampToDate,
+  formatNumber,
+  truncateText,
+} from "../../config/article";
 import { Link } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function truncateText(text, limit = 40) {
-  const words = text.split(" ");
-  if (words.length > limit) {
-    return words.slice(0, limit).join(" ") + "...";
-  }
-  return text;
-}
-
-export default function Articles() {
-  const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const fetchArticles = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getAllArticles();
-      if (response.success) {
-        setArticles(response.articles);
-      } else {
-        console.error("Failed to fetch articles:", response.message);
-      }
-    } catch (error) {
-      console.error("Error fetching articles:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  //   const articleDateInfo = convertTimestampToDate(article.datetime);
-
+export default function Articles({ articles }) {
   return (
     <div>
       <ul className="space-y-4">
@@ -76,18 +47,22 @@ export default function Articles() {
                       </Link>
                     </p>
                     <p className=" text-gray-500 flex items-center gap-x-4 text-xs">
-                        <time
-                          dateTime={
-                            convertTimestampToDate(article.dateTime).datetime
-                          }
-                        >
-                          {convertTimestampToDate(article.date).date}
-                        </time>
-                        <div
-                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                  >
-                    {article.category}
-                  </div>
+                      <time
+                        dateTime={
+                          convertTimestampToDate(article.dateTime).datetime
+                        }
+                      >
+                        {convertTimestampToDate(article.date).date}
+                      </time>
+                      {article.categories &&
+                        article.categories.map((category, index) => (
+                          <span
+                            key={index}
+                            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 capitalize"
+                          >
+                            {category}
+                          </span>
+                        ))}
                     </p>
                   </div>
                   <div className="flex flex-shrink-0 self-center">
@@ -203,8 +178,8 @@ export default function Articles() {
                       className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
                     >
                       <HandThumbUpIcon className="h-5 w-5" aria-hidden="true" />
-                      <span className="font-medium text-gray-900">
-                        {article.likes}
+                      <span className="font-normal text-gray-700">
+                        {formatNumber(article.likes)}
                       </span>
                       <span className="sr-only">likes</span>
                     </button>
@@ -218,8 +193,8 @@ export default function Articles() {
                         className="h-5 w-5"
                         aria-hidden="true"
                       />
-                      <span className="font-medium text-gray-900">
-                        {article.replies}
+                      <span className="font-normal text-gray-700">
+                        {formatNumber(article.replies)}
                       </span>
                       <span className="sr-only">replies</span>
                     </button>
@@ -230,8 +205,8 @@ export default function Articles() {
                       className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
                     >
                       <EyeIcon className="h-5 w-5" aria-hidden="true" />
-                      <span className="font-medium text-gray-900">
-                        {article.views}
+                      <span className="font-normal text-gray-700">
+                        {formatNumber(article.views)}
                       </span>
                       <span className="sr-only">views</span>
                     </button>
@@ -241,8 +216,7 @@ export default function Articles() {
                       type="button"
                       className="inline-flex space-x-2 text-gray-400 hover:text-gray-700"
                     >
-                      
-                      <span className="font-medium text-gray-400">
+                      <span className="font-normal text-gray-400">
                         {article.minutes} minutes Read
                       </span>
                       <span className="sr-only">minutes</span>
@@ -256,7 +230,7 @@ export default function Articles() {
                       className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
                     >
                       <ShareIcon className="h-5 w-5" aria-hidden="true" />
-                      <span className="font-medium text-gray-900">Share</span>
+                      <span className="font-medium text-gray-700">Share</span>
                     </button>
                   </span>
                 </div>

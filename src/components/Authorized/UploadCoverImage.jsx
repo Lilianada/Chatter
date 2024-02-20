@@ -28,7 +28,6 @@ function UploadCoverImage({ selectedImage, handleImageChange}) {
                   onChange={handleImageChange}
                 />
               </label>
-              {/* <p className="pl-1"></p> */}
             </div>
             <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
           </div>
@@ -52,7 +51,6 @@ function UploadCoverImage({ selectedImage, handleImageChange}) {
                   onChange={handleImageChange}
                 />
               </label>
-              {/* <p className="pl-1"></p> */}
             </div>
         </>
       )}

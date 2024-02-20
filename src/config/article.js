@@ -33,6 +33,23 @@ export function convertTimestampToDate(timestamp) {
   };
 }
 
+export function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+  return num.toString();
+}
+
+export function truncateText(text, limit = 40) {
+  const words = text.split(" ");
+  if (words.length > limit) {
+    return words.slice(0, limit).join(" ") + "...";
+  }
+  return text;
+}
 
 export async function postArticle(article, userId) {
   try {

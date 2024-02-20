@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Authorized/Footer";
 import CategoryTabs from "../components/Authorized/CategoryTabs";
 import Articles from "../components/Authorized/Articles";
-import { getAllArticles, getCategories } from "../config/article";
+import { getAllArticles } from "../config/article";
 import { useCategories } from "../context/CategoriesContext";
 
 const navigation = [
@@ -34,6 +34,7 @@ const whoToFollow = [
   },
   // More people...
 ];
+
 const trendingPosts = [
   {
     id: 1,
@@ -53,29 +54,25 @@ function classNames(...classes) {
 }
 
 export default function Home() {
-  // const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState([]);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredArticles, setFilteredArticles] = useState([]);
   const containerRef = useRef(null);
   const { categories } = useCategories();
 
-  useEffect(() => {
-    // fetchCategories();  
+  useEffect(() => { 
     fetchArticles();
   }, []);
 
   useEffect(() => {
     // Filter articles when articles or selectedCategory changes
     if (selectedCategory) {
-      const filtered = articles.filter(article =>
+      const filtered = selectedCategory === 'all' ? articles : articles.filter(article =>
         article.categories.map(cat => cat.trim().toLowerCase()).includes(selectedCategory.trim().toLowerCase())
-      );      
-        console.log('selectedCategory', selectedCategory)
-      console.log("filtered", filtered);
+      );     
       setFilteredArticles(filtered);
     } else {
       setFilteredArticles(articles);
@@ -108,19 +105,6 @@ export default function Home() {
     setShowLeftArrow(scrollLeft > 0);
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth);
   };
-
-  // const fetchCategories = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await getCategories();
-  //     setCategories(response || []); 
-  //     checkForScroll();
-  //   } catch (error) {
-  //     console.error("Error fetching categories: ", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // }
 
   return (
     <div className="min-h-full">
@@ -169,6 +153,7 @@ export default function Home() {
                 showRightArrow={showRightArrow}
                 containerRef={containerRef}
                 onCategorySelect={handleCategorySelect}
+                selectedCategory={selectedCategory}
               />
               <h1 className="sr-only">All articles</h1>
               {isLoading ? (

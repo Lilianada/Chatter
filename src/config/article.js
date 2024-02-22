@@ -1,4 +1,4 @@
-import { addDoc, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 const USERS = "users";
@@ -70,7 +70,6 @@ export async function postArticle(article, userId) {
 
 export async function getAllArticles() {
   try {
-    // Use a collection group query to get all documents from the 'article' subcollections across all users
     const articlesQuery = query(collectionGroup(db, "article")); // Ensure "article" matches your subcollection name
     const querySnapshot = await getDocs(articlesQuery);
 
@@ -120,6 +119,8 @@ export async function updateArticle(userId, articleId, article) {
     return { success: false, message: e.message };
   }
 }
+
+//CATEGORIES
 export async function getCategories() {
   try {
     const categoriesColRef = collection(db, CATEGORIES);
@@ -140,5 +141,17 @@ export async function getCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     return [];
+  }
+}
+
+export async function postUserCategories(userId, categories) {
+  try {
+    const userCategoriesRef = doc(db, USERS, userId);
+    await setDoc(userCategoriesRef, { categories });
+    console.log("User categories updated successfully");
+    return { success: true, message: "User categories updated successfully" };
+  } catch (error) {
+    console.error("Error updating user categories:", error);
+    return { success: false, message: error.message };
   }
 }

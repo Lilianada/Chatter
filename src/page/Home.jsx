@@ -16,6 +16,7 @@ import CategoryTabs from "../components/Authorized/CategoryTabs";
 import Articles from "../components/Authorized/Articles";
 import { getAllArticles } from "../config/article";
 import { useCategories } from "../context/CategoriesContext";
+import SelectTopics from "../components/Authorized/ChooseTopics";
 
 const navigation = [
   { name: "Home", to: "#", icon: HomeIcon, current: true },
@@ -142,6 +143,22 @@ export default function Home() {
                   </Link>
                 ))}
               </div>
+              <div className="pt-6">
+                  <p className="px-3 text-sm font-medium text-gray-500" id="communities-headline">
+                    Topics
+                  </p>
+                  <div className="mt-3 space-y-2" aria-labelledby="communities-headline">
+                    {categories.slice(0, 6).map((category) => (
+                      <Link
+                        key={category.name}
+                        to={category.href}
+                        className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                      >
+                        <span className="truncate">{category.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
             </nav>
           </div>
           <main className="lg:col-span-9 xl:col-span-6 ">
@@ -165,6 +182,7 @@ export default function Home() {
           </main>
           <aside className="hidden xl:col-span-4 xl:block">
             <div className="sticky top-4 space-y-4">
+              {/* who to follow */}
               <section aria-labelledby="who-to-follow-heading">
                 <div className="rounded-lg bg-white shadow">
                   <div className="p-6">
@@ -223,6 +241,7 @@ export default function Home() {
                   </div>
                 </div>
               </section>
+              {/* trending articles */}
               <section aria-labelledby="trending-heading">
                 <div className="rounded-lg bg-white shadow">
                   <div className="p-6">
@@ -281,6 +300,8 @@ export default function Home() {
                   </div>
                 </div>
               </section>
+
+              <SelectTopics/>
             </div>
           </aside>
         </div>

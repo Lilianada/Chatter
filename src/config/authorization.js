@@ -1,11 +1,25 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updateCurrentUser,
 } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
+
+// Authenticated user
+export function getAuthUser() {
+  const authInstance = getAuth();
+  const user = authInstance.currentUser;
+
+  if (!user) {
+    return;
+  }
+  const authUser = user.uid;
+  return authUser;
+}
+
 
 // Register user
 export async function registerUser(email, password, fullName) {
@@ -69,6 +83,7 @@ export async function changePassword(password) {
   }
 }
 
+// Delete user
 export function deleteuser(uid) {
   const userDoc = doc(db, 'users', uid);
   return deleteDoc(userDoc);

@@ -1,0 +1,2 @@
+- Who to follow : List of users
+- Trending : List of articles with the most views

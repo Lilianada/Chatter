@@ -148,10 +148,26 @@ export async function postUserCategories(userId, categories) {
   try {
     const userCategoriesRef = doc(db, USERS, userId);
     await setDoc(userCategoriesRef, { categories });
-    console.log("User categories updated successfully");
     return { success: true, message: "User categories updated successfully" };
   } catch (error) {
     console.error("Error updating user categories:", error);
     return { success: false, message: error.message };
+  }
+}
+
+export async function getUserCategories(userId) {
+  try {
+    const userCategoriesRef = doc(db, USERS, userId);
+    const userCategoriesDoc = await getDoc(userCategoriesRef);
+
+    if (!userCategoriesDoc.exists()) {
+      console.log("No user categories found.");
+      return [];
+    }
+    console.log("userCategoriesDoc", userCategoriesDoc.data().categories);
+    return userCategoriesDoc.data().categories;
+  } catch (error) {
+    console.error("Error fetching user categories:", error);
+    return [];
   }
 }

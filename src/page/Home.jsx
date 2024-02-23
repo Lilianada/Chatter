@@ -15,8 +15,9 @@ import Footer from "../components/Authorized/Footer";
 import CategoryTabs from "../components/Authorized/CategoryTabs";
 import Articles from "../components/Authorized/Articles";
 import { getAllArticles } from "../config/article";
-import { useCategories } from "../context/CategoriesContext";
+// import { useCategories } from "../context/CategoriesContext";
 import SelectTopics from "../components/Authorized/ChooseTopics";
+import { useUserTopics } from "../context/UserTopicsContext";
 
 const navigation = [
   { name: "Home", to: "#", icon: HomeIcon, current: true },
@@ -62,7 +63,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredArticles, setFilteredArticles] = useState([]);
   const containerRef = useRef(null);
-  const { categories } = useCategories();
+  const { userTopics } = useUserTopics();
 
   useEffect(() => { 
     fetchArticles();
@@ -72,7 +73,7 @@ export default function Home() {
     // Filter articles when articles or selectedCategory changes
     if (selectedCategory) {
       const filtered = selectedCategory === 'all' ? articles : articles.filter(article =>
-        article.categories.map(cat => cat.trim().toLowerCase()).includes(selectedCategory.trim().toLowerCase())
+        article.userTopics.map(cat => cat.trim().toLowerCase()).includes(selectedCategory.trim().toLowerCase())
       );     
       setFilteredArticles(filtered);
     } else {
@@ -148,7 +149,7 @@ export default function Home() {
                     Topics
                   </p>
                   <div className="mt-3 space-y-2" aria-labelledby="communities-headline">
-                    {categories.slice(0, 6).map((category) => (
+                    {userTopics.slice(0, 6).map((category) => (
                       <Link
                         key={category.name}
                         to={category.href}
@@ -164,7 +165,7 @@ export default function Home() {
           <main className="lg:col-span-9 xl:col-span-6 ">
             <div className="">
               <CategoryTabs
-                categories={categories}
+                categories={userTopics}
                 checkForScroll={checkForScroll}
                 showLeftArrow={showLeftArrow}
                 showRightArrow={showRightArrow}
@@ -300,8 +301,6 @@ export default function Home() {
                   </div>
                 </div>
               </section>
-
-              <SelectTopics/>
             </div>
           </aside>
         </div>

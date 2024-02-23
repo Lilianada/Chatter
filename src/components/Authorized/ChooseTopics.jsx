@@ -18,11 +18,6 @@ export default function SelectTopics() {
     setTimeout(() => setError(true), 5000);
   };
 
-  const resetSuccess = () => {
-    setSuccess(false);
-    setTimeout(() => setError(true), 3000);
-  };
-
   const handleCategoryChange = (categoryId) => {
     if (selectedCategories.includes(categoryId)) {
       setSelectedCategories(
@@ -44,13 +39,15 @@ export default function SelectTopics() {
     try {
       const response = await postUserCategories(userId, selectedCategories);
       if (response.success === true) {
-        resetSuccess();
+        setSuccess(true);
       }
+      setTimeout(() => setOpen(false), 3500);
+      ;
     } catch (error) {
       console.error("Error posting user categories:", error);
     } finally {
-        setIsLoading(false);
-      setOpen(false);
+      setIsLoading(false);
+      
     }
   };
 

@@ -12,13 +12,14 @@ export const UserTopicsProvider = ({ children }) => {
     const localData = localStorage.getItem("userTopics");
     return localData ? JSON.parse(localData) : [];
   });
+  
   useEffect(() => {
-      const userId = getAuthUser();
-      console.log("userId", userId);
+    const userId = getAuthUser();
+    console.log("userId", userId);
     if (userTopics.length < 1) {
       const fetchUserTopics = async () => {
         setIsLoading(true);
-        try  {
+        try {
           const response = await getUserCategories(userId);
           console.log("response", response);
           const allUserTopics = [

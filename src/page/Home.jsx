@@ -60,27 +60,31 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredArticles, setFilteredArticles] = useState([]);
   const containerRef = useRef(null);
   const { userTopics } = useUserTopics();
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchArticles();
   }, []);
 
   useEffect(() => {
     // Filter articles when articles or selectedCategory changes
     if (selectedCategory) {
-      const filtered = selectedCategory === 'all' ? articles : articles.filter(article =>
-        article.userTopics.map(cat => cat.trim().toLowerCase()).includes(selectedCategory.trim().toLowerCase())
-      );     
+      const filtered =
+        selectedCategory === "all"
+          ? articles
+          : articles.filter((article) =>
+              article.userTopics
+                .map((cat) => cat.trim().toLowerCase())
+                .includes(selectedCategory.trim().toLowerCase())
+            );
       setFilteredArticles(filtered);
     } else {
       setFilteredArticles(articles);
     }
   }, [articles, selectedCategory]);
-  
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -145,21 +149,27 @@ export default function Home() {
                 ))}
               </div>
               <div className="pt-6">
-                  <p className="px-3 text-sm font-medium text-gray-500" id="communities-headline">
-                    Topics
-                  </p>
-                  <div className="mt-3 space-y-2" aria-labelledby="communities-headline">
-                    {userTopics.slice(0, 6).map((category) => (
-                      <Link
-                        key={category.name}
-                        to={category.href}
-                        className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                      >
-                        <span className="truncate">{category.name}</span>
-                      </Link>
-                    ))}
-                  </div>
+                <p
+                  className="px-3 text-sm font-medium text-gray-500"
+                  id="communities-headline"
+                >
+                  Topics
+                </p>
+                <div
+                  className="mt-3 space-y-2"
+                  aria-labelledby="communities-headline"
+                >
+                  {userTopics.slice(0, 6).map((category) => (
+                    <Link
+                      key={category.name}
+                      to={category.href}
+                      className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                    >
+                      <span className="truncate">{category.name}</span>
+                    </Link>
+                  ))}
                 </div>
+              </div>
             </nav>
           </div>
           <main className="lg:col-span-9 xl:col-span-6 ">
@@ -175,10 +185,10 @@ export default function Home() {
               />
               <h1 className="sr-only">All articles</h1>
               {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <Articles articles={filteredArticles} />
-          )}
+                <p>Loading...</p>
+              ) : (
+                <Articles articles={filteredArticles} />
+              )}
             </div>
           </main>
           <aside className="hidden xl:col-span-4 xl:block">
@@ -253,9 +263,7 @@ export default function Home() {
                       Trending
                     </h2>
                     <div className="mt-6 flow-root">
-                      <ul
-                        className="-my-4 divide-y divide-gray-200"
-                      >
+                      <ul className="-my-4 divide-y divide-gray-200">
                         {trendingPosts.map((post) => (
                           <li key={post.id} className="flex space-x-3 py-4">
                             <div className="flex-shrink-0">

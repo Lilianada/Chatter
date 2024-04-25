@@ -7,9 +7,9 @@ import Notification from "../../components/Utils/Notification";
 import Spinner from "../../components/Utils/Spinner";
 import { signinUser } from "../../config/authorization";
 import { useDispatch } from "react-redux";
-// import { db } from "../../config/firebase";
+import { db } from "../../config/firebase.js";
 import { doc, getDoc } from "firebase/firestore";
-import { setUserName, setUserId } from "../../store/actions/userActions";
+import { setUserName, setUserId, setUserEmail } from "../../store/actions/userActions";
 
 export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,55 +42,51 @@ export default function Signin() {
     setRememberMe(rememberMe);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const user = await signinUser(formData.email, formData.password);
-
-      const userUID = user.uid;
-      console.log(userUID);
-      const userRef = doc(db, "users", userUID);
-      const userDoc = await getDoc(userRef);
-      
-      const userData = userDoc.data();
-      const nameParts = userData.fullName;
-      console.log(userData, nameParts);
-      
-      // Dispatch Redux action to save the user's first name
-      dispatch(setUserName(nameParts));
-      dispatch(setUserId(user.uid));
-
-      if (rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-        // Optionally, store user-specific non-sensitive data for convenience
-        localStorage.setItem("userEmail", formData.email);
-      } else {
-        // If not checked, clear any previously set flags
-        localStorage.removeItem("rememberMe");
-        localStorage.removeItem("userEmail");
-      }
-
-      if (user) {
-        navigate("/articles");
-      } else {
-        setNotification({
-          show: true,
-          type: "error",
-          message: "Signin failed. Check your details and try again.",
-        });
-      }
-    } catch (error) {
-      setNotification({
-        show: true,
-        type: "error",
-        message: error.message,
-      });
-    } finally {
-      setIsLoading(false);
+  try {
+    const user = await signinUser(formData.email, formData.password);
+    const userRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userRef);
+    
+    if (!userDoc.exists()) {
+      throw new Error('User data not found.');
     }
-  };
+
+    const userData = userDoc.data();
+    const fullName = userData.fullName;
+    
+    dispatch(setUserName(fullName));
+    dispatch(setUserId(user.uid));
+    dispatch(setUserEmail(formData.email));
+
+    handleLocalStorage(rememberMe, formData.email);
+
+    navigate("/articles");
+  } catch (error) {
+    console.error("Login error:", error);
+    setNotification({
+      show: true,
+      type: "error",
+      message: error.message || "Signin failed. Check your details and try again."
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+const handleLocalStorage = (rememberMe, email) => {
+  if (rememberMe) {
+    localStorage.setItem("rememberMe", "true");
+    localStorage.setItem("userEmail", email);
+  } else {
+    localStorage.removeItem("rememberMe");
+    localStorage.removeItem("userEmail");
+  }
+};
 
   return (
     <>

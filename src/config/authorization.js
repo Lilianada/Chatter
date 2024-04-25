@@ -42,18 +42,14 @@ export async function registerUser(email, password, fullName) {
 }
 
 // signin user
+
 export async function signinUser(email, password) {
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-   
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   } catch (error) {
-    throw error;
+    console.error("Authentication error:", error);
+    throw new Error('Authentication failed. Please check your credentials.');
   }
 }
 
@@ -88,6 +84,6 @@ export async function changePassword(password) {
 
 // Delete user
 export function deleteuser(uid) {
-  const userDoc = doc(db, "users", uid);
+  const userDoc = doc(db, 'users', uid);
   return deleteDoc(userDoc);
 }

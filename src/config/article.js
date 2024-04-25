@@ -85,7 +85,6 @@ export async function getAllArticles() {
   }
 }
 
-
 export async function deleteArticle(userId, articleId) {
   try {
     const articleRequestRef = collection(db, USERS, userId, ARTICLE);

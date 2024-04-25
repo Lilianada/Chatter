@@ -12,7 +12,6 @@ import { deleteDoc, doc, setDoc } from "firebase/firestore";
 export function getAuthUser() {
   const authInstance = getAuth();
   const user = authInstance.currentUser;
-  console.log("authUser", user);
 
   if (!user) {
     // sessionStorage.setItem("authUser", null);
@@ -22,9 +21,6 @@ export function getAuthUser() {
   const authUser = user.uid;
   return authUser;
 }
-
-
-
 
 // Register user
 export async function registerUser(email, password, fullName) {

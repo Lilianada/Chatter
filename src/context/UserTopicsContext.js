@@ -15,7 +15,6 @@ export const UserTopicsProvider = ({ children }) => {
   
   useEffect(() => {
     const userId = getAuthUser();
-    console.log("userId", userId);
     if (userTopics.length < 1) {
       const fetchUserTopics = async () => {
         setIsLoading(true);

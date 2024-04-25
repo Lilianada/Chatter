@@ -19,6 +19,12 @@ module.exports = {
         spin: 'spin 1s linear infinite',
         ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
+      backgroundImage: {
+        "custom-pattern": "url('/src/assets/Background.jpg')",
+      },
+      logo: {
+        "dark-logo": "url('/src/assets/logo.png')",
+      },
     },
   },
   plugins: [

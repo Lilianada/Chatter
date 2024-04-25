@@ -78,10 +78,10 @@ export default function Signin() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-900">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto h-10 w-auto" src={logo} alt="Your Company" />
-          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-white">
             Sign in to your account
           </h2>
         </div>
@@ -185,11 +185,11 @@ export default function Signin() {
             </form>
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm text-gray-300">
             Not a member?{" "}
             <Link
               to="/"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-indigo-500 hover:text-indigo-400"
             >
               Sign up now
             </Link>

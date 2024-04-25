@@ -100,7 +100,7 @@ export default function Hero() {
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">
               <div>
-                <div className="hidden sm:mb-4 sm:flex sm:justify-center lg:justify-start">
+                {/* <div className="hidden sm:mb-4 sm:flex sm:justify-center lg:justify-start">
                   <Link
                     to="#"
                     className="flex items-center rounded-full bg-gray-900 p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
@@ -114,7 +114,7 @@ export default function Hero() {
                       aria-hidden="true"
                     />
                   </Link>
-                </div>
+                </div> */}
                 <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                   Today a writer
                   <br />
@@ -125,34 +125,6 @@ export default function Hero() {
                   the platform that helps you get heard. Enjoy beautiful stories
                   written by talented writers.
                 </p>
-                <p className="mt-8 text-base font-semibold text-white sm:mt-10">
-                  Used by
-                </p>
-                <div className="mt-5 w-full sm:mx-auto sm:max-w-lg lg:ml-0">
-                  <div className="flex flex-wrap items-start justify-between">
-                    <div className="flex justify-center px-1">
-                      <img
-                        className="h-9 sm:h-10"
-                        src="https://tailwindui.com/img/logos/tuple-logo-gray-400.svg"
-                        alt="Tuple"
-                      />
-                    </div>
-                    <div className="flex justify-center px-1">
-                      <img
-                        className="h-9 sm:h-10"
-                        src="https://tailwindui.com/img/logos/workcation-logo-gray-400.svg"
-                        alt="Workcation"
-                      />
-                    </div>
-                    <div className="flex justify-center px-1">
-                      <img
-                        className="h-9 sm:h-10"
-                        src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg"
-                        alt="StaticKit"
-                      />
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             {/* Signup Form */}
@@ -272,7 +244,7 @@ export default function Hero() {
                     >
                       Cookies Policy
                     </Link>
-                    .
+                    . Or use the demo account to explore the page. Proceed to the login page.
                   </p>
                 </div>
               </div>

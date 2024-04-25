@@ -6,6 +6,10 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import Notification from "../../components/Utils/Notification";
 import Spinner from "../../components/Utils/Spinner";
 import { signinUser } from "../../config/authorization";
+import { useDispatch } from "react-redux";
+// import { db } from "../../config/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { setUserName, setUserId } from "../../store/actions/userActions";
 
 export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +25,7 @@ export default function Signin() {
     password: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,6 +48,19 @@ export default function Signin() {
 
     try {
       const user = await signinUser(formData.email, formData.password);
+
+      const userUID = user.uid;
+      console.log(userUID);
+      const userRef = doc(db, "users", userUID);
+      const userDoc = await getDoc(userRef);
+      
+      const userData = userDoc.data();
+      const nameParts = userData.fullName;
+      console.log(userData, nameParts);
+      
+      // Dispatch Redux action to save the user's first name
+      dispatch(setUserName(nameParts));
+      dispatch(setUserId(user.uid));
 
       if (rememberMe) {
         localStorage.setItem("rememberMe", "true");
@@ -185,7 +203,7 @@ export default function Signin() {
                   Demo account details:
                 </p>
                 <p className="text-xs leading-5 text-gray-500 font-semibold">
-                  Email: {" "}
+                  Email:{" "}
                   <span className="font-medium text-gray-400 hover:underline">
                     demouser@demo.app
                   </span>{" "}

@@ -49,6 +49,8 @@ export async function signinUser(email, password) {
       email,
       password
     );
+
+   
     return userCredential.user;
   } catch (error) {
     throw error;
@@ -86,6 +88,6 @@ export async function changePassword(password) {
 
 // Delete user
 export function deleteuser(uid) {
-  const userDoc = doc(db, 'users', uid);
+  const userDoc = doc(db, "users", uid);
   return deleteDoc(userDoc);
 }

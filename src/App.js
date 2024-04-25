@@ -7,14 +7,12 @@ import Home from "./page/Home";
 import Profile from "./page/Profile";
 import Settings from "./page/Settings";
 import NewArticle from "./page/NewArticle";
-import AuthContext from "./context/AuthContext";
 import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
 
 function App() {
   return (
-    <AuthContext>
       <Router className="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -70,7 +68,6 @@ function App() {
           />
         </Routes>
       </Router>
-    </AuthContext>
   );
 }
 

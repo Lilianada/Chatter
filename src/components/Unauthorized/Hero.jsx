@@ -100,21 +100,21 @@ export default function Hero() {
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">
               <div>
-                {/* <div className="hidden sm:mb-4 sm:flex sm:justify-center lg:justify-start">
-                  <Link
-                    to="#"
+                <div className="hidden sm:mb-4 sm:flex sm:justify-center lg:justify-start">
+                  <span
+                    to="signin"
                     className="flex items-center rounded-full bg-gray-900 p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
                   >
                     <span className="rounded-full bg-indigo-500 px-3 py-0.5 text-sm font-semibold leading-5 text-white">
-                      We're hiring
+                      Write articles
                     </span>
-                    <span className="ml-4 text-sm">Visit our careers page</span>
+                    <span className="ml-4 text-sm">Read articles</span>
                     <ChevronRightIcon
                       className="ml-2 h-5 w-5 text-gray-500"
                       aria-hidden="true"
                     />
-                  </Link>
-                </div> */}
+                  </span>
+                </div>
                 <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                   Today a writer
                   <br />
@@ -223,28 +223,7 @@ export default function Hero() {
                 </div>
                 <div className="border-t-2 border-gray-200 bg-gray-50 px-6 py-6 sm:px-10">
                   <p className="text-xs leading-5 text-gray-500">
-                    By signing up, you agree to our{" "}
-                    <Link
-                      to="#"
-                      className="font-medium text-gray-900 hover:underline"
-                    >
-                      Terms
-                    </Link>
-                    ,{" "}
-                    <Link
-                      to="#"
-                      className="font-medium text-gray-900 hover:underline"
-                    >
-                      Data Policy
-                    </Link>{" "}
-                    and{" "}
-                    <Link
-                      to="#"
-                      className="font-medium text-gray-900 hover:underline"
-                    >
-                      Cookies Policy
-                    </Link>
-                    . Or use the demo account to explore the page. Proceed to the login page.
+                    Or use the demo account to explore the page. Proceed to the login page.
                   </p>
                 </div>
               </div>
@@ -260,7 +239,7 @@ export default function Hero() {
           }
           message={notification.message}
           type={notification.type}
-          timer={5000} // Auto-hide after 5 seconds
+          timer={5000}
         />
       )}
     </div>

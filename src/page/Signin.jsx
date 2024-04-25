@@ -33,9 +33,7 @@ export default function Signin() {
   useEffect(() => {
     const rememberMe = localStorage.getItem("rememberMe") === "true";
     const userEmail = rememberMe ? localStorage.getItem("userEmail") : "";
-    setFormData(
-      (prev) => ({ ...prev, email: userEmail }
-    )); 
+    setFormData((prev) => ({ ...prev, email: userEmail }));
     setRememberMe(rememberMe);
   }, []);
 
@@ -181,6 +179,21 @@ export default function Signin() {
                 >
                   {isLoading ? <Spinner /> : "Sign in"}
                 </button>
+              </div>
+              <div className="flex flex-col text-center">
+                <p className="text-xs leading-5 text-indigo-600">
+                  Demo account details:
+                </p>
+                <p className="text-xs leading-5 text-gray-500 font-semibold">
+                  Email: {" "}
+                  <span className="font-medium text-gray-400 hover:underline">
+                    user@demo.app
+                  </span>{" "}
+                  Password:{" "}
+                  <span className="font-medium text-gray-400 hover:underline">
+                    Demoaccount1!
+                  </span>
+                </p>
               </div>
             </form>
           </div>

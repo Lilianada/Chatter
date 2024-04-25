@@ -1,7 +1,6 @@
 import "./App.css";
 import LandingPage from "./page/LandingPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Signin from "./page/Signin";
 import ErrorPage from "./page/404";
 import Home from "./page/Home";
 // import ArticlesList from "./page/ArticlesList";
@@ -11,6 +10,7 @@ import NewArticle from "./page/NewArticle";
 import AuthContext from "./context/AuthContext";
 import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
+import Signin from "./page/Auth/Signin";
 
 function App() {
   return (

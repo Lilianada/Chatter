@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
@@ -66,9 +66,8 @@ export default function Hero() {
         });
         setFormData({ fullName: "", email: "", password: "" });
         setTimeout(() => {
-
           navigate("/signin");
-        }, 4000)
+        }, 4000);
       } else {
         // Handle undefined or null user case
         setNotification({
@@ -94,9 +93,9 @@ export default function Hero() {
   };
 
   return (
-    <div className=" relative overflow-hidden pb-16  sm:pb-24">
+    <div className=" relative overflow-hidden pb-16 min-h-[calc(100vh_-_64px)]  sm:pb-24">
       <main className="mt-16 sm:mt-24">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-8xl">
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">
               <div>
@@ -132,7 +131,7 @@ export default function Hero() {
               <div className="bg-white sm:mx-auto sm:w-full sm:max-w-md sm:overflow-hidden sm:rounded-lg">
                 <div className="px-6 py-8 sm:px-10">
                   <div>
-                    <p className="text-sm font-medium text-gray-700">Sign up</p>
+                    <p className="text-sm font-medium text-gray-700">Sign Up</p>
                     <div className="relative mt-6">
                       <div className="w-full border-t border-gray-300" />
                     </div>
@@ -195,10 +194,10 @@ export default function Hero() {
                           >
                             {showPassword ? (
                               <EyeIcon
-                              className="h-4 w-4 text-gray-500" 
-                              aria-hidden="true" 
+                                className="h-4 w-4 text-gray-500"
+                                aria-hidden="true"
                                 onClick={togglePasswordVisibility}
-/>
+                              />
                             ) : (
                               <EyeSlashIcon
                                 className="h-4 w-4 text-gray-500"
@@ -223,7 +222,12 @@ export default function Hero() {
                 </div>
                 <div className="border-t-2 border-gray-200 bg-gray-50 px-6 py-6 sm:px-10">
                   <p className="text-xs leading-5 text-gray-500">
-                    Or use the demo account to explore the page. Proceed to the login page.
+                    Or use the demo account to explore the page. Proceed to  <Link
+                        to="/signin"
+                        className="font-semibold leading-6 text-indigo-500 hover:text-indigo-400"
+                      >
+                        Sign in 
+                      </Link>
                   </p>
                 </div>
               </div>

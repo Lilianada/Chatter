@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import logo from '../../assets/ChatterLogo.svg'
+import logo from '../../assets/ChatterIcon.svg'
 
 import { Popover, Transition } from "@headlessui/react";
 
@@ -16,7 +16,7 @@ export default function Header() {
     <header className="pt-6">
       <Popover>
         <nav
-          className="relative mx-auto flex max-w-7xl items-center justify-between px-6"
+          className="relative mx-auto flex max-w-8xl items-center justify-between px-6"
           aria-label="Global"
         >
           <div className="flex flex-1 items-center">

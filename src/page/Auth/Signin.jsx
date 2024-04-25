@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import logo from "../assets/ChatterLogo.svg";
+import logo from "../../assets/ChatterLogo.svg";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
-import Notification from "../components/Utils/Notification";
-import Spinner from "../components/Utils/Spinner";
-import { signinUser } from "../config/authorization";
+import Notification from "../../components/Utils/Notification";
+import Spinner from "../../components/Utils/Spinner";
+import { signinUser } from "../../config/authorization";
 
 export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -187,11 +187,11 @@ export default function Signin() {
                 <p className="text-xs leading-5 text-gray-500 font-semibold">
                   Email: {" "}
                   <span className="font-medium text-gray-400 hover:underline">
-                    user@demo.app
+                    demouser@demo.app
                   </span>{" "}
                   Password:{" "}
                   <span className="font-medium text-gray-400 hover:underline">
-                    Demoaccount1!
+                    Demouser1!
                   </span>
                 </p>
               </div>

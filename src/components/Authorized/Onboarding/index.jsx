@@ -6,6 +6,7 @@ import { useModal } from "../../../context/ModalContext";
 import QtnOne from "./QtnOne";
 import QtnTwo from "./QtnTwo";
 import QtnThree from "./QtnThree";
+import DotLoader from "../../Utils/DotLoader";
 
 const interests = [
   "art",
@@ -43,6 +44,7 @@ export default function Onboarding({ open, setOpen }) {
   const [currentSection, setCurrentSection] = useState(0);
   const userId = useSelector((state) => state.user.userId);
   const navigate = useNavigate();
+  const totalSections = 3;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCheckboxChange = (event) => {
@@ -130,6 +132,32 @@ export default function Onboarding({ open, setOpen }) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>{renderSection()}</div>
+                <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8 mt-8">
+                {currentSection < totalSections - 1 ? (
+                  <button
+                    type="submit"
+                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Save & Next
+                  </button>
+                   ) : (
+                    <button
+                    type="submit"
+                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <div className="flex w-full justify-center align-middle gap-2">
+                        <span>Submitting</span>
+                        <DotLoader />
+                      </div>
+                    ) : (
+                      "Submit"
+                    )}
+                  </button>
+                    )}
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

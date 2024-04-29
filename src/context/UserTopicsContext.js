@@ -26,7 +26,7 @@ export const UserTopicsProvider = ({ children }) => {
             { id: "all", name: "All", current: true },
             ...response,
           ];
-          console.log("allUserTopics", allUserTopics);
+          // console.log("allUserTopics", allUserTopics);
           // localStorage.setItem("userTopics", JSON.stringify(allUserTopics));
           setUserTopics(allUserTopics || []);
         } catch (error) {

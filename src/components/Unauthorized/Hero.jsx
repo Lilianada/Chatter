@@ -6,6 +6,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import { registerUser } from "../../config/authorization";
 import Spinner from "../Utils/Spinner";
 import Notification from "../Utils/Notification";
+import Onboarding from "../Authorized/Onboarding";
 
 export default function Hero() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +21,7 @@ export default function Hero() {
     type: "",
     message: "",
   });
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   // Function to toggle the showPassword state
@@ -65,9 +67,7 @@ export default function Hero() {
           message: "Registration successful. You can now log in.",
         });
         setFormData({ fullName: "", email: "", password: "" });
-        setTimeout(() => {
-          navigate("/signin");
-        }, 4000);
+        setOpen(true)
       } else {
         // Handle undefined or null user case
         setNotification({
@@ -247,6 +247,14 @@ export default function Hero() {
           timer={5000}
         />
       )}
+      {
+        open && (
+          <Onboarding
+            open={open}
+            setOpen={setOpen}
+          />
+        )
+      }
     </div>
   );
 }

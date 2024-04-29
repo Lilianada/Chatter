@@ -10,6 +10,7 @@ import NewArticle from "./page/NewArticle";
 import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
+import Onboarding from "./components/Authorized/Onboarding";
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
             element={
               <ProtectedRoutes>
                 <NewArticle />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/onboarding"
+            element={
+              <ProtectedRoutes>
+                <Onboarding />
               </ProtectedRoutes>
             }
           />

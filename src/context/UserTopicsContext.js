@@ -14,7 +14,7 @@ export const UserTopicsProvider = ({ children }) => {
     const localData = localStorage.getItem("userTopics");
     return localData ? JSON.parse(localData) : [];
   });
-  
+  console.log(userTopics, "userTopics")
   useEffect(() => {
     if (userTopics.length < 1) {
       const fetchUserTopics = async () => {
@@ -27,7 +27,7 @@ export const UserTopicsProvider = ({ children }) => {
             ...response,
           ];
           console.log("allUserTopics", allUserTopics);
-          localStorage.setItem("userTopics", JSON.stringify(allUserTopics));
+          // localStorage.setItem("userTopics", JSON.stringify(allUserTopics));
           setUserTopics(allUserTopics || []);
         } catch (error) {
           console.error("Error fetching userTopics: ", error);

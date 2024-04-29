@@ -8,6 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./store/store";
 import AuthContext from "./context/AuthContext";
 import { Provider } from "react-redux";
+import { ModalProvider } from "./context/ModalContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,11 +16,13 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AuthContext>
+        <ModalProvider>
           <CategoriesProvider>
             <UserTopicsProvider>
               <App />
             </UserTopicsProvider>
           </CategoriesProvider>
+          </ModalProvider>
         </AuthContext>
       </PersistGate>
     </Provider>

@@ -1,12 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { getUserCategories } from "../config/article";
 import { getAuthUser } from "../config/authorization";
+import { useSelector } from "react-redux";
 
 const UserTopicsContext = createContext();
 
 export const useUserTopics = () => useContext(UserTopicsContext);
 
 export const UserTopicsProvider = ({ children }) => {
+  const userId = useSelector((state) => state.user.userId);
   const [isLoading, setIsLoading] = useState(false);
   const [userTopics, setUserTopics] = useState(() => {
     const localData = localStorage.getItem("userTopics");
@@ -14,7 +16,6 @@ export const UserTopicsProvider = ({ children }) => {
   });
   
   useEffect(() => {
-    const userId = getAuthUser();
     if (userTopics.length < 1) {
       const fetchUserTopics = async () => {
         setIsLoading(true);

@@ -95,6 +95,7 @@ export default function Hero() {
   return (
     <div className=" relative overflow-hidden pb-16 min-h-[calc(100vh_-_64px)]  sm:pb-24">
       <main className="mt-16 sm:mt-24">
+      
         <div className="mx-auto max-w-8xl">
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">

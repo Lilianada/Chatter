@@ -1,7 +1,7 @@
 const stats = [
     { id: 1, name: 'Writers on the platform', value: '800K+' },
-    { id: 2, name: 'Articles published', value: '1M' },
-    { id: 3, name: 'Total articles read', value: '100M' },
+    { id: 2, name: 'Articles published', value: '1M+' },
+    { id: 3, name: 'Total articles read', value: '100M+' },
     { id: 4, name: 'Paid out to writers', value: '$70M' },
   ]
   

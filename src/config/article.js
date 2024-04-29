@@ -70,7 +70,7 @@ export async function postArticle(article, userId) {
 
 export async function getAllArticles() {
   try {
-    const articlesQuery = query(collectionGroup(db, "article")); // Ensure "article" matches your subcollection name
+    const articlesQuery = query(collectionGroup(db, "article")); 
     const querySnapshot = await getDocs(articlesQuery);
 
     const articles = querySnapshot.docs.map(doc => ({

@@ -10,7 +10,7 @@ import NewArticle from "./page/NewArticle";
 import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
-import Onboarding from "./components/Authorized/Onboarding";
+import Onboarding from "./components/Authorized/Onboarding/Onboarding";
 
 function App() {
   return (

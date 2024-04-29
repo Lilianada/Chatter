@@ -66,8 +66,8 @@ export default function Hero() {
           type: "success",
           message: "Registration successful. You can now log in.",
         });
+        setOpen(true);
         setFormData({ fullName: "", email: "", password: "" });
-        setOpen(true)
       } else {
         // Handle undefined or null user case
         setNotification({
@@ -213,7 +213,7 @@ export default function Hero() {
                         <button
                           type="submit"
                           className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          onClick={register}
+                          onClick={() => setOpen(true)}
                         >
                           {isLoading ? <Spinner /> : "Create your account"}
                         </button>

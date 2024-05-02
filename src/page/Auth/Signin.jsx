@@ -9,7 +9,11 @@ import { signinUser } from "../../config/authorization";
 import { useDispatch } from "react-redux";
 import { db } from "../../config/firebase.js";
 import { doc, getDoc } from "firebase/firestore";
-import { setUserName, setUserId, setUserEmail } from "../../store/actions/userActions";
+import {
+  setUserName,
+  setUserId,
+  setUserEmail,
+} from "../../store/actions/userActions";
 
 export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,51 +46,51 @@ export default function Signin() {
     setRememberMe(rememberMe);
   }, []);
 
-  
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  try {
-    const user = await signinUser(formData.email, formData.password);
-    const userRef = doc(db, "users", user.uid);
-    const userDoc = await getDoc(userRef);
-    
-    if (!userDoc.exists()) {
-      throw new Error('User data not found.');
+    try {
+      const user = await signinUser(formData.email, formData.password);
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        throw new Error("User data not found.");
+      }
+
+      const userData = userDoc.data();
+      const fullName = userData.fullName;
+
+      dispatch(setUserName(fullName));
+      dispatch(setUserId(user.uid));
+      dispatch(setUserEmail(formData.email));
+
+      handleLocalStorage(rememberMe, formData.email);
+
+      navigate("/articles");
+    } catch (error) {
+      console.error("Login error:", error);
+      setNotification({
+        show: true,
+        type: "error",
+        message:
+          error.message || "Signin failed. Check your details and try again.",
+      });
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    const userData = userDoc.data();
-    const fullName = userData.fullName;
-    
-    dispatch(setUserName(fullName));
-    dispatch(setUserId(user.uid));
-    dispatch(setUserEmail(formData.email));
-
-    handleLocalStorage(rememberMe, formData.email);
-
-    navigate("/articles");
-  } catch (error) {
-    console.error("Login error:", error);
-    setNotification({
-      show: true,
-      type: "error",
-      message: error.message || "Signin failed. Check your details and try again."
-    });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-const handleLocalStorage = (rememberMe, email) => {
-  if (rememberMe) {
-    localStorage.setItem("rememberMe", "true");
-    localStorage.setItem("userEmail", email);
-  } else {
-    localStorage.removeItem("rememberMe");
-    localStorage.removeItem("userEmail");
-  }
-};
+  const handleLocalStorage = (rememberMe, email) => {
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+      localStorage.setItem("userEmail", email);
+    } else {
+      localStorage.removeItem("rememberMe");
+      localStorage.removeItem("userEmail");
+    }
+  };
 
   return (
     <>
@@ -200,11 +204,11 @@ const handleLocalStorage = (rememberMe, email) => {
                 </p>
                 <p className="text-xs leading-5 text-gray-500 font-semibold">
                   Email:{" "}
-                  <span className="font-medium text-gray-400 hover:underline">
+                  <span className="font-medium text-gray-400 underline">
                     demouser@demo.app
                   </span>{" "}
                   Password:{" "}
-                  <span className="font-medium text-gray-400 hover:underline">
+                  <span className="font-medium text-gray-400 underline">
                     Demouser1!
                   </span>
                 </p>

@@ -10,6 +10,7 @@ import NewArticle from "./page/NewArticle";
 import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
+import Skeleton from "./components/Authorized/Skeleton";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             path="/articles"
             element={
               <ProtectedRoutes>
-                <Home />
+                <Skeleton />
               </ProtectedRoutes>
             }
           />

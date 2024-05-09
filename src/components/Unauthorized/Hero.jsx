@@ -37,7 +37,7 @@ export default function Hero() {
     return regex.test(pass);
   };
 
-  const register = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -60,7 +60,6 @@ export default function Hero() {
         formData.fullName
       );
       if (user) {
-        // Handle successful registration
         setNotification({
           show: true,
           type: "success",
@@ -85,17 +84,15 @@ export default function Hero() {
       });
     } finally {
       setIsLoading(false);
-      // Automatically hide the notification after a delay
       setTimeout(() => {
         setNotification({ ...notification, show: false });
-      }, 3000); // Adjust the timeout duration as needed
+      }, 3000);
     }
   };
 
   return (
     <div className=" relative overflow-hidden pb-16 min-h-[calc(100vh_-_64px)]  sm:pb-24">
       <main className="mt-16 sm:mt-24">
-      
         <div className="mx-auto max-w-8xl">
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">
@@ -213,7 +210,7 @@ export default function Hero() {
                         <button
                           type="submit"
                           className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          onClick={() => setOpen(true)}
+                          onClick={handleRegister}
                         >
                           {isLoading ? <Spinner /> : "Create your account"}
                         </button>
@@ -223,12 +220,13 @@ export default function Hero() {
                 </div>
                 <div className="border-t-2 border-gray-200 bg-gray-50 px-6 py-6 sm:px-10">
                   <p className="text-xs leading-5 text-gray-500">
-                    Or use the demo account to explore the page. Proceed to  <Link
-                        to="/signin"
-                        className="font-semibold leading-6 text-indigo-500 hover:text-indigo-400"
-                      >
-                        Sign in 
-                      </Link>
+                    Or use the demo account to explore the page. Proceed to{" "}
+                    <Link
+                      to="/signin"
+                      className="font-semibold leading-6 text-indigo-500 hover:text-indigo-400"
+                    >
+                      Sign in
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -247,14 +245,7 @@ export default function Hero() {
           timer={5000}
         />
       )}
-      {
-        open && (
-          <Onboarding
-            open={open}
-            setOpen={setOpen}
-          />
-        )
-      }
+      {open && <Onboarding open={open} setOpen={setOpen} />}
     </div>
   );
 }

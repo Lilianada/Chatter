@@ -145,8 +145,10 @@ export async function getCategories() {
 
 export async function postUserCategories(userId, categories) {
   try {
-    const userCategoriesRef = doc(db, USERS, userId);
-    await setDoc(userCategoriesRef, { categories });
+    const userDocRef = doc(db, "users", userId); // Reference to the user's document
+    const categoriesCollectionRef = collection(userDocRef, "categories"); // Reference to the categories subcollection
+    const categoriesDocRef = doc(categoriesCollectionRef); // Reference to a new document within the categories subcollection
+    await setDoc(categoriesDocRef, categories); // Set the categories data to the new document
     return { success: true, message: "User categories updated successfully" };
   } catch (error) {
     console.error("Error updating user categories:", error);

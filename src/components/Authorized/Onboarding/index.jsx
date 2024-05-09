@@ -47,7 +47,7 @@ export default function Onboarding({ open, setOpen }) {
       // Assuming postUserCategories is an API call to save user data
       const response = await postUserCategories(userId, userData);
       console.log(response);
-      navigate('/dashboard');
+      navigate('/articles');
     } catch (error) {
       console.error("Submission error:", error);
     } finally {

@@ -11,24 +11,33 @@ import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
 import Skeleton from "./components/Authorized/Skeleton";
+import Arts from "./components/Authorized/Arts";
 
 function App() {
   return (
-      <Router className="App">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="/signin" element={<Signin />} />
+    <Router className="App">
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/browse/"
+          element={
+            <ProtectedRoutes>
+              <Skeleton />
+            </ProtectedRoutes>
+          }
+        >
           <Route
-            path="/articles"
+            index
             element={
               <ProtectedRoutes>
-                <Skeleton />
+                <Arts />
               </ProtectedRoutes>
             }
           />
           <Route
-            path="/new-article"
+            path="new-article"
             element={
               <ProtectedRoutes>
                 <NewArticle />
@@ -52,7 +61,7 @@ function App() {
             }
           /> */}
           <Route
-            path="/profile"
+            path="profile"
             element={
               <ProtectedRoutes>
                 <Profile />
@@ -60,7 +69,7 @@ function App() {
             }
           />
           <Route
-            path="/settings"
+            path="settings"
             element={
               <ProtectedRoutes>
                 <Settings />
@@ -68,15 +77,16 @@ function App() {
             }
           />
           <Route
-            path="/support"
+            path="support"
             element={
               <ProtectedRoutes>
                 <Support />
               </ProtectedRoutes>
             }
           />
-        </Routes>
-      </Router>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

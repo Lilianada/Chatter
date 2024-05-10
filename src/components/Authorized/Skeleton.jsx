@@ -19,7 +19,7 @@ export default function Skeleton() {
 
 
   const navigation = [
-    { name: "Home", to: "/articles", icon: HomeIcon, current: true },
+    { name: "Home", to: "/browse", icon: HomeIcon, current: true },
     {
       name: "Profile",
       to: "/profile",

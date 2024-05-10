@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowLeftStartOnRectangleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Logo from "../../assets/ChatterIcon.svg";
-import { signoutUser } from "../../config/authorization";
 import Header from "./Header";
 import CustomModal from "../Utils/CustomModal";
 import { auth } from "../../config/firebase";
@@ -17,19 +16,13 @@ function classNames(...classes) {
 }
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
-  const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const updatedNavigation = navigation.map((item) => ({
-    ...item,
-    current: item.to === location.pathname,
-  }));
 
   const onSignOut = () => {
     setIsOpen(true);
-
   };
 
   return (
@@ -260,53 +253,56 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
               </li>
             ))}
           </ul>
-            <div className="flex flex-col items-center space-y-1 absolute bottom-1 w-full" onClick={() => setSidebarOpen(false)}>
-              <button
-                onClick={onSignOut}
-                className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-rose-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
-              >
-                <ArrowLeftStartOnRectangleIcon
-                  className="h-6 w-6 shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Sign out</span>
-              </button>
-            </div>
+          <div
+            className="flex flex-col items-center space-y-1 absolute bottom-1 w-full"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <button
+              onClick={onSignOut}
+              className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-rose-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
+            >
+              <ArrowLeftStartOnRectangleIcon
+                className="h-6 w-6 shrink-0"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Sign out</span>
+            </button>
+          </div>
         </nav>
       </div>
 
       <Header setSidebarOpen={setSidebarOpen} />
       {isOpen && (
         <CustomModal
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Signout"
-        description="Are you sure you want to sign out of your account?"
-        showConfirmButton={true}
-        confirmButtonText="Sign Out"
-        cancelButtonText="Cancel"
-        confirmButtonBgColor="bg-red-600"
-        confirmButtonTextColor="text-white"
-        onConfirm={() => {
-          setIsLoading(true);
-          auth
-            .signOut()
-            .then(() => {
-              setIsLoading(false);
-              navigate("/");
-            })
-            .catch((error) => {
-              setIsLoading(false);
-              console.error("Error signing out:", error);
-            });
-        }}
-        onCancel={() => setIsOpen(false)}
-        Icon={ExclamationTriangleIcon} 
-        iconBgColor="bg-red-100"
-        buttonBgColor="bg-red-600"
-        iconTextColor="text-red-600"
-        loading={isLoading}
-      />
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          title="Signout"
+          description="Are you sure you want to sign out of your account?"
+          showConfirmButton={true}
+          confirmButtonText="Sign Out"
+          cancelButtonText="Cancel"
+          confirmButtonBgColor="bg-red-600"
+          confirmButtonTextColor="text-white"
+          onConfirm={() => {
+            setIsLoading(true);
+            auth
+              .signOut()
+              .then(() => {
+                setIsLoading(false);
+                navigate("/");
+              })
+              .catch((error) => {
+                setIsLoading(false);
+                console.error("Error signing out:", error);
+              });
+          }}
+          onCancel={() => setIsOpen(false)}
+          Icon={ExclamationTriangleIcon}
+          iconBgColor="bg-red-100"
+          buttonBgColor="bg-red-600"
+          iconTextColor="text-red-600"
+          loading={isLoading}
+        />
       )}
     </div>
   );

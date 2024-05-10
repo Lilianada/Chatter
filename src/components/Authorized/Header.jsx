@@ -1,22 +1,30 @@
 import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { BellIcon } from "@heroicons/react/24/outline";
+import { BellIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import {
   Bars3Icon,
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../config/firebase";
+import CustomModal from "../Utils/CustomModal";
 
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+const userNavigation = [{ name: "Your profile", href: "/profile" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
 export default function Header({ setSidebarOpen }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    setIsOpen(true);
+  };
+
   return (
     <div className="fixed top-0 z-40 w-full flex items-center gap-x-6 bg-neutral-900 px-4 py-4 shadow-sm sm:px-6">
       <button
@@ -28,7 +36,9 @@ export default function Header({ setSidebarOpen }) {
         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
       </button>
       <div className="flex-1 ">
-        <h4 className="text-sm font-semibold leading-6 text-white lg:hidden">Chatter</h4>
+        <h4 className="text-sm font-semibold leading-6 text-white lg:hidden">
+          Chatter
+        </h4>
       </div>
       <form
         className="relative flex flex-1 bg-neutral-800 p-3 rounded-lg"
@@ -58,10 +68,10 @@ export default function Header({ setSidebarOpen }) {
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt=""
           />
-            <ChevronDownIcon
-              className="h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
+          <ChevronDownIcon
+            className="h-5 w-5 text-gray-400"
+            aria-hidden="true"
+          />
         </Menu.Button>
         <Transition
           as={Fragment}
@@ -73,24 +83,57 @@ export default function Header({ setSidebarOpen }) {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-            {userNavigation.map((item) => (
-              <Menu.Item key={item.name}>
-                {({ active }) => (
-                  <Link
-                    to={item.href}
-                    className={classNames(
-                      active ? "bg-neutral-50" : "",
-                      "block px-3 py-1 text-sm leading-6 text-gray-900"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-              </Menu.Item>
-            ))}
+            <Menu.Item>
+              <Link
+                to="/profile"
+                className="bg-neutral-50 block px-3 py-1 text-sm leading-6 text-gray-900"
+              >
+                Your profile
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="sign-out">
+              <button
+                onClick={handleSignOut}
+                className="bg-neutral-50 block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-rose-600"
+              >
+                Sign out
+              </button>
+            </Menu.Item>
           </Menu.Items>
         </Transition>
       </Menu>
+      {isOpen && (
+        <CustomModal
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          title="Signout"
+          description="Are you sure you want to sign out of your account?"
+          showConfirmButton={true}
+          confirmButtonText="Sign Out"
+          cancelButtonText="Cancel"
+          confirmButtonBgColor="bg-red-600"
+          confirmButtonTextColor="text-white"
+          onConfirm={() => {
+            setIsLoading(true);
+            auth
+              .signOut()
+              .then(() => {
+                setIsLoading(false);
+                navigate("/");
+              })
+              .catch((error) => {
+                setIsLoading(false);
+                console.error("Error signing out:", error);
+              });
+          }}
+          onCancel={() => setIsOpen(false)}
+          Icon={ExclamationTriangleIcon}
+          iconBgColor="bg-red-100"
+          buttonBgColor="bg-red-600"
+          iconTextColor="text-red-600"
+          loading={isLoading}
+        />
+      )}
     </div>
   );
 }

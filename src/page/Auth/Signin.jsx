@@ -68,7 +68,7 @@ export default function Signin() {
 
       handleLocalStorage(rememberMe, formData.email);
 
-      navigate("/articles");
+      navigate("/browse");
     } catch (error) {
       console.error("Login error:", error);
       setNotification({

@@ -66,7 +66,7 @@ export default function Skeleton() {
           />
 
           {/* Header */}
-          {/* <Header /> */}
+          <Header />
         </div>
 
         <main className="pt-4 lg:pt-8 pb-10 lg:mx-4 sm:mx-6 bg-white">

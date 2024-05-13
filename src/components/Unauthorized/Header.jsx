@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import logo from '../../assets/ChatterIcon.svg'
+import logo from '../../assets/colored_logo.png'
 
 import { Popover, Transition } from "@headlessui/react";
 
@@ -13,7 +13,7 @@ const navigation = [
 
 export default function Header() {
   return (
-    <header className="pt-6">
+    <header>
       <Popover>
         <nav
           className="relative mx-auto flex max-w-8xl items-center justify-between px-6"
@@ -23,13 +23,11 @@ export default function Header() {
             <div className="flex w-full items-center justify-between md:w-auto">
               <Link to="/">
                 <span className="sr-only">Chatter</span>
-                {/* <img
-                  className="h-8 w-auto sm:h-10"
+                <img
+                  className="w-24 sm:w-10"
                   src={logo}
                   alt=""
-                /> */}
-                <span className="font-medium text-yellow-600">Chatter</span>
-                
+                />
               </Link>
               <div className="-mr-2 flex items-center md:hidden">
                 <Popover.Button className="focus-ring-inset relative inline-flex items-center justify-center rounded-md bg-yellow-500 p-2 text-gray-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-white">
@@ -75,10 +73,10 @@ export default function Header() {
             className="absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden"
           >
             <div className="overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5">
-              <div className="flex items-center justify-between px-5 pt-4">
+              <div className="flex items-center justify-between px-5">
                 <div>
                   <img
-                    className="h-8 w-auto"
+                    className="w-24"
                     src={logo}
                     alt=""
                   />
@@ -103,7 +101,7 @@ export default function Header() {
                 ))}
               </div>
               <Link
-                to="#"
+                to="/signin"
                 className="block w-full bg-gray-100 px-5 py-3 text-center font-medium text-indigo-600 hover:bg-gray-200"
               >
                 Log in

@@ -5,7 +5,7 @@ import {
   ArrowLeftStartOnRectangleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import Logo from "../../assets/ChatterIcon.svg";
+import Logo from "../../assets/colored_logo.png";
 import Header from "./Header";
 import CustomModal from "../Utils/CustomModal";
 import { auth } from "../../config/firebase";
@@ -182,10 +182,10 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
 
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-neutral-900 px-6 pb-2 ring-1 ring-white/10">
                   <div className="flex h-16 shrink-0 items-center">
-                    <img className="h-8 w-auto" src={Logo} alt="Chatter App" />
+                    <img className="h-16 w-auto" src={Logo} alt="Chatter App" />
                   </div>
                   <nav className="flex flex-1 flex-col">
-                    <ul role="list" className="-mx-2 flex-1 space-y-1">
+                    <ul className="-mx-2 flex-1 space-y-1">
                       {navigation.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -211,7 +211,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                       >
                         <button
                           onClick={onSignOut}
-                          className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-rose-400 hover:text-rose-500 hover:bg-neutral-800 w-full"
+                          className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-yellow-500 hover:text-yellow-600 hover:bg-neutral-800 w-full mb-2"
                         >
                           <ArrowLeftStartOnRectangleIcon
                             className="h-6 w-6 shrink-0"
@@ -258,7 +258,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
           >
             <button
               onClick={onSignOut}
-              className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-rose-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
+              className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-yellow-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
             >
               <ArrowLeftStartOnRectangleIcon
                 className="h-6 w-6 shrink-0"

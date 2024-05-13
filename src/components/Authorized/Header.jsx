@@ -26,7 +26,7 @@ export default function Header({ setSidebarOpen }) {
   };
 
   return (
-    <div className="fixed top-0 z-40 w-full flex items-center gap-x-6 bg-neutral-900 px-4 py-4 shadow-sm sm:px-6">
+    <div className="fixed top-0 z-40 w-full flex items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6">
       <button
         type="button"
         className="-m-2.5 p-2.5 text-gray-400 lg:hidden"

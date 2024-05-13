@@ -63,7 +63,7 @@ const people = [
   
   export default function VerifiedAuthors() {
     return (
-      <div className="bg-[#E4D6A7] py-24">
+      <div className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
           <div className="mx-auto lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Join our community of writers</h2>

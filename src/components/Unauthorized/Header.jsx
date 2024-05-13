@@ -54,7 +54,7 @@ export default function Header() {
           <div className="hidden md:flex">
             <Link
               to="/signin"
-              className="inline-flex items-center rounded-md border border-yellow-500 bg-yellow-700 px-4 py-2 text-sm font-medium text-neutral-600 hover:bg-yellow-700"
+              className="inline-flex items-center rounded-md border border-yellow-500 bg-yellow-700 px-4 py-2 text-sm font-medium text-chocolate hover:bg-yellow-700"
             >
               Sign in
             </Link>

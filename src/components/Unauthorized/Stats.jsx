@@ -7,12 +7,12 @@ const stats = [
   
   export default function Stats() {
     return (
-      <div className="bg-[#E4D6A7] py-24">
+      <div className="bg-white py-24">
         <div className="bg-blue-50 py-16 w-11/12 rounded-xl mx-auto ">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:max-w-none">
               <div className="text-center">
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <h2 className="text-3xl font-bold tracking-tight text-chocolate sm:text-4xl">
                   Trusted by writers worldwide
                 </h2>
                 <p className="mt-4 text-lg leading-8 text-gray-600">
@@ -23,7 +23,7 @@ const stats = [
                 {stats.map((stat) => (
                   <div key={stat.id} className="flex flex-col bg-gray-500/5 p-8">
                     <dt className="text-sm font-semibold leading-6 text-gray-600">{stat.name}</dt>
-                    <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">{stat.value}</dd>
+                    <dd className="order-first text-3xl font-semibold tracking-tight text-chocolate">{stat.value}</dd>
                   </div>
                 ))}
               </dl>

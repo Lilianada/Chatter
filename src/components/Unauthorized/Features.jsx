@@ -21,12 +21,12 @@ const features = [
 
 export default function Features() {
   return (
-    <div className="overflow-hidden bg-gray-900 py-24 sm:py-32">
+    <div className="overflow-hidden bg-green py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
-              <h2 className="text-base font-semibold leading-7 text-indigo-400">Start Publishing</h2>
+              <h2 className="text-base font-semibold leading-7 text-yellow-500">Start Publishing</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Writing made easy</p>
               <p className="mt-6 text-lg leading-8 text-gray-300">
               At Chatter, we provide a seamless and engaging platform for writers to share their thoughts, stories, and expertise with a global audience.

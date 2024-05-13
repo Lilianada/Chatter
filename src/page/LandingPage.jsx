@@ -10,7 +10,7 @@ import Features from "../components/Unauthorized/Features";
 export default function LandingPage() {
   return (
     <div>
-      <div className="relative overflow-hidden bg-[#527b46]">
+      <div className="relative overflow-hidden bg-green">
         <div
           className="hidden sm:absolute sm:inset-0 sm:block"
           aria-hidden="true"

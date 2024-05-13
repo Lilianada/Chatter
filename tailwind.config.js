@@ -27,6 +27,7 @@ module.exports = {
       },
     },
     colors: {
+      green: "#527b46",
       chocolate: '#1C110A',
       wheat: '#E4D6A7',
       yellow: {

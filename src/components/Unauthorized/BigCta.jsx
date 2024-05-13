@@ -4,8 +4,8 @@ export default function BigCta() {
     return (
       <div className="bg-white">
         <div className="mx-auto max-w-7xl py-8 sm:px-6 sm:py-8 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-[#960200] px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
-            <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <div className="relative isolate overflow-hidden bg-green px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+            <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-yellow-500 sm:text-4xl">
               Become a writer today.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
@@ -22,7 +22,7 @@ export default function BigCta() {
                 Learn more <span aria-hidden="true">→</span>
               </Link>
             </div>
-            <svg
+            {/* <svg
               viewBox="0 0 1024 1024"
               className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
               aria-hidden="true"
@@ -34,7 +34,7 @@ export default function BigCta() {
                   <stop offset={1} stopColor="#E935C1" />
                 </radialGradient>
               </defs>
-            </svg>
+            </svg> */}
           </div>
         </div>
       </div>

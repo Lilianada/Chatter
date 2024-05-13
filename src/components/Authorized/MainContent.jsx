@@ -36,6 +36,7 @@ const whoToFollow = [
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
 ];
+
 const trendingPosts = [
   {
     id: 1,
@@ -82,22 +83,20 @@ const trendingPosts = [
 
 export default function MainContent() {
   return (
-    <div className="flex flex-1 items-stretch overflow-hidden relative">
-      {/* <main className="flex-1 ">
-      </main> */}
-        {/* Primary column */}
-        <section
-          aria-labelledby="primary-heading"
-          className="flex h-full min-w-0 flex-1 flex-col lg:order-last overflow-y-auto"
-        >
-          <Arts />
-        </section>
+    <div className="flex overflow-hidden relative border-t border-gray-200 mt-4rem">
+      {/* Primary column */}
+      <section
+        aria-labelledby="primary-heading"
+        className="flex flex-1 h-full min-w-0 flex-col overflow-y-auto"
+      >
+        <Arts />
+      </section>
 
       {/* Secondary column (hidden on smaller screens) */}
       <aside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white lg:block">
         <div className="sticky top-4 space-y-4">
           <section aria-labelledby="who-to-follow-heading">
-            <div className="rounded-lg bg-white shadow">
+            <div className=" bg-white">
               <div className="p-6">
                 <h2
                   id="who-to-follow-heading"

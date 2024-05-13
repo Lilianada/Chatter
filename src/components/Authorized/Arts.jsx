@@ -76,16 +76,16 @@ export default function Arts() {
   return (
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl">
-          <div className="mt-10  sm:mt-16">
+          <div>
             {posts.map((post) => (
-              <article key={post.id} className="flex max-w-xl flex-col items-start justify-between border-t border-gray-200 pt-6 p-4 cursor-pointer hover:bg-neutral-100 rounded-lg">
+              <article key={post.id} className="flex max-w-xl flex-col items-start justify-between border-b border-gray-200 pt-6 p-4 cursor-pointer hover:bg-neutral-100">
                 <div className="flex items-center gap-x-4 text-xs">
                   <time dateTime={post.datetime} className="text-gray-500">
                     {post.date}
                   </time>
                   <Link
                     to={post.category.href}
-                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-neutral-200"
+                    className="relative z-10 rounded-full bg-neutral-100 px-3 py-1.5 font-medium text-neutral-600 hover:bg-neutral-200"
                   >
                     {post.category.title}
                   </Link>

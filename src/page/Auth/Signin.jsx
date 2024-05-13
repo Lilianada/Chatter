@@ -94,7 +94,7 @@ export default function Signin() {
 
   return (
     <>
-      <div className="flex min-h-screen flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 bg-green">
+      <div className="flex min-h-screen flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 bg-green-600">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto w-24" src={logo} alt="Chatter" />
           <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-white">
@@ -167,7 +167,7 @@ export default function Signin() {
                   <input
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600"
+                    className="h-4 w-4 rounded border-gray-300 text-red-400 focus:ring-yellow-600"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                     id="rememberMe"
@@ -193,7 +193,7 @@ export default function Signin() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+                  className="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-neutral-600 shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
                 >
                   {isLoading ? <Spinner /> : "Sign in"}
                 </button>

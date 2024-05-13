@@ -27,9 +27,22 @@ module.exports = {
       },
     },
     colors: {
-      green: "#527b46",
+      transparent: 'transparent',
+      white: '#ffffff',
+      black: '#000000',
+      green: {
+        100: "#f0fff4",
+        200: "#c6f6d5",
+        300: "#9ae6b4",
+        400: "#68d391",
+        600: "#527b46",
+        700: "#3f5e36",
+        800: "#2d3e24",
+        900: "#1a1f14",
+      },
       chocolate: '#1C110A',
       wheat: '#E4D6A7',
+      cadet: '#50A2A7',
       yellow: {
         100: "hsl(40, 94%, 95%)",
         200: "hsl(40, 94%, 90%)",
@@ -67,10 +80,10 @@ module.exports = {
         900: "#111827",
         950: "#030712",
       },
-      white: '#ffffff',
-      black: '#000000',
-      darkRed: '#9B2915',
-      cadet: '#50A2A7',
+      red:{ 
+        400: '#9b2915b8',
+        500: '#9B2915',
+      },
     }
   },
   plugins: [

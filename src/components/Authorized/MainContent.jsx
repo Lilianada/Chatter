@@ -83,15 +83,15 @@ const trendingPosts = [
 export default function MainContent() {
   return (
     <div className="flex flex-1 items-stretch overflow-hidden relative">
-      <main className="flex-1 overflow-y-auto">
+      {/* <main className="flex-1 ">
+      </main> */}
         {/* Primary column */}
         <section
           aria-labelledby="primary-heading"
-          className="flex h-full min-w-0 flex-1 flex-col lg:order-last"
+          className="flex h-full min-w-0 flex-1 flex-col lg:order-last overflow-y-auto"
         >
           <Arts />
         </section>
-      </main>
 
       {/* Secondary column (hidden on smaller screens) */}
       <aside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white lg:block">

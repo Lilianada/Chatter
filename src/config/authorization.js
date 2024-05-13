@@ -42,7 +42,6 @@ export async function registerUser(email, password, fullName) {
 }
 
 // signin user
-
 export async function signinUser(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);

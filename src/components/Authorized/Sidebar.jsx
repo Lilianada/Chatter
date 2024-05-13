@@ -6,6 +6,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Logo from "../../assets/colored_logo.png";
+import smallLogo from "../../assets/logoIcon.svg";
 import Header from "./Header";
 import CustomModal from "../Utils/CustomModal";
 import { auth } from "../../config/firebase";
@@ -230,9 +231,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto lg:bg-neutral-900 lg:pb-4">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto lg:bg-chocolate lg:pb-4">
         <div className="flex h-16 shrink-0 items-center justify-center">
-          <img className="h-8 w-auto" src={Logo} alt="Chatter App" />
+          <img className="h-8 w-auto" src={smallLogo} alt="Chatter App" />
         </div>
         <nav className="mt-8">
           <ul className="flex flex-col items-center space-y-1">

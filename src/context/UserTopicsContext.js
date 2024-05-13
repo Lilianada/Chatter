@@ -14,14 +14,14 @@ export const UserTopicsProvider = ({ children }) => {
     const localData = localStorage.getItem("userTopics");
     return localData ? JSON.parse(localData) : [];
   });
-  console.log(userTopics, "userTopics")
+  // console.log(userTopics, "userTopics");
   useEffect(() => {
     if (userTopics.length < 1) {
       const fetchUserTopics = async () => {
         setIsLoading(true);
         try {
           const response = await getUserCategories(userId);
-          console.log("response", response);
+          // console.log("response", response);
           const allUserTopics = [
             { id: "all", name: "All", current: true },
             ...response,

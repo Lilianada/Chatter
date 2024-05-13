@@ -100,9 +100,9 @@ export default function Hero() {
                 <div className="hidden sm:mb-4 sm:flex sm:justify-center lg:justify-start">
                   <span
                     to="signin"
-                    className="flex items-center rounded-full bg-gray-900 p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
+                    className="flex items-center rounded-full bg-gray-800 p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
                   >
-                    <span className="rounded-full bg-indigo-500 px-3 py-0.5 text-sm font-semibold leading-5 text-white">
+                    <span className="rounded-full bg-[#E9B44C] px-3 py-0.5 text-sm font-semibold leading-5 text-neutral-800">
                       Write articles
                     </span>
                     <span className="ml-4 text-sm">Read articles</span>
@@ -148,7 +148,7 @@ export default function Hero() {
                           onChange={onChange}
                           autoComplete="fullName"
                           placeholder="Full name"
-                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#E9B44C] focus:ring-[#E9B44C] sm:text-sm"
                           required
                         />
                       </div>
@@ -166,7 +166,7 @@ export default function Hero() {
                           autoComplete="email"
                           placeholder="Email"
                           required
-                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#E9B44C] focus:ring-[#E9B44C] sm:text-sm"
                         />
                       </div>
 
@@ -180,7 +180,7 @@ export default function Hero() {
                             name="password"
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
-                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#E9B44C] focus:ring-[#E9B44C] sm:text-sm"
                             value={formData.password}
                             onChange={onChange}
                             required
@@ -209,7 +209,7 @@ export default function Hero() {
                       <div>
                         <button
                           type="submit"
-                          className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          className="flex w-full justify-center rounded-md border border-transparent bg-[#E9B44C] px-4 py-2 text-sm font-medium text-neutral-600 shadow-sm hover:bg-[#E9B44C] focus:outline-none focus:ring-2 focus:ring-[#E9B44C] focus:ring-offset-2"
                           onClick={handleRegister}
                         >
                           {isLoading ? <Spinner /> : "Create your account"}
@@ -223,7 +223,7 @@ export default function Hero() {
                     Or use the demo account to explore the page. Proceed to{" "}
                     <Link
                       to="/signin"
-                      className="font-semibold leading-6 text-indigo-500 hover:text-indigo-400"
+                      className="font-semibold leading-6 text-[#E9B44C] hover:text-[#E9B44C]"
                     >
                       Sign in
                     </Link>

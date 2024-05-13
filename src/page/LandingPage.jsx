@@ -10,7 +10,7 @@ import Features from "../components/Unauthorized/Features";
 export default function LandingPage() {
   return (
     <div>
-      <div className="relative overflow-hidden bg-yellowRed">
+      <div className="relative overflow-hidden bg-[#527b46]">
         <div
           className="hidden sm:absolute sm:inset-0 sm:block"
           aria-hidden="true"
@@ -43,8 +43,12 @@ export default function LandingPage() {
         </div>
         <Header />
         <Hero />
-        <Stats />
       </div>
+
+      <div className="bg-[#E4D6A7]">
+
+      </div>
+      <Stats />
       <Features />
 
       {/* <div className="flex flex-1 items-stretch overflow-hidden">

@@ -206,12 +206,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                         </li>
                       ))}
                       <li
-                        className="mt-auto"
+                        className="mt-auto absolute bottom-1 w-11/12"
                         onClick={() => setSidebarOpen(false)}
                       >
                         <button
                           onClick={onSignOut}
-                          className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-rose-400 hover:text-rose-700 hover:bg-gray-800 "
+                          className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-rose-400 hover:text-rose-500 hover:bg-neutral-800 w-full"
                         >
                           <ArrowLeftStartOnRectangleIcon
                             className="h-6 w-6 shrink-0"
@@ -252,8 +252,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                 </Link>
               </li>
             ))}
-          </ul>
-          <div
+          <li
             className="flex flex-col items-center space-y-1 absolute bottom-1 w-full"
             onClick={() => setSidebarOpen(false)}
           >
@@ -267,7 +266,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
               />
               <span className="sr-only">Sign out</span>
             </button>
-          </div>
+          </li>
+          </ul>
         </nav>
       </div>
 

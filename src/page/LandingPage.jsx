@@ -10,7 +10,7 @@ import Features from "../components/Unauthorized/Features";
 export default function LandingPage() {
   return (
     <div>
-      <div className="relative overflow-hidden bg-gray-900">
+      <div className="relative overflow-hidden bg-yellowRed">
         <div
           className="hidden sm:absolute sm:inset-0 sm:block"
           aria-hidden="true"
@@ -43,9 +43,9 @@ export default function LandingPage() {
         </div>
         <Header />
         <Hero />
+        <Stats />
       </div>
-      <Stats />
-      <Features/>
+      <Features />
 
       {/* <div className="flex flex-1 items-stretch overflow-hidden">
         <main className="flex-1 overflow-y-auto">
@@ -58,8 +58,8 @@ export default function LandingPage() {
       </div> */}
 
       <VerifiedAuthors />
-      <BigCta/>
-      <Footer/>
+      <BigCta />
+      <Footer />
     </div>
   );
 }

@@ -26,6 +26,13 @@ module.exports = {
         "dark-logo": "url('/src/assets/logo.png')",
       },
     },
+    colors: {
+      chocolate: '#1C110A',
+      wheat: '#E4D6A7',
+      yellowRed: '#E9B44C',
+      darkRed: '#9B2915',
+      cadet: '#50A2A7',
+    }
   },
   plugins: [
     require('@tailwindcss/forms'),

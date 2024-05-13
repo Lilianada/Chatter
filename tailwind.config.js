@@ -27,8 +27,8 @@ module.exports = {
       },
     },
     colors: {
-    //   chocolate: '#1C110A',
-    //   wheat: '#E4D6A7',
+      chocolate: '#1C110A',
+      wheat: '#E4D6A7',
       yellow: {
         100: "hsl(40, 94%, 95%)",
         200: "hsl(40, 94%, 90%)",
@@ -68,8 +68,8 @@ module.exports = {
       },
       white: '#ffffff',
       black: '#000000',
-    //   darkRed: '#9B2915',
-    //   cadet: '#50A2A7',
+      darkRed: '#9B2915',
+      cadet: '#50A2A7',
     }
   },
   plugins: [

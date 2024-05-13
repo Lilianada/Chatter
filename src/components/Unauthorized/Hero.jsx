@@ -98,19 +98,19 @@ export default function Hero() {
             <div className="px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">
               <div>
                 <div className="hidden sm:mb-4 sm:flex sm:justify-center lg:justify-start">
-                  <span
-                    to="signin"
-                    className="flex items-center rounded-full bg-gray-800 p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
+                  <Link
+                    to="/signin"
+                    className="flex items-center rounded-full bg-chocolate p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
                   >
-                    <span className="rounded-full bg-[#E9B44C] px-3 py-0.5 text-sm font-semibold leading-5 text-neutral-800">
+                    <span className="rounded-full bg-yellow-500 px-3 py-0.5 text-sm font-semibold leading-5 text-neutral-800">
                       Write articles
                     </span>
-                    <span className="ml-4 text-sm">Read articles</span>
+                    <Link to="/signin" className="ml-4 text-sm">Read articles</Link>
                     <ChevronRightIcon
                       className="ml-2 h-5 w-5 text-gray-500"
                       aria-hidden="true"
                     />
-                  </span>
+                  </Link>
                 </div>
                 <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                   Today a writer
@@ -129,7 +129,7 @@ export default function Hero() {
               <div className="bg-white sm:mx-auto sm:w-full sm:max-w-md sm:overflow-hidden sm:rounded-lg">
                 <div className="px-6 py-8 sm:px-10">
                   <div>
-                    <p className="text-sm font-medium text-gray-700">Sign Up</p>
+                    <p className="text-sm font-medium text-gray-700">Create an account</p>
                     <div className="relative mt-6">
                       <div className="w-full border-t border-gray-300" />
                     </div>
@@ -148,7 +148,7 @@ export default function Hero() {
                           onChange={onChange}
                           autoComplete="fullName"
                           placeholder="Full name"
-                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#E9B44C] focus:ring-[#E9B44C] sm:text-sm"
+                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                           required
                         />
                       </div>
@@ -166,7 +166,7 @@ export default function Hero() {
                           autoComplete="email"
                           placeholder="Email"
                           required
-                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#E9B44C] focus:ring-[#E9B44C] sm:text-sm"
+                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                         />
                       </div>
 
@@ -180,7 +180,7 @@ export default function Hero() {
                             name="password"
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
-                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#E9B44C] focus:ring-[#E9B44C] sm:text-sm"
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                             value={formData.password}
                             onChange={onChange}
                             required
@@ -209,7 +209,7 @@ export default function Hero() {
                       <div>
                         <button
                           type="submit"
-                          className="flex w-full justify-center rounded-md border border-transparent bg-[#E9B44C] px-4 py-2 text-sm font-medium text-neutral-600 shadow-sm hover:bg-[#E9B44C] focus:outline-none focus:ring-2 focus:ring-[#E9B44C] focus:ring-offset-2"
+                          className="flex w-full justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-neutral-600 shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                           onClick={handleRegister}
                         >
                           {isLoading ? <Spinner /> : "Create your account"}
@@ -223,7 +223,7 @@ export default function Hero() {
                     Or use the demo account to explore the page. Proceed to{" "}
                     <Link
                       to="/signin"
-                      className="font-semibold leading-6 text-[#E9B44C] hover:text-[#E9B44C]"
+                      className="font-semibold leading-6 text-yellow-500 hover:text-yellow-500"
                     >
                       Sign in
                     </Link>

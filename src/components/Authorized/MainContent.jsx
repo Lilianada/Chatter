@@ -83,7 +83,7 @@ const trendingPosts = [
 
 export default function MainContent() {
   return (
-    <div className="flex overflow-hidden relative border-t border-gray-200 mt-4rem">
+    <div className="flex overflow-hidden relative border-t border-gray-200 mt-24">
       {/* Primary column */}
       <section
         aria-labelledby="primary-heading"

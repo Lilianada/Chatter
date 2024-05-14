@@ -7,7 +7,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Logo from "../../assets/colored_logo.png";
 import smallLogo from "../../assets/logoIcon.svg";
-import Header from "./Header";
 import CustomModal from "../Utils/CustomModal";
 import { auth } from "../../config/firebase";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
@@ -21,14 +20,14 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-
-  const onSignOut = () => {
+  const handleSignOut = () => {
     setIsOpen(true);
   };
 
   return (
     <div>
-      <Transition.Root show={sidebarOpen} as={Fragment}>
+     {/* sidebar for mobile */}
+     <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
           <Transition.Child
             as={Fragment}
@@ -107,7 +106,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                         onClick={() => setSidebarOpen(false)}
                       >
                         <button
-                          onClick={onSignOut}
+                          onClick={handleSignOut}
                           className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-yellow-500 hover:text-yellow-600 hover:bg-neutral-800 w-full mb-2"
                         >
                           <ArrowLeftStartOnRectangleIcon
@@ -127,7 +126,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto lg:bg-chocolate lg:pb-4">
+      <div className="hidden lg:col-start-1 lg:col-span-1 lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:overflow-y-auto lg:bg-chocolate lg:pb-4 lg:w-20">
         <div className="flex h-16 shrink-0 items-center justify-center">
           <img className="h-8 w-auto" src={smallLogo} alt="Chatter App" />
         </div>
@@ -149,25 +148,24 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                 </Link>
               </li>
             ))}
-          <li
-            className="flex flex-col items-center space-y-1 absolute bottom-1 w-full"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <button
-              onClick={onSignOut}
-              className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-yellow-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
+            <li
+              className="flex flex-col items-center space-y-1 absolute bottom-1 w-full"
+              onClick={() => setSidebarOpen(false)}
             >
-              <ArrowLeftStartOnRectangleIcon
-                className="h-6 w-6 shrink-0"
-                aria-hidden="true"
-              />
-              <span className="sr-only">Sign out</span>
-            </button>
-          </li>
+              <button
+                onClick={handleSignOut}
+                className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-yellow-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
+              >
+                <ArrowLeftStartOnRectangleIcon
+                  className="h-6 w-6 shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">Sign out</span>
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
-      
       {isOpen && (
         <CustomModal
           open={isOpen}

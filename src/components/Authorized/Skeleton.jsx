@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Bars3Icon,
   DocumentChartBarIcon,
-  CalendarIcon,
   CreditCardIcon,
   HomeIcon,
-  UserGroupIcon,
-  ChatBubbleLeftRightIcon,
-  ChatBubbleLeftIcon,
   UserCircleIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
@@ -87,7 +82,7 @@ export default function Skeleton() {
         />
       )}
 
-      <main className="pt-4 lg:pt-8 pb-10 lg:mx-4 sm:mx-6 bg-white">
+      <main className="pt-4 lg:pt-8 pb-10 bg-white md:w-[calc(100vw_-_5rem)] ml-auto px-4">
         <div className="px-2">
           <Outlet />
         </div>

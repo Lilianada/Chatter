@@ -93,7 +93,7 @@ export default function MainContent() {
       </section>
 
       {/* Secondary column (hidden on smaller screens) */}
-      <aside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white lg:block">
+      <aside className="hidden fixed right-0 sm:w-80 lg:w-96 overflow-y-auto border-l border-gray-200 bg-white lg:block">
         <div className="sticky top-4 space-y-4">
           <section aria-labelledby="who-to-follow-heading">
             <div className=" bg-white">

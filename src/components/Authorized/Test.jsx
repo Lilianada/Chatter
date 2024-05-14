@@ -153,7 +153,7 @@ export default function Test() {
         {/* Header */}
         <Header setSidebarOpen={setSidebarOpen} />
 
-        <div className="sticky top-20 z-30 ">
+        <div className="sticky top-20 z-30 lg:ml-20">
           {/* Categories Tab */}
           <CategoryTabs
             categories={userTopics}

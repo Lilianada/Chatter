@@ -126,12 +126,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:col-start-1 lg:col-span-1 lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:overflow-y-auto lg:bg-chocolate lg:pb-4 lg:w-20">
+      <div className="hidden lg:col-start-1 lg:col-span-1 lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:flex lg:flex-col lg:justify-between lg:overflow-y-auto lg:bg-chocolate lg:pb-4 lg:w-20">
         <div className="flex h-16 shrink-0 items-center justify-center">
           <img className="h-8 w-auto" src={smallLogo} alt="Chatter App" />
         </div>
         <nav className="mt-8">
-          <ul className="flex flex-col items-center space-y-1">
+          <ul className="flex flex-col items-center space-y-4">
             {navigation.map((item) => (
               <li key={item.name}>
                 <Link
@@ -143,28 +143,24 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                     "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold"
                   )}
                 >
-                  <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+                  <item.icon className="h-7 w-7 shrink-0" aria-hidden="true" />
                   <span className="sr-only">{item.name}</span>
                 </Link>
               </li>
             ))}
-            <li
-              className="flex flex-col items-center space-y-1 absolute bottom-1 w-full"
-              onClick={() => setSidebarOpen(false)}
-            >
-              <button
-                onClick={handleSignOut}
-                className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-yellow-500 hover:text-rose-700 hover:bg-neutral-800 justify-center"
-              >
-                <ArrowLeftStartOnRectangleIcon
-                  className="h-6 w-6 shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Sign out</span>
-              </button>
-            </li>
+            
           </ul>
         </nav>
+        <button
+          onClick={handleSignOut}
+          className="lg:group lg:flex lg:justify-center lg:mx-4 lg:gap-x-3 lg:rounded-md lg:p-3 lg:text-sm lg:leading-6 lg:font-semibold lg:text-yellow-500 lg:hover:text-yellow-600 lg:hover:bg-neutral-800"
+        >
+          <ArrowLeftStartOnRectangleIcon
+            className="h-7 w-7 shrink-0"
+            aria-hidden="true"
+          />
+          <span className="sr-only">Signout</span>
+        </button>
       </div>
       {isOpen && (
         <CustomModal

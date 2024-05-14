@@ -149,20 +149,22 @@ export default function Test() {
         navigation={navigation}
       />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col relative">
         {/* Header */}
         <Header setSidebarOpen={setSidebarOpen} />
 
-        {/* Categories Tab */}
-        <CategoryTabs
-          categories={userTopics}
-          checkForScroll={checkForScroll}
-          showLeftArrow={showLeftArrow}
-          showRightArrow={showRightArrow}
-          containerRef={containerRef}
-          onCategorySelect={handleCategorySelect}
-          selectedCategory={selectedCategory}
-        />
+        <div className="sticky top-20 z-30 ">
+          {/* Categories Tab */}
+          <CategoryTabs
+            categories={userTopics}
+            checkForScroll={checkForScroll}
+            showLeftArrow={showLeftArrow}
+            showRightArrow={showRightArrow}
+            containerRef={containerRef}
+            onCategorySelect={handleCategorySelect}
+            selectedCategory={selectedCategory}
+          />
+        </div>
 
         <div className="relative lg:ml-20 lg:grid lg:grid-cols-10">
           {/* Content area */}

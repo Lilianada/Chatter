@@ -138,8 +138,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                   to={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-800 text-white"
-                      : "text-gray-400 hover:text-white hover:bg-gray-800",
+                      ? "bg-neutral-800 text-white"
+                      : "text-gray-400 hover:text-white hover:bg-neutral-800",
                     "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold"
                   )}
                 >
@@ -154,7 +154,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
             >
               <button
                 onClick={handleSignOut}
-                className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-yellow-500 hover:text-rose-700 hover:bg-gray-800 justify-center"
+                className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-yellow-500 hover:text-rose-700 hover:bg-neutral-800 justify-center"
               >
                 <ArrowLeftStartOnRectangleIcon
                   className="h-6 w-6 shrink-0"

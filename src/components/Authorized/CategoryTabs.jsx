@@ -14,6 +14,7 @@ const CategoryTabs = ({
   onCategorySelect,
     selectedCategory,
 }) => {
+
   useEffect(() => {
     window.addEventListener("resize", checkForScroll);
     return () => window.removeEventListener("resize", checkForScroll);
@@ -32,10 +33,14 @@ const CategoryTabs = ({
     { name: 'Company', href: '#', current: false },
     { name: 'Team Members', href: '#', current: true },
     { name: 'Billing', href: '#', current: false },
+    { name: 'My Account', href: '#', current: false },
+    { name: 'Company', href: '#', current: false },
+    { name: 'Team Members', href: '#', current: false },
+    { name: 'Billing', href: '#', current: false },
   ]
 
   return (
-    <div className="relative mb-4 flex items-center">
+    <div className="relative bg-white p-4  flex items-center mx-auto w-full border-b border-neutral-200">
       {showLeftArrow && (
         <button
           className="absolute left-0 z-10 bg-gray-100 p-2"
@@ -45,7 +50,7 @@ const CategoryTabs = ({
         </button>
       )}
       <div
-        className="flex overflow-x-auto scroll-smooth category-scroll"
+        className="flex overflow-x-auto scroll-smooth category-scroll gap-4"
         ref={containerRef}
         onScroll={checkForScroll}
       >
@@ -55,9 +60,9 @@ const CategoryTabs = ({
             onClick={() => onCategorySelect(category.id)}
             className={classNames(
                 selectedCategory === category.id
-                ? "border-indigo-500 text-indigo-600"
-                : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
-              "whitespace-nowrap border-b-2 py-4 px-4 text-sm font-medium cursor-pointer"
+                ? "bg-yellow-200 text-green-600"
+                : "bg-yellow-100 text-gray-500 hover:bg-yellow-100 hover:text-green-600 rounded-3xl",
+              "whitespace-nowrap py-2 px-2 text-sm font-medium cursor-pointer"
             )}
           >
             {category.name}

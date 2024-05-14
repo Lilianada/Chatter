@@ -16,7 +16,7 @@ export default function Header() {
     <header>
       <Popover>
         <nav
-          className="relative mx-auto flex max-w-8xl items-center justify-between px-6"
+          className="relative mx-auto flex max-w-8xl items-center justify-between px-6 py-6"
           aria-label="Global"
         >
           <div className="flex flex-1 items-center">

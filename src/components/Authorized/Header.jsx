@@ -14,12 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import CustomModal from "../Utils/CustomModal";
 
-const userNavigation = [{ name: "Your profile", href: "/profile" }];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Header({ setSidebarOpen }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -30,7 +24,7 @@ export default function Header({ setSidebarOpen }) {
   };
 
   return (
-    <div className=" flex flex-1  fixed top-0 z-40 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 w-full">
+    <div className="flex flex-1 fixed top-0 z-40 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 w-full">
         <button
           type="button"
           className="-m-2.5 p-2.5 text-gray-400 lg:hidden"

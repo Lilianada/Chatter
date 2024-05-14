@@ -27,6 +27,13 @@ const CategoryTabs = ({
     }
   };
 
+  const tabs = [
+    { name: 'My Account', href: '#', current: false },
+    { name: 'Company', href: '#', current: false },
+    { name: 'Team Members', href: '#', current: true },
+    { name: 'Billing', href: '#', current: false },
+  ]
+
   return (
     <div className="relative mb-4 flex items-center">
       {showLeftArrow && (
@@ -42,7 +49,7 @@ const CategoryTabs = ({
         ref={containerRef}
         onScroll={checkForScroll}
       >
-        {categories.map((category) => (
+        {tabs.map((category) => (
           <span
             key={category.id}
             onClick={() => onCategorySelect(category.id)}

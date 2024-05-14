@@ -8,7 +8,7 @@ const stats = [
   export default function Stats() {
     return (
       <div className="bg-white py-24">
-        <div className="bg-blue-50 py-16 w-11/12 rounded-xl mx-auto ">
+        <div className="bg-blue-50 w-11/12 rounded-xl mx-auto ">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:max-w-none">
               <div className="text-center">

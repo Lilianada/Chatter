@@ -43,7 +43,7 @@ export default function FollowerSuggestion() {
               id="who-to-follow-heading"
               className="text-base font-medium text-gray-900"
             >
-              Who to follow
+              Leaderboard
             </h2>
             <div className="mt-6 flow-root">
               <ul className="-my-4 divide-y divide-gray-200">

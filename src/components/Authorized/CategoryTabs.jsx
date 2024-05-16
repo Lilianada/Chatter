@@ -4,6 +4,14 @@ import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+const tabs = [
+  { name: 'My Account', href: '#', current: false },
+  { name: 'Company', href: '#', current: false },
+  { name: 'Team Members', href: '#', current: true },
+  { name: 'Billing', href: '#', current: false },
+  { name: 'Billing', href: '#', current: false },
+]
+
 const CategoryTabs = ({
   categories,
   onCategorySelect,
@@ -48,13 +56,13 @@ const CategoryTabs = ({
         ref={containerRef}
         onScroll={checkForScroll}
       >
-        {categories.map((category) => (
+        {tabs.map((category) => (
           <span
             key={category.id}
             onClick={() => onCategorySelect(category.id)}
             className={`
               ${selectedCategory === category.id ? 'bg-yellow-200 text-green-600' : 'bg-yellow-100 text-gray-500 hover:bg-yellow-100 hover:text-green-600'}
-              whitespace-nowrap py-2 px-2 text-sm font-medium cursor-pointer rounded-3xl
+              whitespace-nowrap py-1 px-3 text-xs font-normal cursor-pointer rounded-xl
             `}
           >
             {category.name}

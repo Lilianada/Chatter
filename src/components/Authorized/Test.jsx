@@ -141,43 +141,45 @@ export default function Test() {
   };
 
   return (
-    <div className="flex w-full h-full relative">
-      {/* sidebar for mobile */}
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        navigation={navigation}
-      />
+    <main class="h-screen overflow-hidden">
+      <div class="relative flex h-full">
+        {/* <!-- Sidebar --> */}
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          navigation={navigation}
+        />
 
-      <div className="flex flex-col relative">
-        {/* Header */}
-        <Header setSidebarOpen={setSidebarOpen} />
+        <div class="flex flex-1 flex-col lg:pl-20">
+          {/* <!-- Header --> */}
+          <Header setSidebarOpen={setSidebarOpen} />
 
-        <div className="sticky top-20 z-30 lg:ml-20">
-          {/* Categories Tab */}
-          <CategoryTabs
-            categories={userTopics}
-            checkForScroll={checkForScroll}
-            showLeftArrow={showLeftArrow}
-            showRightArrow={showRightArrow}
-            containerRef={containerRef}
-            onCategorySelect={handleCategorySelect}
-            selectedCategory={selectedCategory}
-          />
-        </div>
+          {/* <!-- Tabs Menu --> */}
+          <div class="sticky top-[4.5rem] z-10 md:pl-20 lg:pl-0">
+            <CategoryTabs
+              categories={userTopics}
+              checkForScroll={checkForScroll}
+              showLeftArrow={showLeftArrow}
+              showRightArrow={showRightArrow}
+              containerRef={containerRef}
+              onCategorySelect={handleCategorySelect}
+              selectedCategory={selectedCategory}
+            />
+          </div>
 
-        <div className="relative lg:ml-20 lg:grid lg:grid-cols-10">
-          {/* Content area */}
-          <main className="lg:col-start-1 lg:col-span-6 xl:col-span-7 flex-1 overflow-y-auto  border-r border-gray-200">
-            <Arts />
-          </main>
+          <div class="flex gap-4 flex-1 relative top-[4.5rem] overflow-hidden mb-24">
+            {/* <!-- Content Area --> */}
+            <main class="flex-1 lg:p-4 overflow-y-auto lg:border-r lg:border-gray-200">
+              <Arts />
+            </main>
 
-          {/* Details sidebar */}
-          <aside className="hidden lg:col-start-6 lg:col-span-3 lg:fixed lg:right-0 overflow-y-auto bg-white p-8 lg:block">
-            <FollowerSuggestion />
-          </aside>
+            {/* <!-- Aside Content --> */}
+            <aside class="hidden lg:block lg:w-68 lg:my-4 lg:mr-8 lg:sticky lg:right-0 lg:top-20 lg:bottom-0 ">
+              <FollowerSuggestion />
+            </aside>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

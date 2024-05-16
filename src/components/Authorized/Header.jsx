@@ -24,10 +24,10 @@ export default function Header({ setSidebarOpen }) {
   };
 
   return (
-    <div className="flex flex-1 fixed top-0 z-40 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 w-full">
+    <div className="flex flex-1 fixed top-0 z-40 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 w-full lg:-ml-20">
         <button
           type="button"
-          className="-m-2.5 p-2.5 text-gray-400 lg:hidden"
+          className="-m-2.5 p-2.5 text-gray-400 md:hidden"
           onClick={() => setSidebarOpen(true)}
         >
           <span className="sr-only">Open sidebar</span>

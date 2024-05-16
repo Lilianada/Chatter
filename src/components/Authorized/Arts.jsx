@@ -142,13 +142,12 @@ const posts = [
 
 export default function Arts() {
   return (
-    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl px-4 lg:px-8">
       <div className="mx-auto max-w-2xl">
-        <div>
           {posts.map((post) => (
             <article
               key={post.id}
-              className="flex max-w-xl flex-col items-start justify-between border-b border-gray-200 pt-6 p-4 cursor-pointer hover:bg-neutral-100"
+              className="flex mx-auto max-w-xl flex-col items-start justify-between border-b border-gray-200 pt-6 p-4 cursor-pointer hover:bg-neutral-100"
             >
               <div className="flex gap-4">
                 <div className="">
@@ -169,7 +168,6 @@ export default function Arts() {
                     >
                       {post.category.title}
                     </Link> */}
-                  </div>
                   <div className="relative mt-4 flex items-center gap-x-4">
                     <img
                       src={post.author.imageUrl}
@@ -184,6 +182,7 @@ export default function Arts() {
                         </a>
                       </p>
                     </div>
+                  </div>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -204,7 +203,6 @@ export default function Arts() {
               </div>
             </article>
           ))}
-        </div>
       </div>
     </div>
   );

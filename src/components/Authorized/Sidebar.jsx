@@ -28,7 +28,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
     <div>
      {/* sidebar for mobile */}
      <Transition.Root show={sidebarOpen} as={Fragment}>
-        <Dialog className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
+        <Dialog className="relative z-50 md:hidden" onClose={setSidebarOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -126,12 +126,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:col-start-1 lg:col-span-1 lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:flex lg:flex-col lg:justify-between lg:overflow-y-auto lg:bg-chocolate lg:pb-4 lg:w-20">
+      <div className="hidden md:fixed md:inset-y-0 md:left-0 md:z-50 md:flex md:flex-col md:justify-between md:overflow-y-auto md:bg-chocolate md:pb-4 md:w-20">
         <div className="flex h-16 shrink-0 items-center justify-center">
           <img className="h-8 w-auto" src={smallLogo} alt="Chatter App" />
         </div>
-        <nav className="mt-8">
-          <ul className="flex flex-col items-center space-y-4">
+        <nav className="">
+          <ul className="flex flex-col items-center space-y-6">
             {navigation.map((item) => (
               <li key={item.name}>
                 <Link
@@ -153,7 +153,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
         </nav>
         <button
           onClick={handleSignOut}
-          className="lg:group lg:flex lg:justify-center lg:mx-4 lg:gap-x-3 lg:rounded-md lg:p-3 lg:text-sm lg:leading-6 lg:font-semibold lg:text-yellow-500 lg:hover:text-yellow-600 lg:hover:bg-neutral-800"
+          className="md:group md:flex md:justify-center md:mx-4 md:gap-x-3 md:rounded-md md:p-3 md:text-sm md:leading-6 md:font-semibold md:text-yellow-500 md:hover:text-yellow-600 md:hover:bg-neutral-800"
         >
           <ArrowLeftStartOnRectangleIcon
             className="h-7 w-7 shrink-0"

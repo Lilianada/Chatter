@@ -52,26 +52,25 @@ export default function Skeleton() {
  
 
   return (
-    <main class="h-screen overflow-hidden">
-      <div class="relative flex h-full">
-        {/* <!-- Sidebar --> */}
-        <Sidebar
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-          navigation={navigation}
-        />
+    <main className="h-screen overflow-hidden">
+    <div className="relative flex h-full">
+      {/* Sidebar */}
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        navigation={navigation}
+      />
 
-        <div class="flex flex-1 flex-col lg:pl-20">
-          {/* <!-- Header --> */}
-          <Header setSidebarOpen={setSidebarOpen} />
+      <div className="flex flex-1 flex-col lg:pl-20">
+        {/* Header */}
+        <Header setSidebarOpen={setSidebarOpen} />
 
-         
-            {/* <!-- Content Area --> */}
-          <main class="relative top-[4.5rem]">
-           <Outlet />
-          </main>
-        </div>
+        {/* Content Area */}
+        <main className="relative top-[4.5rem] flex-1 overflow-hidden">
+          <Outlet />
+        </main>
       </div>
-    </main>
+    </div>
+  </main>
   );
 }

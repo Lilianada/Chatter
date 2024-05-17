@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowLeftStartOnRectangleIcon,
@@ -16,7 +16,7 @@ function classNames(...classes) {
 }
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
-  console.log(navigation);
+  const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -132,13 +132,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
           <img className="h-8 w-auto" src={smallLogo} alt="Chatter App" />
         </div>
         <nav className="">
-          <ul className="flex flex-col items-center space-y-6">
-            {navigation.map((item) => (
+        <ul className="flex flex-col items-center space-y-6">
+          {navigation.map((item) => {
+            const isActive = location.pathname === item.to;
+            return (
               <li key={item.name}>
                 <Link
                   to={item.to}
                   className={classNames(
-                    item.current
+                    isActive
                       ? "bg-neutral-800 text-white"
                       : "text-gray-400 hover:text-white hover:bg-neutral-800",
                     "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold"
@@ -148,9 +150,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                   <span className="sr-only">{item.name}</span>
                 </Link>
               </li>
-            ))}
-            
-          </ul>
+            );
+          })}
+        </ul>
         </nav>
         <button
           onClick={handleSignOut}

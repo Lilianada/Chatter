@@ -1,92 +1,89 @@
-import React, { useState } from "react";
+import { useRef, useState } from "react";
 import {
+  HomeIcon,
   DocumentChartBarIcon,
   CreditCardIcon,
-  HomeIcon,
   UserCircleIcon,
-  ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import Header from "./Header";
-import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import CustomModal from "../Utils/CustomModal";
-import { auth } from "../../config/firebase";
+import Header from "./Header";
+import CategoryTabs from "./CategoryTabs";
+import { useUserTopics } from "../../context/UserTopicsContext";
+import { Outlet } from "react-router-dom";
 
-export default function Skeleton() {
+const navigation = [
+  { name: "Home", to: "/browse", icon: HomeIcon, current: true },
+  {
+    name: "Profile",
+    to: "/profile",
+    icon: UserCircleIcon,
+    current: false,
+  },
+  {
+    name: "New Article",
+    to: "/dashboard/new-article",
+    icon: DocumentChartBarIcon,
+    current: false,
+  },
+  {
+    name: "Settings",
+    to: "/dashboard/fixed_term_deposits",
+    icon: CreditCardIcon,
+    current: false,
+  },
+];
+
+export default function Test() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const containerRef = useRef(null);
+  const { userTopics } = useUserTopics();
 
-  const navigation = [
-    { name: "Home", to: "/browse", icon: HomeIcon, current: true },
-    {
-      name: "Profile",
-      to: "/profile",
-      icon: UserCircleIcon,
-      current: false,
-    },
-    {
-      name: "New Article",
-      to: "/dashboard/new-article",
-      icon: DocumentChartBarIcon,
-      current: false,
-    },
-    {
-      name: "Settings",
-      to: "/dashboard/fixed_term_deposits",
-      icon: CreditCardIcon,
-      current: false,
-    },
-  ];
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const checkForScroll = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+    setShowLeftArrow(scrollLeft > 0);
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth);
+  };
 
   return (
-    <div>
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        navigation={navigation}
-      />
-
-      <Header setSidebarOpen={setSidebarOpen} />
-      {isOpen && (
-        <CustomModal
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Signout"
-          description="Are you sure you want to sign out of your account?"
-          showConfirmButton={true}
-          confirmButtonText="Sign Out"
-          cancelButtonText="Cancel"
-          confirmButtonBgColor="bg-red-600"
-          confirmButtonTextColor="text-white"
-          onConfirm={() => {
-            setIsLoading(true);
-            auth
-              .signOut()
-              .then(() => {
-                setIsLoading(false);
-                navigate("/");
-              })
-              .catch((error) => {
-                setIsLoading(false);
-                console.error("Error signing out:", error);
-              });
-          }}
-          onCancel={() => setIsOpen(false)}
-          Icon={ExclamationTriangleIcon}
-          iconBgColor="bg-red-100"
-          buttonBgColor="bg-red-600"
-          iconTextColor="text-red-600"
-          loading={isLoading}
+    <main class="h-screen overflow-hidden">
+      <div class="relative flex h-full">
+        {/* <!-- Sidebar --> */}
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          navigation={navigation}
         />
-      )}
 
-      <main className="pt-4 lg:pt-8 pb-10 bg-white md:w-[calc(100vw_-_5rem)] ml-auto px-4">
-        <div className="px-2">
-          <Outlet />
+        <div class="flex flex-1 flex-col lg:pl-20">
+          {/* <!-- Header --> */}
+          <Header setSidebarOpen={setSidebarOpen} />
+
+          {/* <!-- Tabs Menu --> */}
+          <div class="sticky top-[4.5rem] z-10 md:pl-20 lg:pl-0">
+            <CategoryTabs
+              categories={userTopics}
+              checkForScroll={checkForScroll}
+              showLeftArrow={showLeftArrow}
+              showRightArrow={showRightArrow}
+              containerRef={containerRef}
+              onCategorySelect={handleCategorySelect}
+              selectedCategory={selectedCategory}
+            />
+          </div>
+
+          <main class="flex gap-4 flex-1 relative top-[4.5rem] overflow-hidden">
+            {/* <!-- Content Area --> */}
+           <Outlet />
+          </main>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

@@ -11,9 +11,7 @@ import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
 import Skeleton from "./components/Authorized/Skeleton";
-import Arts from "./components/Authorized/Arts";
 import MainContent from "./components/Authorized/MainContent";
-import Test from "./components/Authorized/Test";
 
 function App() {
   return (
@@ -26,7 +24,7 @@ function App() {
           path="/browse/"
           element={
             <ProtectedRoutes>
-              <Test />
+              <Skeleton />
             </ProtectedRoutes>
           }
         >

@@ -4,52 +4,52 @@ import {
   DocumentChartBarIcon,
   CreditCardIcon,
   UserCircleIcon,
+  Cog6ToothIcon,
+  PencilSquareIcon,
+  BellIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import CategoryTabs from "./CategoryTabs";
-import { useUserTopics } from "../../context/UserTopicsContext";
 import { Outlet } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", to: "/browse", icon: HomeIcon, current: true },
+  { name: "Home", to: "/dashboard/", icon: HomeIcon, current: true },
   {
     name: "Profile",
-    to: "/profile",
+    to: "/dashboard/profile",
     icon: UserCircleIcon,
     current: false,
   },
   {
     name: "New Article",
     to: "/dashboard/new-article",
-    icon: DocumentChartBarIcon,
+    icon: PencilSquareIcon,
     current: false,
   },
   {
     name: "Settings",
-    to: "/dashboard/fixed_term_deposits",
-    icon: CreditCardIcon,
+    to: "/dashboard/settings",
+    icon: Cog6ToothIcon,
+    current: false,
+  },
+  {
+    name: "Notification",
+    to: "/dashboard/notification",
+    icon: BellIcon,
+    current: false,
+  },
+  {
+    name: "Help",
+    to: "/dashboard/help",
+    icon: QuestionMarkCircleIcon,
     current: false,
   },
 ];
 
-export default function Test() {
+export default function Skeleton() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const containerRef = useRef(null);
-  const { userTopics } = useUserTopics();
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-  };
-
-  const checkForScroll = () => {
-    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-    setShowLeftArrow(scrollLeft > 0);
-    setShowRightArrow(scrollLeft < scrollWidth - clientWidth);
-  };
+ 
 
   return (
     <main class="h-screen overflow-hidden">
@@ -65,21 +65,9 @@ export default function Test() {
           {/* <!-- Header --> */}
           <Header setSidebarOpen={setSidebarOpen} />
 
-          {/* <!-- Tabs Menu --> */}
-          <div class="sticky top-[4.5rem] z-10 md:pl-20 lg:pl-0">
-            <CategoryTabs
-              categories={userTopics}
-              checkForScroll={checkForScroll}
-              showLeftArrow={showLeftArrow}
-              showRightArrow={showRightArrow}
-              containerRef={containerRef}
-              onCategorySelect={handleCategorySelect}
-              selectedCategory={selectedCategory}
-            />
-          </div>
-
-          <main class="flex gap-4 flex-1 relative top-[4.5rem] overflow-hidden">
+         
             {/* <!-- Content Area --> */}
+          <main class="relative top-[4.5rem]">
            <Outlet />
           </main>
         </div>

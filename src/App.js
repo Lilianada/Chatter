@@ -21,7 +21,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/signin" element={<Signin />} />
         <Route
-          path="/browse/"
+          path="/dashboard/"
           element={
             <ProtectedRoutes>
               <Skeleton />
@@ -44,22 +44,6 @@ function App() {
               </ProtectedRoutes>
             }
           />
-          {/* <Route
-            path="/onboarding"
-            element={
-              <ProtectedRoutes>
-                <Onboarding />
-              </ProtectedRoutes>
-            }
-          /> */}
-          {/* <Route
-            path="/articles"
-            element={
-              <ProtectedRoutes>
-                <ArticlesList />
-              </ProtectedRoutes>
-            }
-          /> */}
           <Route
             path="profile"
             element={
@@ -77,7 +61,7 @@ function App() {
             }
           />
           <Route
-            path="support"
+            path="help"
             element={
               <ProtectedRoutes>
                 <Support />

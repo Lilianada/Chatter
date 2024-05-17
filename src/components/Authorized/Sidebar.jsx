@@ -16,6 +16,7 @@ function classNames(...classes) {
 }
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
+  console.log(navigation);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -135,7 +136,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
             {navigation.map((item) => (
               <li key={item.name}>
                 <Link
-                  to={item.href}
+                  to={item.to}
                   className={classNames(
                     item.current
                       ? "bg-neutral-800 text-white"

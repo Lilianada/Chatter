@@ -78,7 +78,7 @@ export default function Header({ setSidebarOpen }) {
             >
               <span className="absolute -inset-1.5" />
               <PlusIcon className="h-5 w-5" aria-hidden="true" />
-              <span className="sr-only">Add file</span>
+              <span className="sr-only">New Article</span>
             </button>
           </Menu.Button>
           <Transition

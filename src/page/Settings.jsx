@@ -1,15 +1,9 @@
 import React from "react";
-import Header from "../components/Authorized/Header";
-import Footer from "../components/Unauthorized/Footer";
 
 export default function Settings() {
 
   return (
-    <>
-      <Header />
-      <div className="flex h-full">
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-          <main className="flex flex-1 overflow-hidden">
+          <section className="flex flex-1 overflow-hidden">
             <div className="flex flex-1 flex-col overflow-y-auto xl:overflow-hidden">
               <div className="flex flex-1 xl:overflow-hidden">
                 {/* Main content */}
@@ -116,10 +110,10 @@ export default function Settings() {
                 </div>
               </div>
             </div>
-          </main>
-        </div>
-      </div>
-      <Footer/>
-    </>
+          </section>
+      // <div className="flex h-full">
+      //   <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+      //   </div>
+      // </div>
   );
 }

@@ -75,18 +75,17 @@ export default function NewArticle() {
 
   return (
     <>
-      <Header/>
       <div className="mx-4 my-8 sm:mx-12 sm:my-12">
-        <UploadCoverImage  
+        {/* <UploadCoverImage  
           selectedImage={selectedImage}
           handleImageChange={handleImageChange}
-        />
-        <SelectCategories 
+        /> */}
+        {/* <SelectCategories 
           categories={categories}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           onChange={handleCategoryChange}
-        />
+        /> */}
        <TextArea 
         handleEditorChange={handleEditorChange}
         apiKey={apiKey}
@@ -95,7 +94,6 @@ export default function NewArticle() {
         // handleChange={handleChange}
         />
       </div>
-      <Footer/>
     </>
   )
 }

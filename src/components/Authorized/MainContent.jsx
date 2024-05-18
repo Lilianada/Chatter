@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import Arts from "./Arts";
-import Articles from "./Articles";
 import FollowerSuggestion from "./FollowerSuggestion";
 import CategoryTabs from "./CategoryTabs";
 import { useUserTopics } from "../../context/UserTopicsContext";

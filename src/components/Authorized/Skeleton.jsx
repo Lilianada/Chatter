@@ -1,8 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   HomeIcon,
-  DocumentChartBarIcon,
-  CreditCardIcon,
   UserCircleIcon,
   Cog6ToothIcon,
   PencilSquareIcon,
@@ -12,6 +10,7 @@ import {
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
+import Footer from "./Footer";
 
 const navigation = [
   { name: "Home", to: "/dashboard/", icon: HomeIcon, current: true },
@@ -49,28 +48,29 @@ const navigation = [
 
 export default function Skeleton() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
- 
 
   return (
-    <main className="h-screen overflow-hidden">
-    <div className="relative flex h-full">
-      {/* Sidebar */}
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        navigation={navigation}
-      />
+    <main className="h-screen overflow-auto">
+      <div className="relative flex h-full">
+        {/* Sidebar */}
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          navigation={navigation}
+        />
 
-      <div className="flex flex-1 flex-col lg:pl-20">
-        {/* Header */}
-        <Header setSidebarOpen={setSidebarOpen} />
+        <div className="flex flex-1 flex-col lg:pl-20">
+          {/* Header */}
+          <Header setSidebarOpen={setSidebarOpen} />
 
-        {/* Content Area */}
-        <main className="relative top-[4.5rem] flex-1 overflow-hidden">
-          <Outlet />
-        </main>
+          {/* Content Area */}
+          <section className="relative top-[4.5rem] flex-1 overflow-hidden flex flex-col">
+            <Outlet />
+            {/* Footer */}
+            <Footer />
+          </section>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
   );
 }

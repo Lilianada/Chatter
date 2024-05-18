@@ -83,12 +83,14 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <ul className="-mx-2 flex-1 space-y-1">
-                      {navigation.map((item) => (
+                    {navigation.map((item) => {
+                      const isActive = location.pathname === item.to;
+                      return (
                         <li key={item.name}>
                           <Link
-                            to={item.href}
+                            to={item.to}
                             className={classNames(
-                              item.current
+                              isActive
                                 ? "bg-neutral-800 text-white"
                                 : "text-gray-400 hover:text-white hover:bg-neutral-800",
                               "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -101,7 +103,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                             {item.name}
                           </Link>
                         </li>
-                      ))}
+                      );
+                    })}
                       <li
                         className="mt-auto absolute bottom-1 w-11/12"
                         onClick={() => setSidebarOpen(false)}

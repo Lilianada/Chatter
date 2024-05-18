@@ -1,10 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import Spinner from "../Utils/Spinner";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function TextArea({handleEditorChange, apiKey, isLoading, handleSubmit,}) {
   const [title, setTitle] = useState(""); // State to hold the title

@@ -142,7 +142,7 @@ const posts = [
 
 export default function Arts() {
   return (
-    <div className="mx-auto max-w-6xl px-4 lg:px-8">
+    <div className="mx-auto max-w-6xl lg:px-8">
       <div className="mx-auto max-w-2xl">
         {posts.map((post) => (
           <article

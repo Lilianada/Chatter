@@ -39,7 +39,7 @@ export default function Header({ setSidebarOpen }) {
           </h4>
         </div>
         <form
-          className="relative flex flex-1 bg-neutral-800 p-3 rounded-lg"
+          className="hidden relative sm:flex flex-1 bg-neutral-800 p-3 rounded-lg"
           action="#"
           method="GET"
         >

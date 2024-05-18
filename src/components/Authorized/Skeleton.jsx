@@ -50,7 +50,7 @@ export default function Skeleton() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <main className="h-screen overflow-auto">
+    <main className="h-screen overflow-hidden">
       <div className="relative flex h-full">
         {/* Sidebar */}
         <Sidebar

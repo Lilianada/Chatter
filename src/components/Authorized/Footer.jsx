@@ -45,7 +45,7 @@ const navigation = [
   
   export default function Footer() {
     return (
-      <footer className="block bg-chocolate">
+      <footer className="block bg-chocolate sm:bg-white sm:border-t sm:border-gray-200 md:ml-20">
         <div className="flex items-center justify-between mx-auto max-w-7xl px-4 py-4 lg:px-8">
           <div className="flex justify-center space-x-4 order-2">
             {navigation.map((item) => (

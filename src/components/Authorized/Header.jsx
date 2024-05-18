@@ -33,13 +33,13 @@ export default function Header({ setSidebarOpen }) {
           <span className="sr-only">Open sidebar</span>
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
-        <div className="flex-1 ">
+        <div className="flex-1 hidden sm:flex">
           <h4 className="text-sm font-semibold leading-6 text-white lg:hidden">
             Chatter
           </h4>
         </div>
         <form
-          className="hidden relative sm:flex flex-1 bg-neutral-800 p-3 rounded-lg"
+          className="relative flex flex-1 bg-neutral-800 p-3 rounded-lg"
           action="#"
           method="GET"
         >

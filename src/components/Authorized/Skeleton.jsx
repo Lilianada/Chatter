@@ -50,8 +50,8 @@ export default function Skeleton() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <main className="h-screen overflow-hidden">
-      <div className="relative flex h-full">
+    <main className="h-screen flex flex-col">
+      <div className="relative flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <Sidebar
           sidebarOpen={sidebarOpen}
@@ -64,13 +64,13 @@ export default function Skeleton() {
           <Header setSidebarOpen={setSidebarOpen} />
 
           {/* Content Area */}
-          <section className="relative top-[4.5rem] flex-1 overflow-hidden flex flex-col">
+          <div className="relative top-[4.5rem] flex-1 overflow-y-auto">
             <Outlet />
-            {/* Footer */}
-            <Footer />
-          </section>
+          </div>
         </div>
       </div>
+      {/* Footer */}
+      <Footer/>
     </main>
   );
 }

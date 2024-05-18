@@ -3,7 +3,7 @@ import React from "react";
 export default function Settings() {
 
   return (
-          <section className="flex flex-1 overflow-hidden">
+          <section className="flex flex-1 overflow-hidden pb-16">
             <div className="flex flex-1 flex-col overflow-y-auto xl:overflow-hidden">
               <div className="flex flex-1 xl:overflow-hidden">
                 {/* Main content */}
@@ -111,9 +111,5 @@ export default function Settings() {
               </div>
             </div>
           </section>
-      // <div className="flex h-full">
-      //   <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-      //   </div>
-      // </div>
   );
 }

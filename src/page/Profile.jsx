@@ -1,13 +1,9 @@
 import React from "react";
-import Header from "../components/Authorized/Header";
-import Footer from "../components/Unauthorized/Footer";
 
 export default function Profile() {
 
   return (
-    <>
-      <Header />
-      <div className="flex h-full">
+      <div className="flex h-full pb-16">
         <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
           <main className="flex flex-1 overflow-hidden">
             <div className="flex flex-1 flex-col overflow-y-auto xl:overflow-hidden">
@@ -270,7 +266,5 @@ export default function Profile() {
           </main>
         </div>
       </div>
-      <Footer/>
-    </>
   );
 }

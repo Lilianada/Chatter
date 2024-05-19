@@ -27,7 +27,8 @@ export default function NewArticle() {
       setIsLoading(true);
       try {
         const response = await getCategories();
-        setCategories(response.categories); // Make sure getCategories returns just the categories array
+        console.log("Categories fetched successfully:", response);
+        setCategories(response); 
       } catch (error) {
         console.error("Error fetching categories:", error);
       } finally {
@@ -76,16 +77,19 @@ export default function NewArticle() {
   return (
     <>
       <div className="mx-4 my-8 sm:mx-12 sm:my-12">
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 p-4">
+                      New Article
+                    </h1>
         {/* <UploadCoverImage  
           selectedImage={selectedImage}
           handleImageChange={handleImageChange}
         /> */}
-        {/* <SelectCategories 
+        <SelectCategories 
           categories={categories}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           onChange={handleCategoryChange}
-        /> */}
+        />
        <TextArea 
         handleEditorChange={handleEditorChange}
         apiKey={apiKey}

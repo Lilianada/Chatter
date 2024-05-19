@@ -64,7 +64,7 @@ export default function Skeleton() {
           <Header setSidebarOpen={setSidebarOpen} />
 
           {/* Content Area */}
-          <div className="relative top-[4.5rem] flex-1 overflow-y-auto">
+          <div className="relative md:ml-20 md:mt-[4.5rem] flex-1 overflow-y-auto">
             <Outlet />
           </div>
         </div>

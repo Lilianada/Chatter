@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 const tabs = [
   { name: 'My Account', href: '#', current: false },
   { name: 'Company', href: '#', current: false },
@@ -13,7 +10,6 @@ const tabs = [
 ]
 
 const CategoryTabs = ({
-  categories,
   onCategorySelect,
   selectedCategory,
 }) => {

@@ -8,7 +8,12 @@ export default function NewArticlePage({ handleEditorChange, apiKey, isLoading, 
 
   // Handle change for the title input
   const handleChange = (e) => {
-    
+    const { name, value } = e.target;
+    if (name === "title") {
+      setTitle(value);
+    } else {
+      setDescription(value);
+    }
   };
 
   // Adjusted handleSubmit to also pass title

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../components/Authorized/Header';
-import TextArea from '../components/Authorized/TextArea';
-import UploadCoverImage from '../components/Authorized/UploadCoverImage';
-import Footer from '../components/Unauthorized/Footer';
-import SelectCategories from '../components/Authorized/SelectCategories';
-import { getAuth } from 'firebase/auth';
-import { postArticle, getCategories } from '../config/article';
-
+import React, { useEffect, useState } from "react";
+import Header from "../components/Authorized/Header";
+import TextArea from "../components/Authorized/TextArea";
+import UploadCoverImage from "../components/Authorized/UploadCoverImage";
+import Footer from "../components/Unauthorized/Footer";
+import SelectCategories from "../components/Authorized/SelectCategories";
+import { getAuth } from "firebase/auth";
+import { postArticle, getCategories } from "../config/article";
 
 export default function NewArticle() {
   const [articleData, setArticleData] = useState({
@@ -28,7 +27,7 @@ export default function NewArticle() {
       try {
         const response = await getCategories();
         console.log("Categories fetched successfully:", response);
-        setCategories(response); 
+        setCategories(response);
       } catch (error) {
         console.error("Error fetching categories:", error);
       } finally {
@@ -78,26 +77,26 @@ export default function NewArticle() {
     <>
       <div className="mx-4 my-8 sm:mx-12 sm:my-12">
         <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 p-4">
-                      New Article
-                    </h1>
-        {/* <UploadCoverImage  
+          New Article
+        </h1>
+        <UploadCoverImage  
           selectedImage={selectedImage}
           handleImageChange={handleImageChange}
-        /> */}
-        <SelectCategories 
+        />
+        <SelectCategories
           categories={categories}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           onChange={handleCategoryChange}
         />
-       <TextArea 
-        handleEditorChange={handleEditorChange}
-        apiKey={apiKey}
-        isLoading={isLoading}
-        handleSubmit={handleSubmit}
-        // handleChange={handleChange}
+        <TextArea
+          handleEditorChange={handleEditorChange}
+          apiKey={apiKey}
+          isLoading={isLoading}
+          handleSubmit={handleSubmit}
+          // handleChange={handleChange}
         />
       </div>
     </>
-  )
+  );
 }

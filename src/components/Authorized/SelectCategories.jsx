@@ -8,7 +8,6 @@ function classNames(...classes) {
 export default function SelectCategories({
   categories,
   selectedCategory,
-  setSelectedCategory,
   onChange
 }) {
   return (

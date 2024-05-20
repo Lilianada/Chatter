@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PhotoIcon } from "@heroicons/react/20/solid";
 
 function UploadCoverImage({ selectedImage, handleImageChange}) {
@@ -6,7 +6,7 @@ function UploadCoverImage({ selectedImage, handleImageChange}) {
 
   return (
     <>
-    <div className="max:w-1/3 mb-6">
+    <div className="max-w-[33.333%] p-4">
       <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
         Cover photo
       </label>

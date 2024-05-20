@@ -165,7 +165,7 @@ export async function getUserCategories(userId) {
       console.log("No user categories found.");
       return [];
     }
-    console.log("userCategoriesDoc", userCategoriesDoc.data().categories);
+    // console.log("userCategoriesDoc", userCategoriesDoc.data().categories);
     return userCategoriesDoc.data().categories;
   } catch (error) {
     console.error("Error fetching user categories:", error);

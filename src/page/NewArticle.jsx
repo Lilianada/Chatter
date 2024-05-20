@@ -26,7 +26,6 @@ export default function NewArticle() {
       setIsLoading(true);
       try {
         const response = await getCategories();
-        console.log("Categories fetched successfully:", response);
         setCategories(response);
       } catch (error) {
         console.error("Error fetching categories:", error);

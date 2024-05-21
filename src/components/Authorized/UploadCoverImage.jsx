@@ -5,7 +5,6 @@ function UploadCoverImage({ selectedImage, handleImageChange}) {
   
 
   return (
-    <>
     <div className="max-w-[33.333%] mt-8">
       <label htmlFor="cover-photo" className="block text-normal font-medium text-neutral-900">
         Cover photo
@@ -55,7 +54,6 @@ function UploadCoverImage({ selectedImage, handleImageChange}) {
         </>
       )}
     </div>
-    </>
   );
 }
 

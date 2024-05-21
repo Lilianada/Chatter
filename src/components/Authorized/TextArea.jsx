@@ -26,21 +26,21 @@ export default function NewArticlePage({ handleEditorChange, apiKey, isLoading, 
     <div className="flex flex-col items-center justify-center mt-8">
       <form onSubmit={handleFormSubmit} className="w-full max-w-3xl">
         <div className="mb-4">
-          <label
+          {/* <label
             htmlFor="title"
             className="block text-normal font-medium leading-6 text-gray-900"
           >
             Title
-          </label>
+          </label> */}
           <div className="mt-2 w-full">
-            <div className="flex w-full rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-yellow-600 sm:w-full">
+            <div className="flex w-full sm:w-full">
               <input
                 type="text"
                 name="title"
                 id="title"
                 autoComplete="title"
-                className="block w-full flex-1 rounded-md border-0 bg-transparent py-1.5 pl-1 shadow-sm text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-yellow-600"
-                placeholder="Title of article"
+                className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 "
+                placeholder="Title of article..."
                 required
                 value={title}
                 onChange={handleChange}
@@ -48,22 +48,22 @@ export default function NewArticlePage({ handleEditorChange, apiKey, isLoading, 
             </div>
           </div>
         </div>
-        <div className="my-8">
-          <label
+        <div className="mt-4 mb-8">
+          {/* <label
             htmlFor="title"
             className="block text-normal font-medium leading-6 text-gray-900"
           >
             Description
-          </label>
+          </label> */}
           <div className="mt-2 w-full">
-            <div className="flex w-full rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-yellow-600 sm:w-full">
+            <div className="flex w-full sm:w-full">
               <input
                 type="text"
                 name="description"
                 id="description"
                 autoComplete="description"
-                className="block w-full flex-1 rounded-md border-0 bg-transparent py-1.5 pl-1 shadow-sm text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-yellow-600"
-                placeholder="Description of article"
+                className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-base sm:leading-6 "
+                placeholder="Description..."
                 required
                 value={description}
                 onChange={handleChange}

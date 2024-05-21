@@ -23,12 +23,12 @@ export default function NewArticlePage({ handleEditorChange, apiKey, isLoading, 
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-4">
+    <div className="flex flex-col items-center justify-center mt-8">
       <form onSubmit={handleFormSubmit} className="w-full max-w-3xl">
         <div className="mb-4">
           <label
             htmlFor="title"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-normal font-medium leading-6 text-gray-900"
           >
             Title
           </label>
@@ -48,10 +48,10 @@ export default function NewArticlePage({ handleEditorChange, apiKey, isLoading, 
             </div>
           </div>
         </div>
-        <div className="mb-6">
+        <div className="my-8">
           <label
             htmlFor="title"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-normal font-medium leading-6 text-gray-900"
           >
             Description
           </label>

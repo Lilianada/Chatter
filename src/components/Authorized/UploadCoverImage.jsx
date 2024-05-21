@@ -6,8 +6,8 @@ function UploadCoverImage({ selectedImage, handleImageChange}) {
 
   return (
     <>
-    <div className="max-w-[33.333%] p-4">
-      <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
+    <div className="max-w-[33.333%] mt-8">
+      <label htmlFor="cover-photo" className="block text-normal font-medium text-neutral-900">
         Cover photo
       </label>
       {!selectedImage ? (

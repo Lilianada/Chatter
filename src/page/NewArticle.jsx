@@ -73,12 +73,12 @@ export default function NewArticle() {
   };
 
   return (
-    <>
-      <div className="mx-4 my-8 sm:mx-12 sm:my-12">
-        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 p-4">
+    <div className="flex-1 xl:overflow-y-auto">
+      <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+        <h1 className="text-3xl font-bold tracking-tight text-neutral-900">
           New Article
         </h1>
-        <UploadCoverImage  
+        <UploadCoverImage
           selectedImage={selectedImage}
           handleImageChange={handleImageChange}
         />
@@ -96,6 +96,6 @@ export default function NewArticle() {
           // handleChange={handleChange}
         />
       </div>
-    </>
+    </div>
   );
 }

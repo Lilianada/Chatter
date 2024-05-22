@@ -6,6 +6,7 @@ import Footer from "../components/Unauthorized/Footer";
 import SelectCategories from "../components/Authorized/SelectCategories";
 import { getAuth } from "firebase/auth";
 import { postArticle, getCategories } from "../config/article";
+import Spinner from "../components/Utils/Spinner";
 
 export default function NewArticle() {
   const [articleData, setArticleData] = useState({
@@ -75,19 +76,28 @@ export default function NewArticle() {
   return (
     <div className="flex-1 xl:overflow-y-auto">
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
-        <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
-          New Article
-        </h1>
-        <UploadCoverImage
+        <div className=" flex justify-between items-center">
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
+            New Article
+          </h1>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="rounded-md bg-transparent px-3 py-2 text-sm border border-neutral-300 font-semibold text-neutral-600 shadow-sm hover:border-neutral-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600 w-40 flex justify-center"
+          >
+            {isLoading ? <Spinner /> : "Publish"}
+          </button>
+        </div>
+        {/* <UploadCoverImage
           selectedImage={selectedImage}
           handleImageChange={handleImageChange}
-        />
-        <SelectCategories
+        /> */}
+        {/* <SelectCategories
           categories={categories}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           onChange={handleCategoryChange}
-        />
+        /> */}
         <TextArea
           handleEditorChange={handleEditorChange}
           apiKey={apiKey}

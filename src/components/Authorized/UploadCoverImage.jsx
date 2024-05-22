@@ -1,58 +1,30 @@
 import React from 'react';
-import { PhotoIcon } from "@heroicons/react/20/solid";
+import { PlusIcon } from "@heroicons/react/20/solid";
 
-function UploadCoverImage({ selectedImage, handleImageChange}) {
-  
-
+function UploadCoverImage({ selectedImage, handleImageChange }) {
+  console.log(selectedImage)
   return (
-    <div className="max-w-[33.333%] mt-8">
-      <label htmlFor="cover-photo" className="block text-normal font-medium text-neutral-900">
-        Cover photo
-      </label>
-      {!selectedImage ? (
-        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-10">
-          <div className="text-center">
-            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <label
-                htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
-              >
-                <span>Upload a file or drag and drop</span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                  onChange={handleImageChange}
-                />
-              </label>
-            </div>
-            <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+    <div className="mt-8">
+      <div className="flex items-center space-x-4">
+        <label
+          htmlFor="file-upload"
+          className="cursor-pointer flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200"
+        >
+          <PlusIcon className="h-8 w-8 text-gray-500" aria-hidden="true" />
+          <input
+            id="file-upload"
+            name="file-upload"
+            type="file"
+            className="sr-only"
+            onChange={handleImageChange}
+          />
+        </label>
+        {selectedImage && (
+          <div className="flex justify-center">
+            <img src={selectedImage} alt="Article cover" className="max-w-xs max-h-48 rounded-md border border-gray-300" />
           </div>
-        </div>
-      ) : (
-        <>
-        <div className=" w-fit mt-2 flex justify-center items-center rounded-lg border border-gray-300 px-4 py-4">
-          <img src={selectedImage} alt="Cover" className="max-w-xs max-h-48" />
-        </div>
-        <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <label
-                htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
-              >
-                <span>Change cover image</span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                  onChange={handleImageChange}
-                />
-              </label>
-            </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }

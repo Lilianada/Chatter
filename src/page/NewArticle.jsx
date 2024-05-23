@@ -78,7 +78,7 @@ export default function NewArticle() {
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <div className=" flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
-            New Article
+            Compose Article
           </h1>
           <button
             type="submit"
@@ -88,10 +88,10 @@ export default function NewArticle() {
             {isLoading ? <Spinner /> : "Publish"}
           </button>
         </div>
-        {/* <UploadCoverImage
+        <UploadCoverImage
           selectedImage={selectedImage}
           handleImageChange={handleImageChange}
-        /> */}
+        />
         {/* <SelectCategories
           categories={categories}
           selectedCategory={selectedCategory}

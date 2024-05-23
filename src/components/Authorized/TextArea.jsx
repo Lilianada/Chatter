@@ -65,7 +65,7 @@ export default function NewArticlePage({ handleEditorChange, apiKey, isLoading, 
                 className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-base sm:leading-6 "
                 placeholder="Subtitle..."
                 required
-                maxLength='80'
+                maxLength='100'
                 value={description}
                 onChange={handleChange}
               />

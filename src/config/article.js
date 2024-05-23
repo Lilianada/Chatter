@@ -53,14 +53,33 @@ export function truncateText(text, limit = 40) {
 
 export async function postArticle(article, userId) {
   try {
-    const postRequestRef = collection(db, USERS, userId, ARTICLE);
-    const postRef = await addDoc(postRequestRef, article);
+    const articleWithStatus = { ...article, status: 'published' };
+    const postRequestRef = collection(db, 'USERS', userId, 'ARTICLE');
+    const postRef = await addDoc(postRequestRef, articleWithStatus);
     console.log("Document written with ID: ", postRef.id, postRef);
     return {
       success: true,
       id: postRef.id,
       message: "Article posted successfully",
       article: postRef,
+    };
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    return { success: false, message: e.message };
+  }
+}
+
+export async function saveDraft(article, userId) {
+  try {
+    const articleWithStatus = { ...article, status: 'draft' };
+    const draftRequestRef = collection(db, 'USERS', userId, 'ARTICLE');
+    const draftRef = await addDoc(draftRequestRef, articleWithStatus);
+    console.log("Document written with ID: ", draftRef.id, draftRef);
+    return {
+      success: true,
+      id: draftRef.id,
+      message: "Draft saved successfully",
+      article: draftRef,
     };
   } catch (e) {
     console.error("Error adding document: ", e);

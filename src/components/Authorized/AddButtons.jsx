@@ -4,16 +4,24 @@ import {
   PhotoIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import SelectCategories from "./SelectCategories";
+import Modal from "./Modal";
 
-function AddButtons({ selectedImage, handleImageChange }) {
+function AddButtons({ selectedImage, handleImageChange, categories, selectedCategories, setSelectedCategories }) {
   const [openCategory, setOpenCategory] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    setSelectedCategories(prevState =>
+      checked ? [...prevState, value] : prevState.filter(item => item !== value)
+    );
+  };
 
   return (
     <div className="mt-0 flex gap-2">
-     
       <div className="flex items-center space-x-4">
         <label className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200">
-          <button onClick={() => setOpenCategory(!openCategory)}>
+          <button onClick={() => setOpenCategory(true)}>
             <PlusIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
           </button>
         </label>
@@ -59,6 +67,14 @@ function AddButtons({ selectedImage, handleImageChange }) {
           />
         </label>
       </div>
+      <Modal isOpen={openCategory} closeModal={() => setOpenCategory(false)}>
+        <SelectCategories
+          categories={categories}
+          selectedCategories={selectedCategories}
+          handleCheckboxChange={handleCheckboxChange}
+          close={() => setOpenCategory(false)}
+        />
+      </Modal>
     </div>
   );
 }

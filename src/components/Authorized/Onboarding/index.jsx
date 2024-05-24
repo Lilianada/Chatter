@@ -2,7 +2,6 @@ import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useModal } from "../../../context/ModalContext";
 import QtnOne from "./QtnOne";
 import QtnTwo from "./QtnTwo";
 import QtnThree from "./QtnThree";

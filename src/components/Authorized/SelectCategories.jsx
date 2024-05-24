@@ -1,71 +1,65 @@
-import { Fragment } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import React from "react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-export default function SelectCategories({
+function SelectCategories({
   categories,
-  selectedCategory,
-  onChange
+  selectedCategories,
+  handleCheckboxChange,
+  close,
 }) {
   return (
-    <Listbox value={selectedCategory} onChange={onChange}>
-      {({ open }) => (
-        <div className='mt-0'>
-          <div className="relative">
-            <Listbox.Button className="relative  mt-0 cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              <span className="block truncate">{selectedCategory || "Select a category"}</span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-              </span>
-            </Listbox.Button>
-
-            <Transition
-              show={open}
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-60  overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {categories.map((category, idx) => (
-                  <Listbox.Option
-                    key={idx}
-                    className={({ active }) =>
-                      classNames(
-                        active ? 'bg-yellow-600 text-white' : 'text-gray-900',
-                        'relative cursor-default select-none py-2 pl-8 pr-4 capitalize'
-                      )
-                    }
-                    value={category.id}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate capitalize')}>
-                          {category.id}
-                        </span>
-
-                        {selected ? (
-                          <span
-                            className={classNames(
-                              active ? 'text-chocolate' : 'text-yellow-500',
-                              'absolute inset-y-0 left-0 flex items-center pl-1.5 capitalize'
-                            )}
-                          >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
-          </div>
+    <div className="mt-0 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl px-6 pt-8 pb-4">
+      <div className="flex justify-between items-start">
+        <div className="pb-8 text-left">
+          <h3 className="text-lg font-semibold leading-6 text-gray-900">
+            Choose Topics
+          </h3>
+          <p className="mt-1 text-sm text-gray-500">
+            Select all topics you would like your article to be categorized
+            under.
+          </p>
         </div>
-      )}
-    </Listbox>
+        <button
+          className="p-1 bg-neutral-200 rounded-lg border-1 border-neutral-300 "
+          onClick={close}
+        >
+          <XMarkIcon className="h-6 w-6 text-gray-500" aria-hidden="true" />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {categories.map((item) => (
+          <div
+            key={item.id}
+            className={`relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-indigo-400 cursor-pointer 
+              ${
+                selectedCategories.includes(item.id)
+                  ? "border-indigo-400 bg-indigo-50 focus-within:ring-indigo-400"
+                  : "border-gray-300 bg-white focus-within:ring-indigo-500"
+              }`}
+          >
+            <div className="flex-shrink-0">
+              <input
+                type="checkbox"
+                name="categories"
+                value={item.id}
+                checked={selectedCategories.includes(item.id)}
+                onChange={handleCheckboxChange}
+                className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <span className="focus:outline-none">
+                <p className="text-xs font-medium text-gray-900 capitalize">
+                  {item.name}
+                </p>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
+
+export default SelectCategories;

@@ -109,6 +109,7 @@ export default function NewArticle() {
         { ...articleData, status: "published" },
         userId
       );
+      console.log(response)
       if (response) {
         customModal({
           showModal,
@@ -203,7 +204,7 @@ export default function NewArticle() {
               disabled={isLoading}
               className="bg-transparent px-3 py-2 text-sm border-0 font-semibold text-neutral-400 hover:text-green-400"
             >
-              {isLoading ? "Publishing..." : "Publish"}
+              {isLoading ? <span className="text-green-400">Publishing...</span> : "Publish"}
             </button>
           </div>
         </div>

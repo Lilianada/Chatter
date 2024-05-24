@@ -1,10 +1,17 @@
 import { addDoc, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import { db, storage } from "./firebase";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 
 const USERS = "users";
 // const ARTICLE = 'ARTICLE';
 const CATEGORIES = "categories";
 const ARTICLE = "article";
+
+async function uploadImage(imageBase64, userId) {
+  const storageRef = ref(storage, `users/${userId}/images/${Date.now()}.jpg`);
+  await uploadString(storageRef, imageBase64, 'data_url');
+  return await getDownloadURL(storageRef);
+}
 
 export function convertTimestampToDate(timestamp) {
   // Ensure the input is a valid Firebase Timestamp object
@@ -54,8 +61,17 @@ export function truncateText(text, limit = 40) {
 export async function postArticle(article, userId) {
   try {
     const articleWithStatus = { ...article, status: 'published' };
-    const postRequestRef = collection(db, 'USERS', userId, 'ARTICLE');
+
+    // Upload image to Firebase Storage
+    if (article.coverImage) {
+      const imageUrl = await uploadImage(article.coverImage, userId);
+      articleWithStatus.coverImage = imageUrl;
+    }
+
+    const postRequestRef = collection(db, 'users', userId, 'articles');
+    const postArticleRef = collection(db, 'articles', userId, 'articles');
     const postRef = await addDoc(postRequestRef, articleWithStatus);
+    await addDoc(postArticleRef, articleWithStatus);
     console.log("Document written with ID: ", postRef.id, postRef);
     return {
       success: true,

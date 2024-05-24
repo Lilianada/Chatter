@@ -4,7 +4,6 @@ import BalloonEditor from "@ckeditor/ckeditor5-build-balloon";
 import { getAuth } from "firebase/auth";
 import { getCategories, postArticle, saveDraft } from "../config/article";
 import AddButtons from "../components/Authorized/AddButtons";
-import SelectCategories from "../components/Authorized/SelectCategories";
 import { useSelector } from "react-redux";
 import { useModal } from "../context/ModalContext";
 import { customModal } from "../utils/modalUtils";
@@ -12,18 +11,19 @@ import { CheckIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 export default function NewArticle() {
   const { showModal } = useModal();
-  const userData = useSelector((state) => state.user.userId);
+  const userData = useSelector((state) => state.user);
   const [articleData, setArticleData] = useState({
     title: "",
-    category: "",
+    categories: [],
     description: "",
     content: "",
-    coverImage: "",
-    author: "",
+    author: userData.name,
+    userId: userData.userId,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [savingDraft, setSavingDraft] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -41,6 +41,14 @@ export default function NewArticle() {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    setArticleData((prevData) => ({
+      ...prevData,
+      categories: selectedCategories
+    }));
+  }, [selectedCategories]);
+
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -56,18 +64,27 @@ export default function NewArticle() {
     }
   };
 
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    setSelectedCategories(prevState =>
+      checked ? [...prevState, value] : prevState.filter(item => item !== value)
+    );
+  };
+
   const handleEditorChange = (key, value) => {
     setArticleData((prevData) => ({ ...prevData, [key]: value }));
   };
 
   const isValidArticle = (data) => {
+    console.log(data)
     return (
       data.title &&
-      data.category &&
+      data.categories &&
       data.description &&
       data.content &&
       data.coverImage &&
-      data.author
+      data.author &&
+      data.userId
     );
   };
 
@@ -92,32 +109,32 @@ export default function NewArticle() {
         { ...articleData, status: "published" },
         userId
       );
-      if (response){
-      customModal({
-        showModal,
-        title: "Article Published",
-        text: 'Your article has been published successfully.',
-        icon: CheckIcon,
-        iconBgColor: 'bg-green-100',
-        iconTextColor: 'text-green-400',
-        buttonBgColor: 'bg-green-400',
-        showConfirmButton: false,
-        timer: 3000,
-      })
-    }
+      if (response) {
+        customModal({
+          showModal,
+          title: "Article Published",
+          text: "Your article has been published successfully.",
+          icon: CheckIcon,
+          iconBgColor: "bg-green-100",
+          iconTextColor: "text-green-400",
+          buttonBgColor: "bg-green-400",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
     } catch (error) {
       console.error("Error posting article:", error);
       customModal({
         showModal,
         title: "Error",
-        text: 'There was an error encountered in publishing your article.',
+        text: "There was an error encountered in publishing your article.",
         icon: ExclamationCircleIcon,
-        iconBgColor: 'bg-red-100',
-        iconTextColor: 'text-red-400',
-        buttonBgColor: 'bg-red-400',
+        iconBgColor: "bg-red-100",
+        iconTextColor: "text-red-400",
+        buttonBgColor: "bg-red-400",
         showConfirmButton: false,
         timer: 3000,
-      })
+      });
     } finally {
       setIsLoading(false);
     }
@@ -144,19 +161,19 @@ export default function NewArticle() {
         { ...articleData, status: "draft" },
         userId
       );
-      if (response){
-      customModal({
-        showModal,
-        title: "Draft Saved",
-        text: 'Your draft has been saved successfully.',
-        icon: CheckIcon,
-        iconBgColor: 'bg-green-100',
-        iconTextColor: 'text-green-400',
-        buttonBgColor: 'bg-green-400',
-        showConfirmButton: false,
-        timer: 3000,
-      })
-    }
+      if (response) {
+        customModal({
+          showModal,
+          title: "Draft Saved",
+          text: "Your draft has been saved successfully.",
+          icon: CheckIcon,
+          iconBgColor: "bg-green-100",
+          iconTextColor: "text-green-400",
+          buttonBgColor: "bg-green-400",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
     } catch (error) {
       console.error("Error saving draft:", error);
     } finally {
@@ -190,8 +207,24 @@ export default function NewArticle() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center mt-4">
-          <form className="w-full max-w-3xl">
+        <div className="mt-8">
+
+          {selectedImage && (
+            <div className="flex justify-start mb-4">
+              <img
+                src={selectedImage}
+                alt="Article cover"
+                className="max-w-sm max-h-52 rounded-md border border-gray-300"
+              />
+            </div>
+          )}
+          <AddButtons
+            handleImageChange={handleImageChange}
+            handleCheckboxChange={handleCheckboxChange}
+            categories={categories}
+            selectedCategories={selectedCategories}
+          />
+          <form className="w-full max-w-3xl mt-4">
             <div className="mt-2 flex items-center">
               <div className="w-full">
                 <div className="flex w-full sm:w-full">
@@ -211,6 +244,7 @@ export default function NewArticle() {
                 </div>
               </div>
             </div>
+
             <div className=" flex items-center">
               <div className="w-full">
                 <div className="flex w-full sm:w-full">
@@ -240,22 +274,6 @@ export default function NewArticle() {
                   handleEditorChange("content", editor.getData());
                 }}
               />
-            </div>
-
-            <div className="flex justify-between items-center mt-8">
-              <AddButtons
-                selectedImage={selectedImage}
-                handleImageChange={handleImageChange}
-                categories={categories}
-                setCategories={setCategories}
-                userData={userData}
-              />
-              {/* <SelectCategories
-                categories={categories}
-                selectedCategory={articleData.category}
-                onChange={handleCategoryChange}
-                userData={userData}
-              /> */}
             </div>
           </form>
         </div>

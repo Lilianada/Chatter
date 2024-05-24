@@ -1,22 +1,16 @@
 import React, { useState } from "react";
 import { PlusIcon } from "@heroicons/react/20/solid";
-import {
-  PhotoIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
 import SelectCategories from "./SelectCategories";
 import Modal from "./Modal";
 
-function AddButtons({ selectedImage, handleImageChange, categories, selectedCategories, setSelectedCategories }) {
+function AddButtons({
+  handleImageChange,
+  categories,
+  selectedCategories,
+  handleCheckboxChange,
+}) {
   const [openCategory, setOpenCategory] = useState(false);
-
-  const handleCheckboxChange = (event) => {
-    const { value, checked } = event.target;
-    setSelectedCategories(prevState =>
-      checked ? [...prevState, value] : prevState.filter(item => item !== value)
-    );
-  };
-
   return (
     <div className="mt-0 flex gap-2">
       <div className="flex items-center space-x-4">
@@ -41,15 +35,6 @@ function AddButtons({ selectedImage, handleImageChange, categories, selectedCate
             title="Cover Image"
           />
         </label>
-        {selectedImage && (
-          <div className="flex justify-center">
-            <img
-              src={selectedImage}
-              alt="Article cover"
-              className="max-w-xs max-h-48 rounded-md border border-gray-300"
-            />
-          </div>
-        )}
       </div>
       <div className="flex items-center space-x-4">
         <label

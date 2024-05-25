@@ -196,7 +196,7 @@ export default function NewArticle() {
               disabled={savingDraft}
               className="bg-transparent px-3 py-2 text-sm border-0 font-semibold text-neutral-400 hover:text-neutral-300"
             >
-              {savingDraft ? "Saving..." : "Save Draft"}
+              {savingDraft ?<span className="text-green-400">Saving...</span>  : "Save Draft"}
             </button>
             <button
               type="button"

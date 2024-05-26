@@ -3,7 +3,7 @@ import React from "react";
 export default function Profile() {
 
   return (
-      <div className="flex h-full pb-16">
+      <div className="flex h-full">
         <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
           <main className="flex flex-1 overflow-hidden">
             <div className="flex flex-1 flex-col overflow-y-auto xl:overflow-hidden">

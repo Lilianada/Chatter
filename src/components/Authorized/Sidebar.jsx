@@ -86,7 +86,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, navigation }) {
                     {navigation.map((item) => {
                       const isActive = location.pathname === item.to;
                       return (
-                        <li key={item.name}>
+                        <li key={item.name}  onClick={() => setSidebarOpen(false)}> 
                           <Link
                             to={item.to}
                             className={classNames(

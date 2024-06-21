@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
-  BellIcon,
   ExclamationTriangleIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";

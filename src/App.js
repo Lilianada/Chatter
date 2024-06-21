@@ -1,7 +1,6 @@
 import "./App.css";
 import LandingPage from "./page/LandingPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ErrorPage from "./page/404";
 import Home from "./page/Home";
 // import ArticlesList from "./page/ArticlesList";
 import Profile from "./page/Profile";
@@ -12,13 +11,14 @@ import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
 import Skeleton from "./components/Authorized/Skeleton";
 import MainContent from "./components/Authorized/MainContent";
+import PageNotFound from "./components/Utils/PageNotFound";
 
 function App() {
   return (
     <Router className="App">
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<PageNotFound />} />
         <Route path="/signin" element={<Signin />} />
         <Route
           path="/dashboard/"

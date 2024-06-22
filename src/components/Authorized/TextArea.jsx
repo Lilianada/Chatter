@@ -3,6 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 
 function TextArea({ handleEditorChange, articleData }) {
+  
   return (
     <div className="flex flex-col items-center justify-center mt-8">
       <form className="w-full max-w-3xl">

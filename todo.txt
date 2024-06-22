@@ -1,2 +1,5 @@
-- Who to follow : List of users
-- Trending : List of articles with the most views
+- Use firebase for authentication: done
+- Use Nodejs/Expressjs for backend: done
+- Use MongoDB for database: done
+- Use React for frontend: done
+- Use Redux for state management: done

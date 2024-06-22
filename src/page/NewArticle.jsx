@@ -17,8 +17,13 @@ export default function NewArticle() {
     categories: [],
     description: "",
     content: "",
-    author: userData.name,
+    author: {
+      name: userData.fullName,
+      email: userData.email,
+      image: userData.photoURL,
+    },
     userId: userData.userId,
+    status: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [savingDraft, setSavingDraft] = useState(false);
@@ -91,8 +96,9 @@ export default function NewArticle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const auth = getAuth();
-    const userId = auth.currentUser ? auth.currentUser.uid : null;
-    if (!userId) {
+    const token = await auth.currentUser.getIdToken();
+    
+    if (!token) {
       console.error("User is not authenticated.");
       return;
     }
@@ -104,11 +110,19 @@ export default function NewArticle() {
 
     setIsLoading(true);
 
+    const newArticle = {
+      title: articleData.title,
+      categories: articleData.categories,
+      description: articleData.description,
+      content: articleData.content,
+      coverImage: articleData.coverImage,
+      author: articleData.author,
+      status: "published",
+    }
+console.log(newArticle)
     try {
-      const response = await postArticle(
-        { ...articleData, status: "published" },
-        userId
-      );
+      
+      const response = await postArticle( newArticle, token);
       console.log(response)
       if (response) {
         customModal({
@@ -144,8 +158,9 @@ export default function NewArticle() {
   const handleSaveDraft = async (e) => {
     e.preventDefault();
     const auth = getAuth();
-    const userId = auth.currentUser ? auth.currentUser.uid : null;
-    if (!userId) {
+    const token = await auth.currentUser.getIdToken();
+    
+    if (!token) {
       console.error("User is not authenticated.");
       return;
     }
@@ -160,7 +175,7 @@ export default function NewArticle() {
     try {
       const response = await saveDraft(
         { ...articleData, status: "draft" },
-        userId
+        token 
       );
       if (response) {
         customModal({

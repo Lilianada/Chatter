@@ -57,7 +57,7 @@ const navigation = [
           </div>
           <div className="order-1 ">
             <p className="text-center text-xs leading-5 text-neutral-500">
-              &copy; 2020 Chatter, Inc. All rights reserved.
+              &copy; 2024 Chatter, Inc. All rights reserved.
             </p>
           </div>
         </div>

@@ -73,7 +73,7 @@ export default function Header({ setSidebarOpen }) {
           <Menu.Button className="-m-1.5 flex items-center p-1.5">
             <button
               type="button"
-              className="relative rounded-full bg-yellow-600 p-1.5 text-white hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+              className="relative rounded-full bg-yellow-600 p-1.5 text-neutral-600 hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
             >
               <span className="absolute -inset-1.5" />
               <PlusIcon className="h-5 w-5" aria-hidden="true" />

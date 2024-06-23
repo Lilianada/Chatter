@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import BalloonEditor from "@ckeditor/ckeditor5-build-balloon";
 import { getAuth } from "firebase/auth";
-import { getCategories, postArticle, saveDraft } from "../config/article";
+import { getCategories } from "../config/article";
 import AddButtons from "../components/Authorized/AddButtons";
 import { useSelector } from "react-redux";
 import { useModal } from "../context/ModalContext";
 import { customModal } from "../utils/modalUtils";
-import { CheckIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  ExclamationCircleIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import { postArticle, saveDraft } from "../services/articleServices";
 
 export default function NewArticle() {
   const { showModal } = useModal();
@@ -18,9 +23,9 @@ export default function NewArticle() {
     description: "",
     content: "",
     author: {
-      name: userData.fullName,
+      name: userData.name,
       email: userData.email,
-      image: userData.photoURL,
+      // image: userData.photoURL,
     },
     userId: userData.userId,
     status: "",
@@ -33,14 +38,11 @@ export default function NewArticle() {
 
   useEffect(() => {
     async function fetchCategories() {
-      setIsLoading(true);
       try {
         const response = await getCategories();
         setCategories(response);
       } catch (error) {
         console.error("Error fetching categories:", error);
-      } finally {
-        setIsLoading(false);
       }
     }
     fetchCategories();
@@ -49,10 +51,9 @@ export default function NewArticle() {
   useEffect(() => {
     setArticleData((prevData) => ({
       ...prevData,
-      categories: selectedCategories
+      categories: selectedCategories,
     }));
   }, [selectedCategories]);
-
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -71,8 +72,10 @@ export default function NewArticle() {
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
-    setSelectedCategories(prevState =>
-      checked ? [...prevState, value] : prevState.filter(item => item !== value)
+    setSelectedCategories((prevState) =>
+      checked
+        ? [...prevState, value]
+        : prevState.filter((item) => item !== value)
     );
   };
 
@@ -81,7 +84,7 @@ export default function NewArticle() {
   };
 
   const isValidArticle = (data) => {
-    console.log(data)
+    console.log(data);
     return (
       data.title &&
       data.categories &&
@@ -97,7 +100,7 @@ export default function NewArticle() {
     e.preventDefault();
     const auth = getAuth();
     const token = await auth.currentUser.getIdToken();
-    
+
     if (!token) {
       console.error("User is not authenticated.");
       return;
@@ -118,12 +121,11 @@ export default function NewArticle() {
       coverImage: articleData.coverImage,
       author: articleData.author,
       status: "published",
-    }
-console.log(newArticle)
+    };
+    console.log(newArticle);
     try {
-      
-      const response = await postArticle( newArticle, token);
-      console.log(response)
+      const response = await postArticle(newArticle, token);
+      console.log(response);
       if (response) {
         customModal({
           showModal,
@@ -159,7 +161,7 @@ console.log(newArticle)
     e.preventDefault();
     const auth = getAuth();
     const token = await auth.currentUser.getIdToken();
-    
+
     if (!token) {
       console.error("User is not authenticated.");
       return;
@@ -175,7 +177,7 @@ console.log(newArticle)
     try {
       const response = await saveDraft(
         { ...articleData, status: "draft" },
-        token 
+        token
       );
       if (response) {
         customModal({
@@ -197,6 +199,10 @@ console.log(newArticle)
     }
   };
 
+  const handleDeleteCategories = () => {
+    setSelectedCategories([]);
+  };
+
   return (
     <div className="flex-1 xl:overflow-y-auto mt-[4.5rem] md:mt-0">
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
@@ -208,23 +214,30 @@ console.log(newArticle)
             <button
               type="button"
               onClick={handleSaveDraft}
-              disabled={savingDraft}
+              disabled={savingDraft || isLoading}
               className="bg-transparent px-3 py-2 text-sm border-0 font-semibold text-neutral-400 hover:text-neutral-300"
             >
-              {savingDraft ?<span className="text-green-400">Saving...</span>  : "Save Draft"}
+              {savingDraft ? (
+                <span className="text-green-400">Saving...</span>
+              ) : (
+                "Save Draft"
+              )}
             </button>
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={isLoading}
-              className="bg-transparent px-3 py-2 text-sm border-0 font-semibold text-neutral-400 hover:text-green-400"
+              disabled={isLoading || savingDraft}
+              className="bg-yellow-600 px-2 py-0 text-sm border-0 rounded-xl font-normal text-neutral-600 hover:bg-yellow-500 "
             >
-              {isLoading ? <span className="text-green-400">Publishing...</span> : "Publish"}
+              {isLoading ? (
+                <span className="leading-3">Publishing...</span>
+              ) : (
+                "Publish"
+              )}
             </button>
           </div>
         </div>
         <div className="mt-8">
-
           {selectedImage && (
             <div className="flex justify-start mb-4">
               <img
@@ -278,6 +291,34 @@ console.log(newArticle)
                       handleEditorChange("description", e.target.value)
                     }
                   />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-2 flex items-center">
+              <div className="w-full">
+                <div className="flex w-full sm:w-full gap-2">
+                  {selectedCategories.map((category) => (
+                    <span
+                      key={category}
+                      className="inline-flex items-center capitalize px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-100 text-gray-500 mr-2"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                  {selectedCategories.length > 0 && (
+                    <div className="flex items-center space-x-4">
+                      <button
+                        onClick={handleDeleteCategories}
+                        className="cursor-pointer flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200"
+                      >
+                        <TrashIcon
+                          className="h-3 w-3 text-gray-500"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

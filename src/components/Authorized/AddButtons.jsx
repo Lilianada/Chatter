@@ -9,6 +9,8 @@ function AddButtons({
   categories,
   selectedCategories,
   handleCheckboxChange,
+  handleDeleteImage,
+  selectedImage,
 }) {
   const [openCategory, setOpenCategory] = useState(false);
   return (
@@ -16,7 +18,7 @@ function AddButtons({
       <div className="flex items-center space-x-4">
         <label className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200">
           <button onClick={() => setOpenCategory(true)}>
-            <PlusIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
+            <PlusIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
           </button>
         </label>
       </div>
@@ -36,22 +38,17 @@ function AddButtons({
           />
         </label>
       </div>
-      <div className="flex items-center space-x-4">
-        <label
-          htmlFor="delete"
-          className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200"
-        >
-          <TrashIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
-          <input
-            id="delete"
-            name="delete"
-            type="button"
+      {selectedImage && (
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={(e) => handleDeleteImage(e)}
             title="Delete Image"
-            className="sr-only"
-            onChange={() => handleImageChange(null)}
-          />
-        </label>
-      </div>
+            className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200"
+          >
+            <TrashIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
+          </button>
+        </div>
+      )}
       <Modal isOpen={openCategory} closeModal={() => setOpenCategory(false)}>
         <SelectCategories
           categories={categories}

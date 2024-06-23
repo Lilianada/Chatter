@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import axios from "axios";
 
 // Authenticated user
 export function getAuthUser() {
@@ -25,17 +26,12 @@ export function getAuthUser() {
 // Register user
 export async function registerUser(email, password, fullName) {
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
+    const response = await axios.post(`${process.env.API_URL}/register`, {
       email,
-      password
-    );
-    const newUserId = userCredential.user.uid;
-    await setDoc(doc(db, "users", newUserId), {
-      fullName: fullName,
-      email: email,
-    });
-    return userCredential.user;
+      password,
+      fullName,
+  });
+  return response.data;
   } catch (error) {
     throw error;
   }

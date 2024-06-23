@@ -99,8 +99,8 @@ export default function NewArticle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const auth = getAuth();
-    const token = await auth.currentUser.getIdToken();
-
+    const token = await auth.currentUser.getIdToken(true);
+    console.log(auth.currentUser)
     if (!token) {
       console.error("User is not authenticated.");
       return;
@@ -199,9 +199,20 @@ export default function NewArticle() {
     }
   };
 
-  const handleDeleteCategories = () => {
-    setSelectedCategories([]);
+  const handleDeleteCategories = (e) => {
+    e.preventDefault();
+    if (selectedCategories.length > 0) {
+      setSelectedCategories(
+        selectedCategories.slice(0, selectedCategories.length - 1)
+      );
+    }
   };
+
+  const handleDeleteImage = (e) => {
+    e.preventDefault();
+    setSelectedImage(null);
+    setArticleData((prevData) => ({ ...prevData, coverImage: null }));
+  }
 
   return (
     <div className="flex-1 xl:overflow-y-auto mt-[4.5rem] md:mt-0">
@@ -227,13 +238,9 @@ export default function NewArticle() {
               type="button"
               onClick={handleSubmit}
               disabled={isLoading || savingDraft}
-              className="bg-yellow-600 px-2 py-0 text-sm border-0 rounded-xl font-normal text-neutral-600 hover:bg-yellow-500 "
+              className="bg-yellow-600 px-2 py-0 leading-[.5rem] text-[14px] border-0 rounded-xl font-normal text-neutral-600 hover:bg-yellow-500 "
             >
-              {isLoading ? (
-                <span className="leading-3">Publishing...</span>
-              ) : (
-                "Publish"
-              )}
+              {isLoading ? <span>Publishing...</span> : "Publish"}
             </button>
           </div>
         </div>
@@ -252,6 +259,8 @@ export default function NewArticle() {
             handleCheckboxChange={handleCheckboxChange}
             categories={categories}
             selectedCategories={selectedCategories}
+            handleDeleteImage={handleDeleteImage}
+            sele
           />
           <form className="w-full max-w-3xl mt-4">
             <div className="mt-2 flex items-center">
@@ -309,7 +318,7 @@ export default function NewArticle() {
                   {selectedCategories.length > 0 && (
                     <div className="flex items-center space-x-4">
                       <button
-                        onClick={handleDeleteCategories}
+                        onClick={(e) => handleDeleteCategories(e)}
                         className="cursor-pointer flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200"
                       >
                         <TrashIcon

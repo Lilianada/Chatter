@@ -1,13 +1,13 @@
 import {
-  createUserWithEmailAndPassword,
   getAuth,
   sendPasswordResetEmail,
-  signInWithEmailAndPassword,
   updateCurrentUser,
 } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
-import axios from "axios";
+import { deleteDoc, doc } from "firebase/firestore";
+import axiosInstance from "../utils/axiosInstance";
+
+const API_URL = `${process.env.REACT_APP_API_URL}/user`;
 
 // Authenticated user
 export function getAuthUser() {
@@ -26,7 +26,7 @@ export function getAuthUser() {
 // Register user
 export async function registerUser(email, password, fullName) {
   try {
-    const response = await axios.post(`${process.env.API_URL}/register`, {
+    const response = await axiosInstance.post(`${API_URL}/register`, {
       email,
       password,
       fullName,
@@ -40,8 +40,12 @@ export async function registerUser(email, password, fullName) {
 // signin user
 export async function signinUser(email, password) {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return userCredential.user;
+   const response = await axiosInstance.post(`${API_URL}/login`, {
+      email,
+      password,
+    });
+    return response.data;
+
   } catch (error) {
     console.error("Authentication error:", error);
     throw new Error('Authentication failed. Please check your credentials.');

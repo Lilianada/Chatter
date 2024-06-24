@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5050/article';
+const API_URL = `${process.env.REACT_APP_API_URL}/article`;
 
 export const postArticle = async (articleData, token) => {
+    console.log(API_URL);
   const config = {
     headers: {
       'Authorization': `Bearer ${token}`

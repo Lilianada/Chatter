@@ -47,10 +47,10 @@ export async function registerUser(email, password, fullName) {
 export async function signinUser(email, password) {
   try {
     const response = await axiosInstance.post('/user/login', { email, password });
+    console.log(response)
     if (response.data.success) {
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('token', response.data.token); // Save the token if you're using it for session management
-      return response.data;
+      localStorage.setItem('token', response.data.token); 
+      return response.data.user;
     } else {
       throw new Error(response.data.message);
     }

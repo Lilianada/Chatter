@@ -8,11 +8,11 @@ import Spinner from "../../components/Utils/Spinner";
 import { signinUser } from "../../config/authorization";
 import { useDispatch } from "react-redux";
 import { db } from "../../config/firebase.js";
-import { doc, getDoc } from "firebase/firestore";
 import {
   setUserName,
   setUserId,
   setUserEmail,
+  setUserCategories,
 } from "../../store/actions/userActions";
 
 export default function Signin() {
@@ -52,12 +52,13 @@ export default function Signin() {
   
     try {
       const user = await signinUser(formData.email, formData.password, db);
-      if (user.success) {
-        dispatch(setUserName(user.user.fullName));
-        dispatch(setUserId(user.user.uid));
-        dispatch(setUserEmail(user.user.email));
-  
-        handleLocalStorage(rememberMe, user.user.email);
+      console.log(user, 'user')
+      if (user) {
+        dispatch(setUserName(user.fullName));
+        dispatch(setUserId(user.uid));
+        dispatch(setUserEmail(user.email));
+        dispatch(setUserCategories(user.categories))
+        handleLocalStorage(rememberMe, user.email);
   
         navigate("/dashboard/");
         setNotification({

@@ -7,7 +7,6 @@ export const useCategories = () => useContext(CategoriesContext);
 
 export const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState(() => {
-    // Attempt to get cached categories from localStorage
     const localData = localStorage.getItem("categories");
     return localData ? JSON.parse(localData) : [];
   });
@@ -19,7 +18,8 @@ export const CategoriesProvider = ({ children }) => {
         setIsLoading(true);
         try {
           const response = await getAllCategories();
-          const allCategories = [{id: "all", name: "All", current: true, }, ...response];
+          const result = response.categories;
+          const allCategories = [{id: "all", name: "All", current: true, }, ...result];
           localStorage.setItem("categories", JSON.stringify(allCategories));
           setCategories(allCategories || []);
         } catch (error) {

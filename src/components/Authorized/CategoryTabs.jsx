@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-import {getUserCategories} from "../../config/categories.js";
 import { useSelector } from "react-redux";
 
 const CategoryTabs = ({
@@ -10,8 +9,7 @@ const CategoryTabs = ({
   const containerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [tabs, setTabs] = useState([]);
-  const userId = useSelector((state) => state.user.userId);
+  const tabs = useSelector((state) => state.user.categories)
 
   useEffect(() => {
     checkForScroll();
@@ -19,19 +17,6 @@ const CategoryTabs = ({
     return () => window.removeEventListener('resize', checkForScroll);
   }, []);
 
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await getUserCategories(userId);
-        console.log(response)
-        setTabs(response);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    }
-    fetchCategories();
-  }, []);
 
   const checkForScroll = () => {
     const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
@@ -64,14 +49,14 @@ const CategoryTabs = ({
       >
         {tabs.map((category) => (
           <span
-            key={category.id}
-            onClick={() => onCategorySelect(category.id)}
+            key={category}
+            onClick={() => onCategorySelect(category)}
             className={`
-              ${selectedCategory === category.id ? 'bg-yellow-200 text-green-600' : 'bg-yellow-100 text-gray-500 hover:bg-yellow-100 hover:text-green-600'}
+              ${selectedCategory === category ? 'bg-yellow-200 text-green-600' : 'bg-yellow-100 text-gray-500 hover:bg-yellow-100 hover:text-green-600'}
               whitespace-nowrap py-1 px-3 text-xs font-normal cursor-pointer rounded-xl
             `}
           >
-            {category.name}
+            {category}
           </span>
         ))}
       </div>

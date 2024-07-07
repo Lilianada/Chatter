@@ -3,14 +3,9 @@ import axiosInstance from "../utils/axiosInstance";
 export async function getAllCategories() {
 
     try {
-      const response = await axiosInstance.get(`/category/getCategories`, {
-        headers:{
-            "Authorization": localStorage.getItem('token')
-        }
-      });
-  
-      if (response.success) {
-        return {categories: response.data}
+      const response = await axiosInstance.get(`/category/getCategories`);
+      if (response.data.success) {
+        return {categories: response.data.categories}
       }
       
     } catch(err) {
@@ -50,7 +45,7 @@ export async function getAllCategories() {
       });
   
       // Check if the response contains the expected data
-      console.log(res)
+      console.log(res, 'response')
       if (res.data && res.data.success) {
         return { success: true, categories: res.data.categories };
       } else {

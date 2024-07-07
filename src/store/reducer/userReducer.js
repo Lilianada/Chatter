@@ -1,9 +1,10 @@
-import { SET_USER_NAME, SET_USER_EMAIL, SET_USER_ID } from '../actions/userActions';
+import { SET_USER_NAME, SET_USER_EMAIL, SET_USER_ID, SET_USER_CATEGORIES} from '../actions/userActions';
 
 const initialState = {
   name: '',
   email: '',
   userId: '',
+  categories: ''
 };
 
 const userReducer = (state = initialState, action) => {
@@ -23,6 +24,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         userId: action.payload
       };
+    case SET_USER_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload
+      }
     default:
       return state;
   }

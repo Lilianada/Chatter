@@ -45,42 +45,39 @@ export default function Signin() {
     setFormData((prev) => ({ ...prev, email: userEmail }));
     setRememberMe(rememberMe);
   }, []);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     try {
-      const user = await signinUser(formData.email, formData.password);
-      const userRef = doc(db, "users", user.uid);
-      const userDoc = await getDoc(userRef);
-
-      if (!userDoc.exists()) {
-        throw new Error("User data not found.");
+      const user = await signinUser(formData.email, formData.password, db);
+      if (user.success) {
+        dispatch(setUserName(user.user.fullName));
+        dispatch(setUserId(user.user.uid));
+        dispatch(setUserEmail(user.user.email));
+  
+        handleLocalStorage(rememberMe, user.user.email);
+  
+        navigate("/dashboard/");
+        setNotification({
+          show: true,
+          type: "success",
+          message: "Login successful.",
+        });
       }
-
-      const userData = userDoc.data();
-      const fullName = userData.fullName;
-
-      dispatch(setUserName(fullName));
-      dispatch(setUserId(user.uid));
-      dispatch(setUserEmail(formData.email));
-
-      handleLocalStorage(rememberMe, formData.email);
-
-      navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
       setNotification({
         show: true,
         type: "error",
-        message:
-          error.message || "Signin failed. Check your details and try again.",
+        message: error.message || "Signin failed. Check your details and try again.",
       });
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   const handleLocalStorage = (rememberMe, email) => {
     if (rememberMe) {

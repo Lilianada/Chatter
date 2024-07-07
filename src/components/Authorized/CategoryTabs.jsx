@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 const tabs = [
-  { name: 'My Account', href: '#', current: false },
-  { name: 'Company', href: '#', current: false },
-  { name: 'Team Members', href: '#', current: true },
-  { name: 'Billing', href: '#', current: false },
-  { name: 'Billing', href: '#', current: false },
+  { id: 1, name: 'My Account', href: '#', current: false },
+  { id: 2, name: 'Company', href: '#', current: false },
+  { id: 3, name: 'Team Members', href: '#', current: true },
+  { id: 4, name: 'Billing', href: '#', current: false },
+  { id: 5, name: 'Billing', href: '#', current: false },
 ]
 
 const CategoryTabs = ({

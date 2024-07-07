@@ -34,7 +34,7 @@ const whoToFollow = [
     imageUrl:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
-  // More people...
+  
 ];
 
 const trendingPosts = [
@@ -48,7 +48,7 @@ const trendingPosts = [
     body: "What books do you have on your bookshelf just to look smarter than you actually are?",
     comments: 291,
   },
-  // More posts...
+ 
 ];
 
 function classNames(...classes) {
@@ -205,9 +205,9 @@ export default function Home() {
                     </h2>
                     <div className="mt-6 flow-root">
                       <ul className="-my-4 divide-y divide-gray-200">
-                        {whoToFollow.map((user) => (
+                        {whoToFollow.map((user, index) => (
                           <li
-                            key={user.handle}
+                            key={index}
                             className="flex items-center space-x-3 py-4"
                           >
                             <div className="flex-shrink-0">

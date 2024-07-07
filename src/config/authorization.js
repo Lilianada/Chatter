@@ -1,10 +1,11 @@
 import {
   getAuth,
   sendPasswordResetEmail,
+  signInWithEmailAndPassword,
   updateCurrentUser,
 } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import axiosInstance from "../utils/axiosInstance";
 
 const API_URL = `/user`;
@@ -44,21 +45,33 @@ export async function registerUser(email, password, fullName) {
   }
 }
 
-
 // signin user
-export async function signinUser(email, password) {
+export async function signinUser(email, password, db) {
+  const auth = getAuth();
   try {
-    const response = await axiosInstance.post(`/api/user/login`, {
-      email,
-      password,
-    });
-    return response.data;
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    const userRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+      throw new Error("User data not found.");
+    }
+
+    const userData = userDoc.data();
+    return {
+      success: true,
+      user: {
+        uid: user.uid,
+        email: user.email,
+        fullName: userData.fullName,
+      }
+    };
   } catch (error) {
     console.error("Authentication error:", error);
-    throw new Error("Authentication failed. Please check your credentials.");
+    throw error; // Propagate error to be handled by the caller
   }
 }
-
 // Logout user
 export async function signoutUser() {
   try {

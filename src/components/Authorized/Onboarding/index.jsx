@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,25 +6,11 @@ import QtnOne from "./QtnOne";
 import QtnTwo from "./QtnTwo";
 import QtnThree from "./QtnThree";
 import DotLoader from "../../Utils/DotLoader";
-import { postUserCategories } from "../../../config/article";
+import {
+  addUserCategories,
+  getAllCategories,
+} from "../../../config/categories.js";
 
-const interests = [
-  "art",
-  "beauty",
-  "books",
-  "career-advice",
-  "creativity",
-  "education",
-  "fashion",
-  "fitness",
-  "food",
-  "health",
-  "lifestyle",
-  "photography",
-  "relationship",
-  "self-improvement",
-  "technology",
-];
 const contribution = [
   "Yes, I am interested.",
   "Maybe in the future.",
@@ -34,7 +20,7 @@ const frequency = ["Daily", "Weekly", "Monthly", "Occasionally"];
 
 export default function Onboarding({ open, setOpen }) {
   const userId = useSelector((state) => state.user.userId);
-  console.log(userId);
+  const [interests, setInterests] = useState([]);
   const [userData, setUserData] = useState({
     interests: [],
     willingToContribute: [],
@@ -44,6 +30,14 @@ export default function Onboarding({ open, setOpen }) {
   const totalSections = 3;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await getAllCategories();
+      setInterests(response);
+    };
+    fetchCategories();
+  });
 
   const handleCheckboxChange = (event) => {
     const { name, value, checked } = event.target;
@@ -66,10 +60,10 @@ export default function Onboarding({ open, setOpen }) {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Assuming postUserCategories is an API call to save user data
-      const response = await postUserCategories(userId, userData);
+      // Assuming addUserCategories is an API call to save user data
+      const response = await addUserCategories(userId, userData);
       console.log(response);
-      navigate("/articles");
+      navigate("/dashboard/");
     } catch (error) {
       console.error("Submission error:", error);
     } finally {

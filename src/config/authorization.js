@@ -48,7 +48,7 @@ export async function registerUser(email, password, fullName) {
 // signin user
 export async function signinUser(email, password) {
   try {
-    const response = await axiosInstance.post(`${API_URL}/login`, {
+    const response = await axiosInstance.post(`/api/user/login`, {
       email,
       password,
     });

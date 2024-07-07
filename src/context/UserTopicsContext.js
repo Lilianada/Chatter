@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { getUserCategories } from "../config/article";
+import { getUserCategories } from "../config/categories";
 import { useSelector } from "react-redux";
 
 

@@ -1,8 +1,5 @@
 import axiosInstance from "../utils/axiosInstance";
 
-
-
-
 export async function getAllCategories() {
 
     try {

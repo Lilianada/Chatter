@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { getCategories } from "../config/article";
+import { getAllCategories } from "../config/categories";
 
 const CategoriesContext = createContext();
 
@@ -18,7 +18,7 @@ export const CategoriesProvider = ({ children }) => {
       const fetchCategories = async () => {
         setIsLoading(true);
         try {
-          const response = await getCategories();
+          const response = await getAllCategories();
           const allCategories = [{id: "all", name: "All", current: true, }, ...response];
           localStorage.setItem("categories", JSON.stringify(allCategories));
           setCategories(allCategories || []);

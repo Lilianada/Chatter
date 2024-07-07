@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { useCategories } from "../../context/CategoriesContext";
 import Alert from "../Utils/Alert";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
-import { postUserCategories } from "../../config/article";
+import { addUserCategories } from "../../config/categories";
 import { getAuthUser } from "../../config/authorization";
 
 export default function SelectTopics() {
@@ -37,7 +37,7 @@ export default function SelectTopics() {
     setIsLoading(true);
     const userId = getAuthUser();
     try {
-      const response = await postUserCategories(userId, selectedCategories);
+      const response = await addUserCategories(userId, selectedCategories);
       if (response.success === true) {
         setSuccess(true);
       }

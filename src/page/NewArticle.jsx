@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import BalloonEditor from "@ckeditor/ckeditor5-build-balloon";
 import { getAuth } from "firebase/auth";
-import { getCategories } from "../config/article";
+import { getAllCategories } from "../config/categories";
 import AddButtons from "../components/Authorized/AddButtons";
 import { useSelector } from "react-redux";
 import { useModal } from "../context/ModalContext";
@@ -39,7 +39,7 @@ export default function NewArticle() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await getCategories();
+        const response = await getAllCategories();
         setCategories(response);
       } catch (error) {
         console.error("Error fetching categories:", error);

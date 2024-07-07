@@ -21,7 +21,7 @@ export const UserTopicsProvider = ({ children }) => {
         setIsLoading(true);
         try {
           const response = await getUserCategories(userId);
-          console.log("response", response);
+          // console.log("response", response);
           const allUserTopics = [
             { id: "all", name: "All", current: true },
             ...response,

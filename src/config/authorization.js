@@ -7,7 +7,7 @@ import { auth, db } from "./firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import axiosInstance from "../utils/axiosInstance";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/user`;
+const API_URL = `/user`;
 
 // Authenticated user
 export function getAuthUser() {
@@ -26,29 +26,35 @@ export function getAuthUser() {
 // Register user
 export async function registerUser(email, password, fullName) {
   try {
-    const response = await axiosInstance.post(`${API_URL}/register`, {
+    const response = await axiosInstance.post(`/api/user/register`, {
       email,
       password,
       fullName,
-  });
-  return response.data;
+    });
+    if (response.data.success) {
+      localStorage.setItem("token", response.data.token);
+      return response.data; // Return the whole data object or a specific part of it
+    } else {
+      throw new Error('Registration failed. Please try again.'); // Ensure the response structure allows for this else.
+    }
   } catch (error) {
-    throw error;
+    // Re-throw the error to be handled by the caller
+    throw error.response ? error.response.data : new Error("Registration failed. Network error.");
   }
 }
+
 
 // signin user
 export async function signinUser(email, password) {
   try {
-   const response = await axiosInstance.post(`${API_URL}/login`, {
+    const response = await axiosInstance.post(`${API_URL}/login`, {
       email,
       password,
     });
     return response.data;
-
   } catch (error) {
     console.error("Authentication error:", error);
-    throw new Error('Authentication failed. Please check your credentials.');
+    throw new Error("Authentication failed. Please check your credentials.");
   }
 }
 
@@ -83,6 +89,6 @@ export async function changePassword(password) {
 
 // Delete user
 export function deleteuser(uid) {
-  const userDoc = doc(db, 'users', uid);
+  const userDoc = doc(db, "users", uid);
   return deleteDoc(userDoc);
 }

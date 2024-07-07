@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
@@ -21,6 +22,7 @@ export default function Hero() {
     message: "",
   });
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Function to toggle the showPassword state
   const togglePasswordVisibility = () => {
@@ -57,28 +59,22 @@ export default function Hero() {
         formData.password,
         formData.fullName
       );
+      
       if (user) {
         setNotification({
           show: true,
           type: "success",
-          message: "Registration successful. You can now log in.",
+          message: "Your registration was successful.",
         });
         setOpen(true);
         setFormData({ fullName: "", email: "", password: "" });
-      } else {
-        // Handle undefined or null user case
-        setNotification({
-          show: true,
-          type: "error",
-          message: "Registration failed. Please try again.",
-        });
-      }
+      } 
+      
     } catch (error) {
-      // Handle registration error
       setNotification({
         show: true,
         type: "error",
-        message: `Failed to register. ${error.message}`,
+        message: `${error.response.data}`,
       });
     } finally {
       setIsLoading(false);

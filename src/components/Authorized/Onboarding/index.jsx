@@ -46,7 +46,7 @@ export default function Onboarding({ open, setOpen }) {
       // Assuming postUserCategories is an API call to save user data
       const response = await postUserCategories(userId, userData);
       console.log(response);
-      navigate('/dashboard/');
+      navigate('/articles');
     } catch (error) {
       console.error("Submission error:", error);
     } finally {
@@ -77,11 +77,7 @@ export default function Onboarding({ open, setOpen }) {
                 <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8 mt-8">
                   <button
                     onClick={navigateSections}
-<<<<<<< HEAD
-                    className="rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-neutral-600 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-=======
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
->>>>>>> ae2abca (after initialization of git again)
+                    className="rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-neutral-600 shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? <DotLoader /> : (currentSection === totalSections - 1 ? 'Submit' : 'Save & Next')}

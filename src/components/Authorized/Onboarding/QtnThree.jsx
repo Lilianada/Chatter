@@ -21,7 +21,7 @@ export default function QtnThree({ frequency, userData, handleCheckboxChange, ha
                   value={item}
                   checked={userData.readingFrequency.includes(item)}
                   onChange={handleCheckboxChange}
-                  className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 rounded-full"
+                  className="h-4 w-4 text-yellow-600 border-gray-300 focus:ring-yellow-500 rounded-full"
                 />
                 <label className="ml-2 text-sm text-gray-700">{item}</label>
               </div>

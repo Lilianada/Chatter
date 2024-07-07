@@ -19,11 +19,11 @@ export default function QtnOne({ interests, userData, handleCheckboxChange, hand
       {interests.map((item) => (
         <div
           key={item}
-          className={`relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-indigo-400 cursor-pointer 
+          className={`relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-3 shadow-sm focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 hover:border-yellow-400 cursor-pointer 
       ${
         userData.interests.includes(item)
-          ? "border-indigo-400 bg-indigo-50 focus-within:ring-indigo-400"
-          : "border-gray-300 bg-white focus-within:ring-indigo-500"
+          ? "border-yellow-400 bg-yellow-50 focus-within:ring-yellow-400"
+          : "border-gray-300 bg-white focus-within:ring-yellow-500"
       }`}
         >
           <div className="flex-shrink-0">
@@ -33,7 +33,7 @@ export default function QtnOne({ interests, userData, handleCheckboxChange, hand
               value={item}
               checked={userData.interests.includes(item)}
               onChange={handleCheckboxChange}
-              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              className="h-4 w-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
             />
           </div>
           <div className="min-w-0 flex-1">

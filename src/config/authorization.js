@@ -1,14 +1,11 @@
 import {
   getAuth,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
   updateCurrentUser,
 } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import axiosInstance from "../utils/axiosInstance";
-
-const API_URL = `/user`;
+import axios from "axios";
 
 // Authenticated user
 export function getAuthUser() {
@@ -44,6 +41,7 @@ export async function registerUser(email, password, fullName) {
     throw error.response ? error.response.data : new Error("Registration failed. Network error.");
   }
 }
+
 export async function signinUser(email, password) {
   try {
     const response = await axiosInstance.post('/user/login', { email, password });
@@ -59,7 +57,6 @@ export async function signinUser(email, password) {
   }
 }
 
-
 // Logout user
 export async function signoutUser() {
   try {
@@ -72,7 +69,7 @@ export async function signoutUser() {
 // Forgot password
 export async function forgotPassword(email) {
   try {
-    const reset = await sendPasswordResetEmail(auth, email);
+    const reset = await axiosInstance.post('', email, )
     return reset;
   } catch (error) {
     throw error;

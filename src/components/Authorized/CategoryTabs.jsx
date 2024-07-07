@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-
-const tabs = [
-  { id: 1, name: 'My Account', href: '#', current: false },
-  { id: 2, name: 'Company', href: '#', current: false },
-  { id: 3, name: 'Team Members', href: '#', current: true },
-  { id: 4, name: 'Billing', href: '#', current: false },
-  { id: 5, name: 'Billing', href: '#', current: false },
-]
+import {getUserCategories} from "../../config/categories.js";
+import { useSelector } from "react-redux";
 
 const CategoryTabs = ({
   onCategorySelect,
@@ -16,11 +10,27 @@ const CategoryTabs = ({
   const containerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [tabs, setTabs] = useState([]);
+  const userId = useSelector((state) => state.user.userId);
 
   useEffect(() => {
     checkForScroll();
     window.addEventListener('resize', checkForScroll);
     return () => window.removeEventListener('resize', checkForScroll);
+  }, []);
+
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await getUserCategories(userId);
+        console.log(response)
+        setTabs(response);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+    fetchCategories();
   }, []);
 
   const checkForScroll = () => {

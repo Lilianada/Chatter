@@ -3,7 +3,7 @@ import axiosInstance from "../utils/axiosInstance";
 export async function getAllCategories() {
 
     try {
-      const response = await axiosInstance.get(`/api/category/getCategories`, {
+      const response = await axiosInstance.get(`/category/getCategories`, {
         headers:{
             "Authorization": localStorage.getItem('token')
         }
@@ -20,7 +20,7 @@ export async function getAllCategories() {
   
   export async function addUserCategories(userId, categories) {
     try {
-      const result = await axiosInstance.post(`/api/category/addUserCategories/${userId}`, {
+      const result = await axiosInstance.post(`/category/addUserCategories/${userId}`, {
         categories // Assuming categories is an array or object that needs to be sent
       }, {
         headers: {
@@ -43,15 +43,16 @@ export async function getAllCategories() {
   
   export async function getUserCategories(userId) {
     try {
-      const res = await axiosInstance.get(`/api/category/getUserCategories/${userId}`, {
+      const res = await axiosInstance.get(`/category/getUserCategories/${userId}`, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
       });
   
       // Check if the response contains the expected data
+      console.log(res)
       if (res.data && res.data.success) {
-        return { success: true, categories: res.data.categories }; // Assuming the response has a categories array
+        return { success: true, categories: res.data.categories };
       } else {
         // Handle scenario when the API response is not successful
         return { success: false, message: res.data.message || "Failed to fetch categories" };

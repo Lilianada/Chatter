@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,24 +6,8 @@ import { useModal } from "../../../context/ModalContext";
 import QtnOne from "./QtnOne";
 import QtnTwo from "./QtnTwo";
 import QtnThree from "./QtnThree";
+import { getAllCategories } from "../../config/categories";
 
-const interests = [
-  "art",
-  "beauty",
-  "books",
-  "career-advice",
-  "creativity",
-  "education",
-  "fashion",
-  "fitness",
-  "food",
-  "health",
-  "lifestyle",
-  "photography",
-  "relationship",
-  "self-improvement",
-  "technology",
-];
 
 const contribution = [
   "Yes, I am interested.",
@@ -34,6 +18,7 @@ const contribution = [
 const frequency = ["Daily", "Weekly", "Monthly", "Occasionally"];
 
 export default function Dialog({ open, setOpen }) {
+  const [categories, setCategories] = useState([]);
   const [userData, setUserData] = useState({
     interests: [],
     willingToContribute: [],
@@ -44,6 +29,18 @@ export default function Dialog({ open, setOpen }) {
   const userId = useSelector((state) => state.user.userId);
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await getAllCategories();
+        setCategories(response);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   const handleCheckboxChange = (event) => {
     const { name, value, checked } = event.target;
@@ -66,7 +63,7 @@ export default function Dialog({ open, setOpen }) {
       case 0:
         return (
           <QtnOne
-            interests={interests}
+            interests={categories}
             userData={userData}
             handleCheckboxChange={handleCheckboxChange}
             handleSubmit={handleSubmit}
@@ -93,7 +90,7 @@ export default function Dialog({ open, setOpen }) {
       default:
         return (
           <QtnOne
-            interests={interests}
+            interests={categories}
             userData={userData}
             handleCheckboxChange={handleCheckboxChange}
             handleSubmit={handleSubmit}

@@ -4,27 +4,28 @@ import { Link } from "react-router-dom";
 
 const whoToFollow = [
   {
+    id: 1,
     name: "Leonard Krasner",
     handle: "leonardkrasner",
     href: "#",
     imageUrl:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
-  {
+  {id: 2,
     name: "Leonard Krasner",
     handle: "leonardkrasner",
     href: "#",
     imageUrl:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
-  {
+  {id: 3,
     name: "Leonard Krasner",
     handle: "leonardkrasner",
     href: "#",
     imageUrl:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
-  {
+  {id: 4,
     name: "Leonard Krasner",
     handle: "leonardkrasner",
     href: "#",
@@ -49,7 +50,7 @@ export default function FollowerSuggestion() {
               <ul className="-my-4 divide-y divide-gray-200">
                 {whoToFollow.map((user) => (
                   <li
-                    key={user.handle}
+                    key={user.id}
                     className="flex items-center space-x-3 py-4"
                   >
                     <div className="flex-shrink-0">

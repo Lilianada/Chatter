@@ -27,7 +27,7 @@ export function getAuthUser() {
 // Register user
 export async function registerUser(email, password, fullName) {
   try {
-    const response = await axiosInstance.post(`/api/user/register`, {
+    const response = await axiosInstance.post(`/user/register`, {
       email,
       password,
       fullName,
@@ -44,34 +44,22 @@ export async function registerUser(email, password, fullName) {
     throw error.response ? error.response.data : new Error("Registration failed. Network error.");
   }
 }
-
-// signin user
-export async function signinUser(email, password, db) {
-  const auth = getAuth();
+export async function signinUser(email, password) {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    const userRef = doc(db, "users", user.uid);
-    const userDoc = await getDoc(userRef);
-
-    if (!userDoc.exists()) {
-      throw new Error("User data not found.");
+    const response = await axiosInstance.post('/user/login', { email, password });
+    if (response.data.success) {
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('token', response.data.token); // Save the token if you're using it for session management
+      return response.data;
+    } else {
+      throw new Error(response.data.message);
     }
-
-    const userData = userDoc.data();
-    return {
-      success: true,
-      user: {
-        uid: user.uid,
-        email: user.email,
-        fullName: userData.fullName,
-      }
-    };
   } catch (error) {
-    console.error("Authentication error:", error);
-    throw error; // Propagate error to be handled by the caller
+    throw new Error(error.response.data.message || "Network Error");
   }
 }
+
+
 // Logout user
 export async function signoutUser() {
   try {

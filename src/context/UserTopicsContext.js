@@ -1,11 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { getUserCategories } from "../config/article";
-import { getAuthUser } from "../config/authorization";
 import { useSelector } from "react-redux";
 
-const UserTopicsContext = createContext();
 
 export const useUserTopics = () => useContext(UserTopicsContext);
+
+
+export const UserTopicsContext = createContext();
 
 export const UserTopicsProvider = ({ children }) => {
   const userId = useSelector((state) => state.user.userId);
@@ -14,31 +15,31 @@ export const UserTopicsProvider = ({ children }) => {
     const localData = localStorage.getItem("userTopics");
     return localData ? JSON.parse(localData) : [];
   });
-  // console.log(userTopics, "userTopics");
-  useEffect(() => {
-    if (userTopics.length < 1) {
-      const fetchUserTopics = async () => {
-        setIsLoading(true);
-        try {
-          const response = await getUserCategories(userId);
-          // console.log("response", response);
-          const allUserTopics = [
-            { id: "all", name: "All", current: true },
-            ...response,
-          ];
-          // console.log("allUserTopics", allUserTopics);
-          // localStorage.setItem("userTopics", JSON.stringify(allUserTopics));
-          setUserTopics(allUserTopics || []);
-        } catch (error) {
-          console.error("Error fetching userTopics: ", error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
 
+  useEffect(() => {
+    const fetchUserTopics = async () => {
+      if (!userId) return; // Ensure there is a userId before fetching
+      setIsLoading(true);
+      try {
+        const response = await getUserCategories(userId);
+        const topics = response.success ? response.categories : []; // Adjust depending on the actual structure of response
+        const allUserTopics = [
+          { id: "all", name: "All", current: true },
+          ...topics,
+        ];
+        localStorage.setItem("userTopics", JSON.stringify(allUserTopics)); // Save to local storage
+        setUserTopics(allUserTopics);
+      } catch (error) {
+        console.error("Error fetching userTopics:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (userTopics.length < 1) {
       fetchUserTopics();
     }
-  }, []);
+  }, [userId]); // Add userId to useEffect dependencies
 
   return (
     <UserTopicsContext.Provider value={{ userTopics, isLoading }}>

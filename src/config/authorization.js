@@ -31,11 +31,12 @@ export async function registerUser(email, password, fullName) {
       password,
       fullName,
     });
+    console.log(response)
     if (response.data.success) {
       localStorage.setItem("token", response.data.token);
-      return response.data; // Return the whole data object or a specific part of it
+      return response.data;
     } else {
-      throw new Error('Registration failed. Please try again.'); // Ensure the response structure allows for this else.
+      throw new Error('Registration failed. Please try again.'); 
     }
   } catch (error) {
     // Re-throw the error to be handled by the caller

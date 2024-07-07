@@ -1,10 +1,9 @@
 import { addDoc, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
 import { db, storage } from "./firebase";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import axiosInstance from "../utils/axiosInstance";
 
 const USERS = "users";
-// const ARTICLE = 'ARTICLE';
-const CATEGORIES = "categories";
 const ARTICLE = "article";
 
 async function uploadImage(imageBase64, userId) {
@@ -154,56 +153,3 @@ export async function updateArticle(userId, articleId, article) {
   }
 }
 
-//CATEGORIES
-export async function getCategories() {
-  try {
-    const categoriesColRef = collection(db, CATEGORIES);
-    const categoriesQuery = query(categoriesColRef);
-    const querySnapshot = await getDocs(categoriesQuery);
-
-    if (querySnapshot.empty) {
-      console.log("No categories found.");
-      return [];
-    }
-
-    const categories = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return categories; // Returns an array of categories
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    return [];
-  }
-}
-
-export async function postUserCategories(userId, categories) {
-  try {
-    const userDocRef = doc(db, "users", userId); // Reference to the user's document
-    const categoriesCollectionRef = collection(userDocRef, "categories"); // Reference to the categories subcollection
-    const categoriesDocRef = doc(categoriesCollectionRef); // Reference to a new document within the categories subcollection
-    await setDoc(categoriesDocRef, categories); // Set the categories data to the new document
-    return { success: true, message: "User categories updated successfully" };
-  } catch (error) {
-    console.error("Error updating user categories:", error);
-    return { success: false, message: error.message };
-  }
-}
-
-export async function getUserCategories(userId) {
-  try {
-    const userCategoriesRef = doc(db, USERS, userId);
-    const userCategoriesDoc = await getDoc(userCategoriesRef);
-
-    if (!userCategoriesDoc.exists()) {
-      console.log("No user categories found.");
-      return [];
-    }
-    // console.log("userCategoriesDoc", userCategoriesDoc.data().categories);
-    return userCategoriesDoc.data().categories;
-  } catch (error) {
-    console.error("Error fetching user categories:", error);
-    return [];
-  }
-}

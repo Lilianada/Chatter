@@ -25,13 +25,7 @@ export default function Header({ setSidebarOpen }) {
 
   const confirmSignout = () => {
     setIsLoading(true);
-    // API call to invalidate the token on the server
-    axiosInstance.post('/user/logout', {}, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
-    .then(response => {
-      if (response.data.success) {
-        auth.signOut()  // Assuming this is Firebase auth.signOut() and not necessary if using only custom tokens
+    auth.signOut()  // Assuming this is Firebase auth.signOut() and not necessary if using only custom tokens
         .then(() => {
           localStorage.clear(); // Clear local storage or specifically remove the token
           setIsLoading(false);
@@ -41,13 +35,7 @@ export default function Header({ setSidebarOpen }) {
           setIsLoading(false);
           console.error("Error during Firebase sign out:", error);
         });
-      }
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      console.error("Server-side logout failed:", error);
-    });
-}
+  }
 
 
   return (

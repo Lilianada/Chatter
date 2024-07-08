@@ -1,11 +1,13 @@
 import {
+  browserSessionPersistence,
   getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
   updateCurrentUser,
 } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import axiosInstance from "../utils/axiosInstance";
-import axios from "axios";
 
 // Authenticated user
 export function getAuthUser() {
@@ -42,18 +44,32 @@ export async function registerUser(email, password, fullName) {
   }
 }
 
+
 export async function signinUser(email, password) {
   try {
-    const response = await axiosInstance.post('/user/login', { email, password });
-    console.log(response.data)
-    if (response.data.success) {
-      localStorage.setItem('token', response.data.token); 
+    const auth = getAuth();
+    // Sign in with Firebase and get user credentials
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    
+    // Get ID token from the Firebase user
+    const idToken = await userCredential.user.getIdToken();
+
+    // Post to your server for further authentication or user data retrieval
+    const response = await axiosInstance.post('/user/login', { 
+      token: idToken 
+    });
+
+    console.log(response.data);
+    if (response.data.success && response.data.user) {
+      localStorage.setItem('token', idToken); 
       return response.data.user;
     } else {
-      throw new Error(response.data.message);
+      // Handle failed login
+      throw new Error(response.data.message || "Login failed with no specific error.");
     }
   } catch (error) {
-    throw new Error(error.response.data.message || "Network Error");
+    console.error("Authentication error:", error);
+    throw new Error(error.response?.data?.message || error.message || "Network Error");
   }
 }
 
@@ -91,3 +107,22 @@ export function deleteuser(uid) {
   const userDoc = doc(db, "users", uid);
   return deleteDoc(userDoc);
 }
+
+
+localStorage.setItem('sessionStartTime', Date.now());
+
+function checkSession() {
+  const startTime = localStorage.getItem('sessionStartTime');
+  const currentTime = Date.now();
+
+  if (currentTime - startTime > 86400000) {  // 86400000 ms = 24 hours
+    // Handle session expiration
+    auth.signOut().then(() => {
+      localStorage.clear(); // Clear local storage or session-related data
+      window.location.href = '/signin'; // Redirect to login page
+    });
+  }
+}
+
+// You can call this function periodically or on certain events
+checkSession();

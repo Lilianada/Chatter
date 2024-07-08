@@ -27,7 +27,7 @@ export const UserTopicsProvider = ({ children }) => {
           { id: "all", name: "All", current: true },
           ...topics,
         ];
-        localStorage.setItem("userTopics", JSON.stringify(allUserTopics)); // Save to local storage
+        // localStorage.setItem("userTopics", JSON.stringify(allUserTopics)); // Save to local storage
         setUserTopics(allUserTopics);
       } catch (error) {
         console.error("Error fetching userTopics:", error);

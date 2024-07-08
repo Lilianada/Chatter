@@ -9,7 +9,7 @@ export default function MainContent() {
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const containerRef = useRef(null);
-  const { userTopics } = useUserTopics();
+  // const { userTopics } = useUserTopics();
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -25,7 +25,7 @@ export default function MainContent() {
       {/* Tabs Menu */}
       <div className="sticky  z-10 bg-white">
         <CategoryTabs
-          categories={userTopics}
+          // categories={userTopics}
           checkForScroll={checkForScroll}
           showLeftArrow={showLeftArrow}
           showRightArrow={showRightArrow}

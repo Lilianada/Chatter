@@ -9,24 +9,25 @@ export const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getAllCategories();
-        if (response.success) { 
-          const allCategories = response.categories;
-          setCategories(allCategories);
-        } else {
-          throw new Error('Failed to fetch categories');
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      } finally {
-        setIsLoading(false);
+  const fetchCategories = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getAllCategories();
+      if (response) { 
+        const allCategories = response.categories;
+        setCategories(allCategories);
+      } else {
+        throw new Error('Failed to fetch categories');
       }
-    };
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+
+  useEffect(() => {
     fetchCategories();
   }, []);
 

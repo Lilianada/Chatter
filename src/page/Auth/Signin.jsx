@@ -49,22 +49,26 @@ export default function Signin() {
   
     try {
       const user = await signinUser(formData.email, formData.password, db);
-      console.log(user)
+      
       if (user) {
+        console.log(user)
         dispatch(setUser('name', user.fullName));
         dispatch(setUser('userId', user.uid));
         dispatch(setUser('email', user.email));
         dispatch(setUser('categories', user.categories))
+        console.log('users saved to store');
+        
         if (rememberMe) {
           localStorage.setItem("rememberMe", "true");
         } 
   
-        navigate("/dashboard/");
-        setNotification({
-          show: true,
-          type: "success",
-          message: "Login successful.",
-        });
+        navigate("/dashboard");
+        console.log("Login successful.");
+        // setNotification({
+        //   show: true,
+        //   type: "success",
+        //   message: "Login successful.",
+        // });
       }
     } catch (error) {
       console.error("Login error:", error);

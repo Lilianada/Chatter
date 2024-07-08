@@ -1,34 +1,22 @@
-import { SET_USER_NAME, SET_USER_EMAIL, SET_USER_ID, SET_USER_CATEGORIES} from '../actions/userActions';
+import { SET_USER} from '../actions/userActions';
 
 const initialState = {
   name: '',
+  usernane: '',
   email: '',
   userId: '',
-  categories: ''
+  profilePic: '',
+  categories: []
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER_NAME:
+    case SET_USER:
+      const { field, value } = action.payload;
       return {
         ...state,
-        name: action.payload
+        [field]: value
       };
-    case SET_USER_EMAIL:
-      return {
-        ...state,
-        email: action.payload
-      };
-    case SET_USER_ID:
-      return {
-        ...state,
-        userId: action.payload
-      };
-    case SET_USER_CATEGORIES:
-      return {
-        ...state,
-        categories: action.payload
-      }
     default:
       return state;
   }

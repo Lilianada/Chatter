@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoPersonCircle } from "react-icons/io5";
+import { updateProfile } from "../config/profile";
+import Notification from "../components/Utils/Notification";
+import { setUser } from "../store/actions/userActions";
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.userId);
   const fullName = useSelector((state) => state.user.name);
   const email = useSelector((state) => state.user.email);
   const categories = useSelector((state) => state.user.categories);
+  const [isLoadig, setIsLoading] = useState(false);
+  const [notification, setNotification] = useState({
+    show: false,
+    type: "",
+    message: "",
+  });
   const [formState, setFormState] = useState({
     fullName: fullName || "",
     username: "",
@@ -38,10 +49,54 @@ export default function Profile() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form data submitted:", formState);
-    // Here you would typically handle the submission logic, like sending data to a server
+    const {
+      fullName,
+      username,
+      description,
+      email,
+      categories,
+      pronouns,
+      profilePic,
+    } = formState;
+    setIsLoading(true);
+    try {
+      const result = await updateProfile(userId, {
+        fullName,
+        username,
+        description,
+        email,
+        categories,
+        pronouns,
+        profilePic,
+      });
+      if (result) {
+        setNotification({
+          show: true,
+          type: "success",
+          message: "Your profile has been successfully updated!",
+        });
+
+        dispatch(setUser("name", fullName));
+        dispatch(setUser("username", username));
+        dispatch(setUser("email", email));
+        dispatch(setUser("categories", categories));
+        dispatch(setUser("profilePic", profilePic));
+      } else {
+        // If the result is not successful, handle accordingly
+        setNotification({
+          show: true,
+          type: "error",
+          message:
+            result.message || "Failed to update profile. Please try again.",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -239,7 +294,7 @@ export default function Profile() {
                         type="submit"
                         className="inline-flex justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-chocolate shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
                       >
-                        Save
+                        Update
                       </button>
                     </div>
                   </form>
@@ -270,6 +325,17 @@ export default function Profile() {
           </div>
         </main>
       </div>
+      {notification.show && (
+        <Notification
+          title={
+            notification.type.charAt(0).toUpperCase() +
+            notification.type.slice(1)
+          }
+          message={notification.message}
+          type={notification.type}
+          timer={5000}
+        />
+      )}
     </div>
   );
 }

@@ -9,10 +9,7 @@ import { signinUser } from "../../config/authorization";
 import { useDispatch } from "react-redux";
 import { db } from "../../config/firebase.js";
 import {
-  setUserName,
-  setUserId,
-  setUserEmail,
-  setUserCategories,
+  setUser,
 } from "../../store/actions/userActions";
 
 export default function Signin() {
@@ -52,12 +49,11 @@ export default function Signin() {
   
     try {
       const user = await signinUser(formData.email, formData.password, db);
-      console.log(user, 'user')
       if (user) {
-        dispatch(setUserName(user.fullName));
-        dispatch(setUserId(user.uid));
-        dispatch(setUserEmail(user.email));
-        dispatch(setUserCategories(user.categories))
+        dispatch(setUser('name', user.fullName));
+        dispatch(setUser('userId', user.uid));
+        dispatch(setUser('email', user.email));
+        dispatch(setUser('categories', user.categories))
         handleLocalStorage(rememberMe, user.email);
   
         navigate("/dashboard/");

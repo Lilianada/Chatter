@@ -45,7 +45,7 @@ export async function registerUser(email, password, fullName) {
 export async function signinUser(email, password) {
   try {
     const response = await axiosInstance.post('/user/login', { email, password });
-    console.log(response)
+    console.log(response.data)
     if (response.data.success) {
       localStorage.setItem('token', response.data.token); 
       return response.data.user;

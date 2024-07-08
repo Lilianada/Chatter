@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import CustomModal from "../Utils/CustomModal";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function Header({ setSidebarOpen }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,33 @@ export default function Header({ setSidebarOpen }) {
   const handleSignOut = () => {
     setIsOpen(true);
   };
+
+  const confirmSignout = () => {
+    setIsLoading(true);
+    // API call to invalidate the token on the server
+    axiosInstance.post('/user/logout', {}, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
+    .then(response => {
+      if (response.data.success) {
+        auth.signOut()  // Assuming this is Firebase auth.signOut() and not necessary if using only custom tokens
+        .then(() => {
+          localStorage.clear(); // Clear local storage or specifically remove the token
+          setIsLoading(false);
+          navigate("/");
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.error("Error during Firebase sign out:", error);
+        });
+      }
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      console.error("Server-side logout failed:", error);
+    });
+}
+
 
   return (
     <div className="flex flex-1 fixed top-0 z-40 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 w-full lg:-ml-20">
@@ -118,19 +146,7 @@ export default function Header({ setSidebarOpen }) {
           cancelButtonText="Cancel"
           confirmButtonBgColor="bg-red-600"
           confirmButtonTextColor="text-white"
-          onConfirm={() => {
-            setIsLoading(true);
-            auth
-              .signOut()
-              .then(() => {
-                setIsLoading(false);
-                navigate("/");
-              })
-              .catch((error) => {
-                setIsLoading(false);
-                console.error("Error signing out:", error);
-              });
-          }}
+          onConfirm={confirmSignout}
           onCancel={() => setIsOpen(false)}
           Icon={ExclamationTriangleIcon}
           iconBgColor="bg-red-100"

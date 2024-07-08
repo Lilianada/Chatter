@@ -6,31 +6,28 @@ const CategoriesContext = createContext();
 export const useCategories = () => useContext(CategoriesContext);
 
 export const CategoriesProvider = ({ children }) => {
-  const [categories, setCategories] = useState(() => {
-    const localData = localStorage.getItem("categories");
-    return localData ? JSON.parse(localData) : [];
-  });
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (categories.length === 0) {
-      const fetchCategories = async () => {
-        setIsLoading(true);
-        try {
-          const response = await getAllCategories();
-          const result = response.categories;
-          const allCategories = [{id: "all", name: "All", current: true, }, ...result];
-          localStorage.setItem("categories", JSON.stringify(allCategories));
-          setCategories(allCategories || []);
-        } catch (error) {
-          console.error("Error fetching categories: ", error);
-        } finally {
-          setIsLoading(false);
+    const fetchCategories = async () => {
+      setIsLoading(true);
+      try {
+        const response = await getAllCategories();
+        if (response.success) { 
+          const allCategories = response.categories;
+          setCategories(allCategories);
+        } else {
+          throw new Error('Failed to fetch categories');
         }
-      };
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-      fetchCategories();
-    }
+    fetchCategories();
   }, []);
 
   return (
@@ -39,3 +36,5 @@ export const CategoriesProvider = ({ children }) => {
     </CategoriesContext.Provider>
   );
 };
+
+export default CategoriesProvider;

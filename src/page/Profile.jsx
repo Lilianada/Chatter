@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoPersonCircle } from "react-icons/io5";
 import { updateProfile } from "../config/profile";
 import Notification from "../components/Utils/Notification";
 import { setUser } from "../store/actions/userActions";
+import { useCategories } from "../context/CategoriesContext";
 
 export default function Profile() {
+  const { items } = useCategories();
+  console.log(items)
   const dispatch = useDispatch();
+  const [topics, setTopics] = useState(() => {
+    const storedTopics = localStorage.getItem('categories');
+    if (storedTopics) {
+      return JSON.parse(storedTopics);
+    }
+    return []; // Return an empty array if nothing is stored
+  });
+  console.log(topics)
   const userId = useSelector((state) => state.user.userId);
   const fullName = useSelector((state) => state.user.name);
   const email = useSelector((state) => state.user.email);
@@ -23,7 +34,7 @@ export default function Profile() {
     description: "",
     profilePic: null,
     email: email || "",
-    categroies: categories || [],
+    categories: categories || [],
     pronouns: "",
     photoPreview: null,
   });
@@ -228,9 +239,62 @@ export default function Profile() {
                           />
                         </div>
                         <p className="mt-3 text-sm text-neutral-500">
-                          Brief description for your profile. URLs are
-                          hyperlinked.
+                          Brief description for your profile.
                         </p>
+                      </div>
+
+                      <div className="sm:col-span-6">
+                        <label
+                          htmlFor="categories"
+                          className="block text-sm font-medium leading-6 text-neutral-900"
+                        >
+                          Categories
+                        </label>
+                        <div className="mt-2">
+                          <div className="border p-4 rounded-md">
+                            <div className="-m-1 flex flex-wrap items-center">
+                              {categories.map((value) => (
+                                <span
+                                  key={value}
+                                  className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900"
+                                >
+                                  <span>{value}</span>
+                                  <button
+                                    type="button"
+                                    className="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                                  >
+                                    <span className="sr-only">Remove filter for {value}</span>
+                                    <svg
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 8 8"
+                                      className="h-2 w-2"
+                                    >
+                                      <path
+                                        d="M1 1l6 6m0-6L1 7"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                      />
+                                    </svg>
+                                  </button>
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        <select
+                          id="country"
+                          name="country"
+                          autoComplete="country-name"
+                          className="mt-2 block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+                        >
+                          <option>
+                              Select categories
+                          </option>
+                          {topics && topics.map((item) => (
+                            <option value={item.name} key={item._id}>{item.name}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
 

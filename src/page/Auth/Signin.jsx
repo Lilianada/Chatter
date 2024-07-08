@@ -49,12 +49,15 @@ export default function Signin() {
   
     try {
       const user = await signinUser(formData.email, formData.password, db);
+      console.log(user)
       if (user) {
         dispatch(setUser('name', user.fullName));
         dispatch(setUser('userId', user.uid));
         dispatch(setUser('email', user.email));
         dispatch(setUser('categories', user.categories))
-        handleLocalStorage(rememberMe, user.email);
+        if (rememberMe) {
+          localStorage.setItem("rememberMe", "true");
+        } 
   
         navigate("/dashboard/");
         setNotification({
@@ -72,17 +75,6 @@ export default function Signin() {
       });
     } finally {
       setIsLoading(false);
-    }
-  };
-  
-
-  const handleLocalStorage = (rememberMe, email) => {
-    if (rememberMe) {
-      localStorage.setItem("rememberMe", "true");
-      localStorage.setItem("userEmail", email);
-    } else {
-      localStorage.removeItem("rememberMe");
-      localStorage.removeItem("userEmail");
     }
   };
 

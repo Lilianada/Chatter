@@ -51,7 +51,6 @@ export default function Signin() {
       const user = await signinUser(formData.email, formData.password, db);
       
       if (user) {
-        console.log(user)
         dispatch(setUser('name', user.fullName));
         dispatch(setUser('userId', user.uid));
         dispatch(setUser('email', user.email));

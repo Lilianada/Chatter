@@ -37,7 +37,7 @@ export default function Onboarding({ open, setOpen }) {
       setInterests(response);
     };
     fetchCategories();
-  });
+  }, []);
 
   const handleCheckboxChange = (event) => {
     const { name, value, checked } = event.target;

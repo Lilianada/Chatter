@@ -7,8 +7,7 @@ import { useCategories } from "../context/CategoriesContext";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 
 export default function Profile() {
-  const { items } = useCategories();
-  console.log(items);
+  const { categories } = useCategories();
   const dispatch = useDispatch();
   const [topics, setTopics] = useState(() => {
     const storedTopics = localStorage.getItem("categories");
@@ -21,7 +20,7 @@ export default function Profile() {
   const userId = useSelector((state) => state.user.userId);
   const fullName = useSelector((state) => state.user.name);
   const email = useSelector((state) => state.user.email);
-  const categories = useSelector((state) => state.user.categories);
+  const userCategories = useSelector((state) => state.user.categories);
   const [isLoadig, setIsLoading] = useState(false);
   const [notification, setNotification] = useState({
     show: false,
@@ -253,7 +252,7 @@ export default function Profile() {
                         <div className="mt-2 grid grid-cols-3 ">
                           <div className="col-span-2">
                             <div className="-m-1 flex flex-wrap items-center">
-                              {categories.map((value) => (
+                              {userCategories.map((value) => (
                                 <span
                                   key={value}
                                   className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-xs font-medium text-gray-900"
@@ -284,6 +283,12 @@ export default function Profile() {
                             </div>
                           </div>
                           <div className="col-span-1">
+                          <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <span className="block truncate">Choose Categories</span>
+          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <ChevronUpDownIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
+          </span>
+        </ListboxButton>
                             <select
                               id="country"
                               name="country"
@@ -291,8 +296,8 @@ export default function Profile() {
                               className="mt-2 block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
                             >
                               <option>Select categories</option>
-                              {topics &&
-                                topics.map((item) => (
+                              {categories &&
+                                categories.map((item) => (
                                   <option value={item.name} key={item._id}>
                                     {item.name}
                                   </option>

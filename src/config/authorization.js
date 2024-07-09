@@ -59,7 +59,6 @@ export async function signinUser(email, password) {
       token: idToken 
     });
 
-    console.log(response.data);
     if (response.data.success && response.data.user) {
       localStorage.setItem('token', idToken); 
       return response.data.user;

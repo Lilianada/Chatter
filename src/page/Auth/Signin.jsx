@@ -63,12 +63,6 @@ export default function Signin() {
         } 
   
         navigate("/dashboard");
-        console.log("Login successful.");
-        // setNotification({
-        //   show: true,
-        //   type: "success",
-        //   message: "Login successful.",
-        // });
       }
     } catch (error) {
       console.error("Login error:", error);

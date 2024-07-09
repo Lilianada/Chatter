@@ -29,7 +29,7 @@ export default function Header({ setSidebarOpen }) {
       .then(() => {
         localStorage.clear();
         setIsLoading(false);
-        navigate("/");
+        navigate("/signin");
       })
       .catch((error) => {
         setIsLoading(false);

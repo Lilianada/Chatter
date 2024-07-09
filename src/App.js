@@ -9,7 +9,7 @@ import NewArticle from "./page/NewArticle";
 import ProtectedRoutes from "./config/protectedRoutes";
 import Support from "./page/Support";
 import Signin from "./page/Auth/Signin";
-import Skeleton from "./components/Authorized/Skeleton";
+import Layout from "./components/Authorized/Layout";
 import MainContent from "./components/Authorized/MainContent";
 import PageNotFound from "./components/Utils/PageNotFound";
 
@@ -24,7 +24,7 @@ function App() {
           path="/dashboard/"
           element={
             <ProtectedRoutes>
-              <Skeleton />
+              <Layout />
             </ProtectedRoutes>
           }
         >

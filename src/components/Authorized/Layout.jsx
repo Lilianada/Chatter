@@ -47,7 +47,7 @@ const navigation = [
   },
 ];
 
-export default function Skeleton() {
+export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

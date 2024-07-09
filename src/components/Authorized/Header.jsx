@@ -1,9 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import {
-  ExclamationTriangleIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   Bars3Icon,
   ChevronDownIcon,
@@ -12,7 +9,6 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import CustomModal from "../Utils/CustomModal";
-import axiosInstance from "../../utils/axiosInstance";
 
 export default function Header({ setSidebarOpen }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,21 +21,21 @@ export default function Header({ setSidebarOpen }) {
 
   const confirmSignout = () => {
     setIsLoading(true);
-    auth.signOut()  // Assuming this is Firebase auth.signOut() and not necessary if using only custom tokens
-        .then(() => {
-          localStorage.clear(); // Clear local storage or specifically remove the token
-          setIsLoading(false);
-          navigate("/");
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.error("Error during Firebase sign out:", error);
-        });
-  }
-
+    auth
+      .signOut()
+      .then(() => {
+        localStorage.clear();
+        setIsLoading(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error during Firebase sign out:", error);
+      });
+  };
 
   return (
-    <div className="flex flex-1 fixed top-0 z-40 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 w-full lg:-ml-20">
+    <div className="flex flex-1 items-center gap-x-6 bg-chocolate px-4 py-4 shadow-sm sm:px-6 ">
       <button
         type="button"
         className="-m-2.5 p-2.5 text-gray-400 md:hidden"

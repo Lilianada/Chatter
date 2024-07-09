@@ -25,6 +25,19 @@ module.exports = {
       logo: {
         "dark-logo": "url('/src/assets/logo.png')",
       },
+      gridTemplateAreas: {
+        'layout': [
+          'sidebar header header',
+          'sidebar content content',
+          'sidebar footer footer'
+        ],
+      },
+      gridTemplateColumns: {
+        'layout': '5rem 1fr', // Example widths, adjust as necessary
+      },
+      gridTemplateRows: {
+        'layout': 'auto 1fr auto', // Adjust row sizes based on content
+      }
     },
     colors: {
       transparent: 'transparent',
@@ -92,6 +105,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('@savvywombat/tailwindcss-grid-areas')
   ],
 };
 

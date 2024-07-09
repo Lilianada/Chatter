@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+import CategoryTabs from "./CategoryTabs";
 import {
   HomeIcon,
   UserCircleIcon,
@@ -50,27 +51,27 @@ export default function Skeleton() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <main className="h-screen flex flex-col">
-      <div className="relative flex flex-1 overflow-hidden">
-        {/* Sidebar */}
+    <div className="h-screen w-screen grid grid-areas-layout grid-cols-layout grid-rows-layout relative">
+      {/* Sidebar */}
+      <div className="grid-in-sidebar">
         <Sidebar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           navigation={navigation}
         />
-
-        <div className="flex flex-1 flex-col lg:pl-20">
-          {/* Header */}
-          <Header setSidebarOpen={setSidebarOpen} />
-
-          {/* Content Area */}
-          <div className="relative md:ml-20 md:mt-[4.5rem] flex-1 overflow-y-auto">
-            <Outlet />
-          </div>
-        </div>
+      </div>
+      {/* Header */}
+      <div className="grid-in-header flex flex-col fixed top-0 z-40 w-[calc(100vw_-_5rem)]">
+        <Header setSidebarOpen={setSidebarOpen} />
+      </div>
+      {/* Main content */}
+      <div className="grid-in-content relative top-[4.5rem]">
+        <Outlet />
       </div>
       {/* Footer */}
-      <Footer/>
-    </main>
+      <div className="grid-in-footer fixed z-40 bottom-0 w-[calc(100vw_-_5rem)]">
+        <Footer />
+      </div>
+    </div>
   );
 }

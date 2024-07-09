@@ -36,10 +36,10 @@ const CategoryTabs = ({
     <div className="relative bg-white p-4 flex items-center mx-auto border-b border-neutral-200">
       {showLeftArrow && (
         <button
-          className="absolute left-0 z-10 bg-gray-100 p-2"
+          className="absolute left-0 z-10 "
           onClick={() => scroll('left')}
         >
-          <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+          <ChevronLeftIcon className="h-6 w-6" aria-hidden="true" />
         </button>
       )}
       <div
@@ -62,10 +62,10 @@ const CategoryTabs = ({
       </div>
       {showRightArrow && (
         <button
-          className="absolute right-0 z-10 bg-gray-100 p-2"
+          className="absolute right-0 z-10"
           onClick={() => scroll('right')}
         >
-          <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+          <ChevronRightIcon className="h-6 w-6" aria-hidden="true" />
         </button>
       )}
     </div>

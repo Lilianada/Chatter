@@ -21,16 +21,16 @@ export default function MainContent() {
 
   return (
     <div className="flex flex-col">
-        <div className=" bg-white">
-          <CategoryTabs
-            checkForScroll={checkForScroll}
-            showLeftArrow={showLeftArrow}
-            showRightArrow={showRightArrow}
-            containerRef={containerRef}
-            onCategorySelect={handleCategorySelect}
-            selectedCategory={selectedCategory}
-          />
-        </div>
+      <div className=" bg-white">
+        <CategoryTabs
+          checkForScroll={checkForScroll}
+          showLeftArrow={showLeftArrow}
+          showRightArrow={showRightArrow}
+          containerRef={containerRef}
+          onCategorySelect={handleCategorySelect}
+          selectedCategory={selectedCategory}
+        />
+      </div>
 
       <div className=" flex flex-1 overflow-hidden">
         <div className=" flex-1 lg:px-4 overflow-y-auto lg:border-r lg:border-gray-200 lg:pt-4 lg:pb-24">

@@ -36,7 +36,7 @@ module.exports = {
         'layout': '5rem 1fr', // Example widths, adjust as necessary
       },
       gridTemplateRows: {
-        'layout': 'auto 1fr auto', // Adjust row sizes based on content
+        'layout': 'auto 1fr 3.45rem', // Adjust row sizes based on content
       }
     },
     colors: {

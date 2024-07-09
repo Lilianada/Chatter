@@ -34,8 +34,8 @@ const navigation = [
     current: false,
   },
   {
-    name: "Notification",
-    to: "/dashboard/notification",
+    name: "Activities",
+    to: "/dashboard/activities",
     icon: BellIcon,
     current: false,
   },
@@ -51,7 +51,7 @@ export default function Skeleton() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="h-screen w-screen grid grid-areas-layout grid-cols-layout grid-rows-layout relative">
+    <div className="h-screen w-screen md:grid md:grid-areas-layout grid-cols-layout grid-rows-layout relative">
       {/* Sidebar */}
       <div className="grid-in-sidebar">
         <Sidebar
@@ -61,15 +61,15 @@ export default function Skeleton() {
         />
       </div>
       {/* Header */}
-      <div className="grid-in-header flex flex-col fixed top-0 z-40 w-[calc(100vw_-_5rem)]">
+      <div className="md:grid-in-header flex flex-col fixed top-0 z-40 w-screen md:w-[calc(100vw_-_5rem)]">
         <Header setSidebarOpen={setSidebarOpen} />
       </div>
       {/* Main content */}
-      <div className="grid-in-content relative top-[4.5rem]">
+      <div className="md:grid-in-content mt-[4.5rem]">
         <Outlet />
       </div>
       {/* Footer */}
-      <div className="grid-in-footer fixed z-40 bottom-0 w-[calc(100vw_-_5rem)]">
+      <div className="w-screen grid-in-footer md:w-[calc(100vw_-_5rem)] relative bottom-0 z-40">
         <Footer />
       </div>
     </div>

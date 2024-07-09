@@ -9,7 +9,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Art & Design", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -26,7 +26,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Creative Writing", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -43,7 +43,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Technology", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -60,7 +60,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Food & Cooking", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -77,7 +77,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Skincare & Beauty", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -94,7 +94,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "DIY & Crafts", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -111,7 +111,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Skincare & Beauty", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -128,7 +128,7 @@ const posts = [
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde.",
     date: "Mar 16, 2020",
     datetime: "2020-03-16",
-    category: { title: "Marketing", href: "#" },
+    category: { title: "Art & Design", href: "#" },
     author: {
       name: "Michael Foster",
       role: "Co-Founder / CTO",
@@ -143,11 +143,11 @@ const posts = [
 export default function Arts() {
   return (
     <div className="mx-auto max-w-6xl lg:px-8">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-2xl divide-neutral-200 divide-y">
         {posts.map((post) => (
           <article
             key={post.id}
-            className="flex mx-auto max-w-xl flex-col items-start justify-between border-b border-gray-200 pt-6 p-4 cursor-pointer hover:bg-neutral-100"
+            className="flex mx-auto max-w-xl flex-col items-start justify-between pt-6 p-4 cursor-pointer hover:bg-neutral-100"
           >
             <div className="flex gap-4">
                 <div className="group relative">

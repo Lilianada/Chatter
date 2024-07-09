@@ -5,15 +5,18 @@ import {
   Bars3Icon,
   ChevronDownIcon,
   MagnifyingGlassIcon,
+  UserCircleIcon
 } from "@heroicons/react/20/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import CustomModal from "../Utils/CustomModal";
+import { useSelector } from "react-redux";
 
 export default function Header({ setSidebarOpen }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const profilepic = useSelector((state) => state.user.profilepic);
 
   const handleSignOut = () => {
     setIsOpen(true);
@@ -72,11 +75,12 @@ export default function Header({ setSidebarOpen }) {
       <Menu as="div" className="relative flex gap-4">
         <Menu.Button className="-m-1.5 flex items-center p-1.5">
           <span className="sr-only">Open user menu</span>
-          <img
+          { !profilepic ? <UserCircleIcon className="h-8 w-8 text-neutral-200" /> : 
+            <img
             className="h-8 w-8 rounded-full bg-gray-50"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
+            src={profilepic}
+            alt="profilePic"
+          />}
           <ChevronDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
@@ -102,7 +106,7 @@ export default function Header({ setSidebarOpen }) {
           <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
             <Menu.Item>
               <Link
-                to="/profile"
+                to="/dashboard/profile"
                 className="bg-neutral-50 block px-3 py-1 text-sm leading-6 text-gray-900"
               >
                 Your profile

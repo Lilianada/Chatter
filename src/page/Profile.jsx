@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IoPersonCircle } from "react-icons/io5";
 import { updateProfile } from "../config/profile";
 import Notification from "../components/Utils/Notification";
 import { setUser } from "../store/actions/userActions";
 import { useCategories } from "../context/CategoriesContext";
+import { UserCircleIcon } from "@heroicons/react/20/solid";
 
 export default function Profile() {
   const { items } = useCategories();
@@ -188,7 +188,7 @@ export default function Profile() {
                         </label>
                         <div className="mt-2 flex items-center">
                           {!formState.photoPreview || !formState.profilePic ? (
-                            <IoPersonCircle className="h-16 w-16 text-neutral-200" />
+                            <UserCircleIcon className="h-16 w-16 text-neutral-200" />
                           ) : (
                             <img
                               className="inline-block h-16 w-16 rounded-full bg-neutral-100"

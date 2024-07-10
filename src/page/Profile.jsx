@@ -1,42 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "../config/profile";
+import { getUserData, updateProfile } from "../config/profile";
 import Notification from "../components/Utils/Notification";
 import { setUser } from "../store/actions/userActions";
 import { useCategories } from "../context/CategoriesContext";
-import { UserCircleIcon } from "@heroicons/react/20/solid";
+import { UserCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { Listbox } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 export default function Profile() {
-  const { categories } = useCategories();
   const dispatch = useDispatch();
-  const [topics, setTopics] = useState(() => {
-    const storedTopics = localStorage.getItem("categories");
-    if (storedTopics) {
-      return JSON.parse(storedTopics);
-    }
-    return [];
-  });
-  console.log(topics);
+  const { categories } = useCategories();
   const userId = useSelector((state) => state.user.userId);
-  const fullName = useSelector((state) => state.user.name);
-  const email = useSelector((state) => state.user.email);
-  const userCategories = useSelector((state) => state.user.categories);
   const [isLoadig, setIsLoading] = useState(false);
+  const [selected, setSelected] = useState([]);
   const [notification, setNotification] = useState({
     show: false,
     type: "",
     message: "",
   });
+  
   const [formState, setFormState] = useState({
-    fullName: fullName || "",
+    fullName: "",
     username: "",
     description: "",
     profilePic: null,
-    email: email || "",
-    categories: categories || [],
+    email:  "",
+    categories: [],
     pronouns: "",
     photoPreview: null,
   });
+  
+  useEffect(() => {
+    const fetchUser = async () => {
+      setIsLoading(true);
+      try {
+        const response = await getUserData(userId);
+        console.log("User data:", response.data);
+        const { fullName, email, userCategories, pronouns, profilePic, description, } = response.data;  
+        setFormState(prevState => ({
+          ...prevState,
+          fullName: fullName,
+          email: email,
+          categories: categories, 
+          pronouns: pronouns,
+          profilePic: profilePic,
+          description: description,
+          
+        }));
+        setSelected(userCategories); 
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setNotification({ show: true, type: "error", message: "Failed to fetch user data." });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchUser();
+    }
+  }, [userId, categories]);
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -61,26 +85,16 @@ export default function Profile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const {
-      fullName,
-      username,
-      description,
-      email,
-      categories,
-      pronouns,
-      profilePic,
-    } = formState;
+
+    // Merge selected with formState before submission
+    const finalData = {
+      ...formState,
+      categories: selected.map((cat) => cat), // Assuming you only need the name
+    };
+
     setIsLoading(true);
     try {
-      const result = await updateProfile(userId, {
-        fullName,
-        username,
-        description,
-        email,
-        categories,
-        pronouns,
-        profilePic,
-      });
+      const result = await updateProfile(userId, finalData);
       if (result) {
         setNotification({
           show: true,
@@ -88,13 +102,13 @@ export default function Profile() {
           message: "Your profile has been successfully updated!",
         });
 
-        dispatch(setUser("name", fullName));
-        dispatch(setUser("username", username));
-        dispatch(setUser("email", email));
-        dispatch(setUser("categories", categories));
-        dispatch(setUser("profilePic", profilePic));
+        // Update Redux store as needed
+        dispatch(setUser("name", finalData.fullName));
+        dispatch(setUser("username", finalData.username));
+        dispatch(setUser("email", finalData.email));
+        dispatch(setUser("categories", finalData.categories));
+        dispatch(setUser("profilePic", finalData.profilePic));
       } else {
-        // If the result is not successful, handle accordingly
         setNotification({
           show: true,
           type: "error",
@@ -103,10 +117,29 @@ export default function Profile() {
         });
       }
     } catch (err) {
-      console.error(err);
+      console.error("Profile update error:", err);
+      setNotification({
+        show: true,
+        type: "error",
+        message: "Failed to update profile due to an error.",
+      });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleCategorySelect = (category) => {
+    console.log(category);
+    if (!selected.find((cat) => cat === category)) {
+      const updatedCategories = [...selected, category];
+      console.log(updatedCategories);
+      setSelected(updatedCategories);
+    }
+  };
+
+  const handleRemoveCategory = (category) => {
+    const updatedCategories = selected.filter((cat) => cat !== category);
+    setSelected(updatedCategories);
   };
 
   return (
@@ -245,65 +278,79 @@ export default function Profile() {
                       <div className="sm:col-span-6">
                         <label
                           htmlFor="categories"
-                          className="block text-sm font-medium leading-6 text-neutral-900"
+                          className="block text-sm font-medium text-gray-700"
                         >
                           Categories
                         </label>
-                        <div className="mt-2 grid grid-cols-3 ">
-                          <div className="col-span-2">
-                            <div className="-m-1 flex flex-wrap items-center">
-                              {userCategories.map((value) => (
-                                <span
-                                  key={value}
-                                  className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-xs font-medium text-gray-900"
+                        <div className="mt-1 border border-gray-300 rounded-md relative">
+                          <div className="p-2">
+                            {selected.map((category) => (
+                              <span
+                                key={category}
+                                className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-gray-100 py-1 px-1.5 text-xs font-medium text-gray-900"
+                              >
+                                {category}
+                                <button
+                                  type="button"
+                                  className="ml-1 inline-flex flex-shrink-0 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                                  onClick={() => handleRemoveCategory(category)}
                                 >
-                                  <span>{value}</span>
-                                  <button
-                                    type="button"
-                                    className="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
-                                  >
-                                    <span className="sr-only">
-                                      Remove filter for {value}
-                                    </span>
-                                    <svg
-                                      fill="none"
-                                      stroke="currentColor"
-                                      viewBox="0 0 8 8"
-                                      className="h-2 w-2"
-                                    >
-                                      <path
-                                        d="M1 1l6 6m0-6L1 7"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                      />
-                                    </svg>
-                                  </button>
-                                </span>
-                              ))}
-                            </div>
+                                  <XMarkIcon
+                                    className="h-4 w-4"
+                                    aria-hidden="true"
+                                  />
+                                </button>
+                              </span>
+                            ))}
                           </div>
-                          <div className="col-span-1">
-                          <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-          <span className="block truncate">Choose Categories</span>
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronUpDownIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
-          </span>
-        </ListboxButton>
-                            <select
-                              id="country"
-                              name="country"
-                              autoComplete="country-name"
-                              className="mt-2 block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+                          <Listbox
+                            value={selected}
+                            onChange={handleCategorySelect}
+                          >
+                            <Listbox.Button className="w-full rounded-b-md border-t border-gray-300 text-xs bg-white py-2 px-3 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between">
+                              Select categories
+                              <ChevronUpDownIcon
+                                className="h-5 w-5 text-gray-400"
+                                aria-hidden="true"
+                              />
+                            </Listbox.Button>
+                            <Listbox.Options
+                              transition
+                              className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             >
-                              <option>Select categories</option>
-                              {categories &&
-                                categories.map((item) => (
-                                  <option value={item.name} key={item._id}>
-                                    {item.name}
-                                  </option>
+                              {categories
+                                .filter(
+                                  (cat) =>
+                                    !selected.some(
+                                      (selected) => selected.name === cat.name
+                                    )
+                                )
+                                .map((category) => (
+                                  <Listbox.Option
+                                    key={category.index}
+                                    value={category.name}
+                                    className={({ active, selected }) =>
+                                      `group relative cursor-default select-none py-2 pl-4 pr-4 text-sm ${
+                                        active
+                                          ? "bg-yellow-100"
+                                          : "text-gray-900"
+                                      } ${selected ? "font-bold" : ""}`
+                                    }
+                                  >
+                                    <span className="block truncate font-normal group-data-[selected]:font-semibold">
+                                      {category.name}
+                                    </span>
+
+                                    <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-yellow-600 group-data-[focus]:text-white [.group:not([data-selected])_&]:hidden">
+                                      <CheckIcon
+                                        className="h-5 w-5"
+                                        aria-hidden="true"
+                                      />
+                                    </span>
+                                  </Listbox.Option>
                                 ))}
-                            </select>
-                          </div>
+                            </Listbox.Options>
+                          </Listbox>
                         </div>
                       </div>
                     </div>
@@ -368,7 +415,7 @@ export default function Profile() {
                         type="submit"
                         className="inline-flex justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-chocolate shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
                       >
-                        Update
+                        {isLoadig ? "Updating" : "Update"}
                       </button>
                     </div>
                   </form>

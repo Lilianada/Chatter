@@ -48,7 +48,7 @@ export default function Header({ setSidebarOpen }) {
         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
       </button>
       <div className="flex-1 hidden sm:flex">
-        <h4 className="text-sm font-semibold leading-6 text-white lg:hidden">
+        <h4 className="text-sm font-semibold leading-6 text-white md:hidden">
           Chatter
         </h4>
       </div>

@@ -102,13 +102,14 @@ export default function Profile() {
           type: "success",
           message: "Your profile has been successfully updated!",
         });
+        console.log("Profile updated:", result);
 
         // Update Redux store as needed
         dispatch(setUser("name", finalData.fullName));
         dispatch(setUser("userName", finalData.userName));
         dispatch(setUser("email", finalData.email));
         dispatch(setUser("categories", finalData.categories));
-        dispatch(setUser("profilePic", finalData.profilePic));
+        // dispatch(setUser("profilePic", finalData.profilePic));
       } else {
         setNotification({
           show: true,

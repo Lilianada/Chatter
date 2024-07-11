@@ -6,7 +6,8 @@ export async function updateProfile(userId, data) {
     const response = await axiosInstance.patch(`/user/updateProfile`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
+      },
+      userId: userId,
     });
     if (response.data.success) {
       console.log("Profile update response:", response);

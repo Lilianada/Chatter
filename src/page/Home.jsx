@@ -15,9 +15,9 @@ import Footer from "../components/Authorized/Footer";
 import CategoryTabs from "../components/Authorized/CategoryTabs";
 import Articles from "../components/Authorized/Articles";
 import { getAllArticles } from "../config/article";
-// import { useCategories } from "../context/CategoriesContext";
+import { useCategories } from "../context/CategoriesContext";
 import SelectTopics from "../components/Authorized/ChooseTopics";
-import { useUserTopics } from "../context/UserTopicsContext";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Home", to: "#", icon: HomeIcon, current: true },
@@ -63,7 +63,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredArticles, setFilteredArticles] = useState([]);
   const containerRef = useRef(null);
-  const { userTopics } = useUserTopics();
+  const userTopics  = useSelector((state) => state.user.categories);
 
   useEffect(() => {
     fetchArticles();

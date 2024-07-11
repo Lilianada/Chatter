@@ -1,15 +1,16 @@
 import React from "react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { useCategories } from "../../context/CategoriesContext";
 
 function SelectCategories({
-  categories,
   selectedCategories,
   handleCheckboxChange,
   close,
 }) {
+  const {categories} = useCategories();
   return (
-    <div className="mt-0 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl px-6 pt-8 pb-4">
-      <div className="flex justify-between items-end">
+    <div className="mt-0 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl px-6 py-4">
+      <div className="flex justify-end mb-4">
         <button
           className="p-1 bg-neutral-200 rounded-lg border-1 border-neutral-300 "
           onClick={close}
@@ -18,7 +19,7 @@ function SelectCategories({
         </button>
       </div>
       <div className="flex justify-between items-start">
-        <div className="pb-8 text-left">
+        <div className="pb-4 text-left">
           <h3 className="text-lg font-semibold leading-6 text-gray-900">
             Choose Topics
           </h3>
@@ -33,7 +34,7 @@ function SelectCategories({
         {categories.map((item) => (
           <div
             key={item._id}
-            className={`relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-indigo-400 cursor-pointer 
+            className={`relative flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-2 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-indigo-400 cursor-pointer 
               ${
                 selectedCategories.includes(item._id)
                   ? "border-indigo-400 bg-indigo-50 focus-within:ring-indigo-400"
@@ -44,8 +45,8 @@ function SelectCategories({
               <input
                 type="checkbox"
                 name="categories"
-                value={item._id}
-                checked={selectedCategories.includes(item._id)}
+                value={item.name}
+                checked={selectedCategories.includes(item.name)}
                 onChange={handleCheckboxChange}
                 className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
               />

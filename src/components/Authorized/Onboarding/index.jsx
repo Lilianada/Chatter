@@ -10,6 +10,7 @@ import {
   addUserCategories,
   getAllCategories,
 } from "../../../config/categories.js";
+import { useCategories } from "../../../context/CategoriesContext.js";
 
 const contribution = [
   "Yes, I am interested.",
@@ -20,7 +21,7 @@ const frequency = ["Daily", "Weekly", "Monthly", "Occasionally"];
 
 export default function Onboarding({ open, setOpen }) {
   const userId = useSelector((state) => state.user.userId);
-  const [interests, setInterests] = useState([]);
+  const { interests } = useCategories();
   const [userData, setUserData] = useState({
     interests: [],
     willingToContribute: [],
@@ -31,13 +32,6 @@ export default function Onboarding({ open, setOpen }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await getAllCategories();
-      setInterests(response.data);
-    };
-    fetchCategories();
-  }, []);
 
   const handleCheckboxChange = (event) => {
     const { name, value, checked } = event.target;

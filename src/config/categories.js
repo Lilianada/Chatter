@@ -6,6 +6,7 @@ export async function getAllCategories() {
     if (response.data.success) {
       return { data: response.data.categories };
     }
+    
   } catch (err) {
     console.error(err);
   }

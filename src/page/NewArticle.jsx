@@ -13,6 +13,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { postArticle, saveDraft } from "../services/articleServices";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 export default function NewArticle() {
   const { showModal } = useModal();
@@ -208,6 +209,13 @@ export default function NewArticle() {
     }
   };
 
+  const deleteCategory = (e, category) => {
+    e.preventDefault();
+    setSelectedCategories(
+      selectedCategories.filter((item) => item !== category)
+    );
+  };
+
   const handleDeleteImage = (e) => {
     e.preventDefault();
     setSelectedImage(null);
@@ -257,7 +265,6 @@ export default function NewArticle() {
           <AddButtons
             handleImageChange={handleImageChange}
             handleCheckboxChange={handleCheckboxChange}
-            categories={categories}
             selectedCategories={selectedCategories}
             handleDeleteImage={handleDeleteImage}
             sele
@@ -306,14 +313,24 @@ export default function NewArticle() {
 
             <div className="mt-2 flex items-center">
               <div className="w-full">
-                <div className="flex w-full sm:w-full gap-2">
+                <div className="flex w-full flex-wrap sm:w-full gap-2">
                   {selectedCategories.map((category) => (
                     <span
-                      key={category}
-                      className="inline-flex items-center capitalize px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-100 text-gray-500 mr-2"
+                    key={category}
+                    className="m-1 inline-flex items-center capitalize rounded-full border border-gray-200 bg-gray-100 py-1 px-1.5 text-xs font-medium text-gray-900"
+                  >
+                    {category}
+                    <button
+                      type="button"
+                      className="ml-1 inline-flex flex-shrink-0 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                      onClick={(e) => deleteCategory(e, category)}
                     >
-                      {category}
-                    </span>
+                      <XMarkIcon
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </span>
                   ))}
                   {selectedCategories.length > 0 && (
                     <div className="flex items-center space-x-4">

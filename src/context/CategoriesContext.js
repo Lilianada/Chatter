@@ -12,7 +12,7 @@ export const CategoriesProvider = ({ children }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await getAllCategories();
-      setCategories(response.categories);
+      setCategories(response.data);
     };
     fetchCategories();
   }, []);

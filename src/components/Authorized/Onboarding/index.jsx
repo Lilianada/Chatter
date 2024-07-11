@@ -34,7 +34,7 @@ export default function Onboarding({ open, setOpen }) {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await getAllCategories();
-      setInterests(response);
+      setInterests(response.data);
     };
     fetchCategories();
   }, []);

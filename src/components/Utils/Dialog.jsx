@@ -34,7 +34,7 @@ export default function Dialog({ open, setOpen }) {
     async function fetchCategories() {
       try {
         const response = await getAllCategories();
-        setCategories(response);
+        setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }

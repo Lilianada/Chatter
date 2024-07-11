@@ -13,6 +13,7 @@ function AddButtons({
   selectedImage,
 }) {
   const [openCategory, setOpenCategory] = useState(false);
+  
   return (
     <div className="mt-0 flex gap-2">
       <div className="flex items-center space-x-4">

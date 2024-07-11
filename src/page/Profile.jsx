@@ -421,26 +421,6 @@ export default function Profile() {
                     </div>
                   </form>
 
-                  <div className="grid grid-cols-1 gap-y-6 pt-8 sm:grid-cols-6 sm:gap-x-6 border-t mt-12">
-                    <div className="sm:col-span-4">
-                      <label
-                        htmlFor="email-address"
-                        className="block text-sm font-medium leading-6 text-neutral-900"
-                      >
-                        Delete Account
-                      </label>
-                      <button
-                        type="submit"
-                        className="mt-2 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
-                      >
-                        Yes, delete my account
-                      </button>
-                      <p className="mt-2 text-xs text-neutral-500 sm:col-span-6">
-                        This action is not reversible. All information related
-                        to this account will be deleted permanently.
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -28,7 +28,6 @@ export async function getUserData(userId) {
       userId: userId
     });
     
-    console.log("User data response:", response); 
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);

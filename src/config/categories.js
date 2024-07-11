@@ -4,7 +4,7 @@ export async function getAllCategories() {
   try {
     const response = await axiosInstance.get(`/category/getCategories`);
     if (response.data.success) {
-      return { categories: response.data.categories };
+      return { data: response.data.categories };
     }
   } catch (err) {
     console.error(err);

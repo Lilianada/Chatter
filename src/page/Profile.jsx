@@ -22,7 +22,7 @@ export default function Profile() {
   
   const [formState, setFormState] = useState({
     fullName: "",
-    username: "",
+    userName: "",
     description: "",
     profilePic: null,
     email:  "",
@@ -36,19 +36,20 @@ export default function Profile() {
       setIsLoading(true);
       try {
         const response = await getUserData(userId);
-        console.log("User data:", response.data);
-        const { fullName, email, userCategories, pronouns, profilePic, description, } = response.data;  
+       
+        const { fullName, userName, email, categories, pronouns, profilePic, description, } = response.data;  
         setFormState(prevState => ({
           ...prevState,
           fullName: fullName,
+          userName: userName,
           email: email,
           categories: categories, 
           pronouns: pronouns,
           profilePic: profilePic,
           description: description,
-          
+
         }));
-        setSelected(userCategories); 
+        setSelected(categories); 
       } catch (err) {
         console.error("Error fetching user data:", err);
         setNotification({ show: true, type: "error", message: "Failed to fetch user data." });
@@ -89,7 +90,7 @@ export default function Profile() {
     // Merge selected with formState before submission
     const finalData = {
       ...formState,
-      categories: selected.map((cat) => cat), // Assuming you only need the name
+      categories: selected.map((cat) => cat), 
     };
 
     setIsLoading(true);
@@ -104,7 +105,7 @@ export default function Profile() {
 
         // Update Redux store as needed
         dispatch(setUser("name", finalData.fullName));
-        dispatch(setUser("username", finalData.username));
+        dispatch(setUser("userName", finalData.userName));
         dispatch(setUser("email", finalData.email));
         dispatch(setUser("categories", finalData.categories));
         dispatch(setUser("profilePic", finalData.profilePic));
@@ -190,10 +191,10 @@ export default function Profile() {
 
                       <div className="sm:col-span-6">
                         <label
-                          htmlFor="username"
+                          htmlFor="userName"
                           className="block text-sm font-medium leading-6 text-neutral-900"
                         >
-                          Username
+                          UserName
                         </label>
                         <div className="mt-2 flex rounded-md shadow-sm">
                           <span className="inline-flex items-center rounded-l-md border border-r-0 border-neutral-300 bg-white px-3 text-neutral-500 sm:text-sm">
@@ -201,10 +202,10 @@ export default function Profile() {
                           </span>
                           <input
                             type="text"
-                            name="username"
-                            id="username"
-                            autoComplete="username"
-                            value={formState.username}
+                            name="userName"
+                            id="userName"
+                            autoComplete="userName"
+                            value={formState.userName}
                             onChange={handleChange}
                             className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-neutral-900 ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-yellow-500 sm:text-sm sm:leading-6"
                           />

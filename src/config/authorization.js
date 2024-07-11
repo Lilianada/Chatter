@@ -1,7 +1,5 @@
 import {
-  browserSessionPersistence,
   getAuth,
-  setPersistence,
   signInWithEmailAndPassword,
   updateCurrentUser,
 } from "firebase/auth";

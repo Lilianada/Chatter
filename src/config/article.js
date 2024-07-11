@@ -1,4 +1,4 @@
-import { addDoc, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc,} from "firebase/firestore";
 import { db, storage } from "./firebase";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import axiosInstance from "../utils/axiosInstance";
@@ -104,18 +104,12 @@ export async function saveDraft(article, userId) {
 
 export async function getAllArticles() {
   try {
-    const articlesQuery = query(collectionGroup(db, "article")); 
-    const querySnapshot = await getDocs(articlesQuery);
-
-    const articles = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return { success: true, articles };
-  } catch (e) {
-    console.error("Error fetching articles: ", e);
-    return { success: false, message: e.message };
+    const response = await axiosInstance.get(`/articles/getArticles`);
+    if (response.data.success) {
+      return { articles: response.data.articles };
+    }
+  } catch (err) {
+    console.error(err);
   }
 }
 

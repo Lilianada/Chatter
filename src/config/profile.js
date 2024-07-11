@@ -3,13 +3,15 @@ import axiosInstance from "../utils/axiosInstance";
 export async function updateProfile(userId, data) {
   console.log(data);
   try {
-    const response = await axiosInstance.patch(`/user/updateProfile/${userId}`, data, {
+    const response = await axiosInstance.patch(`/user/updateProfile`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
     });
-    console.log("Profile update response:", response);
-    return response.data;
+    if (response.data.success) {
+      console.log("Profile update response:", response);
+      return response.data;
+    }
   } catch (error) {
     console.error("Error updating profile:", error);
     throw error;
@@ -17,13 +19,15 @@ export async function updateProfile(userId, data) {
 }
 
 export async function getUserData(userId) {
-  
   try {
-    const response = await axiosInstance.get(`/user/getUser/${userId}`, {
+    const response = await axiosInstance.get(`/user/getUser`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
+        Authorization: localStorage.getItem("token"),
+        'Content-Type': 'application/json'
+      },
+      userId: userId
     });
+    
     console.log("User data response:", response); 
     return response.data;
   } catch (error) {

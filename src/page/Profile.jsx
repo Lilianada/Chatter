@@ -130,10 +130,8 @@ export default function Profile() {
   };
 
   const handleCategorySelect = (category) => {
-    console.log(category);
     if (!selected.find((cat) => cat === category)) {
       const updatedCategories = [...selected, category];
-      console.log(updatedCategories);
       setSelected(updatedCategories);
     }
   };

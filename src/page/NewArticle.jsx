@@ -203,9 +203,7 @@ export default function NewArticle() {
   const handleDeleteCategories = (e) => {
     e.preventDefault();
     if (selectedCategories.length > 0) {
-      setSelectedCategories(
-        selectedCategories.slice(0, selectedCategories.length - 1)
-      );
+      setSelectedCategories([]);
     }
   };
 

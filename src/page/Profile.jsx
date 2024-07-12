@@ -8,6 +8,7 @@ import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useUserContext } from "../context/UserContext";
+import DotLoader from "../components/Utils/DotLoader";
 
 export default function Profile() {
   const { categories } = useCategories();
@@ -400,18 +401,18 @@ export default function Profile() {
                     </div>
 
                     <div className="flex justify-end gap-x-3 pt-8">
-                      <button
+                      {/* <button
                         type="button"
                         className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50"
                       >
                         Cancel
-                      </button>
+                      </button> */}
                       <button
                         type="submit"
                         disabled={isLoading}
                         className="inline-flex justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-chocolate shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
                       >
-                        {isLoading ? "Updating" : "Update"}
+                        {isLoading ? <span className="flex items-center gap-2">Updating <DotLoader /></span> : "Update"}
                       </button>
                     </div>
                   </form>

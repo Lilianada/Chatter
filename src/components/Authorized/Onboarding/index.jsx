@@ -136,7 +136,7 @@ export default function Onboarding({ open, setOpen }) {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      <DotLoader />
+                     `Submitting ${<DotLoader />}`
                     ) : currentSection === totalSections - 1 ? (
                       "Submit"
                     ) : (

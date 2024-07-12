@@ -36,7 +36,7 @@ const whoToFollow = [
 
 export default function FollowerSuggestion() {
   return (
-    <div className="sticky top-4 space-y-4">
+    <div className="space-y-4">
       <section aria-labelledby="who-to-follow-heading">
         <div className=" bg-white">
           <div className="p-6">

@@ -20,7 +20,7 @@ export default function MainContent() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative h-[calc(100vh_-_8rem)] overflow-hidden">
       <div className=" bg-white">
         <CategoryTabs
           checkForScroll={checkForScroll}
@@ -32,13 +32,13 @@ export default function MainContent() {
         />
       </div>
 
-      <div className=" flex flex-1 overflow-hidden">
-        <div className=" flex-1 lg:px-4 overflow-y-auto lg:border-r lg:border-gray-200 lg:pt-4 lg:pb-24">
+      <div className=" flex flex-1 h-screen overflow-hidden mt-16">
+        <div className=" flex-1 lg:px-4 overflow-y-auto lg:border-r lg:border-gray-200 lg:pt-4">
           <Arts />
         </div>
 
         {/* Aside Content */}
-        <aside className=" hidden lg:block lg:w-68 lg:my-4 lg:mr-8 lg:sticky lg:top-20">
+        <aside className=" hidden lg:block lg:w-68 lg:my-4 lg:mr-8 lg:sticky lg:top-4">
           <FollowerSuggestion />
         </aside>
       </div>

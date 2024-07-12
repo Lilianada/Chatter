@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { useSelector } from "react-redux";
+import { useUserContext } from "../../context/UserContext";
 
 const CategoryTabs = ({
   onCategorySelect,
@@ -9,7 +9,7 @@ const CategoryTabs = ({
   const containerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const tabs = useSelector((state) => state.user.categories)
+  const { categories } = useUserContext().user;
 
   useEffect(() => {
     checkForScroll();
@@ -33,7 +33,7 @@ const CategoryTabs = ({
   };
 
   return (
-    <div className="relative bg-white p-4 flex items-center mx-auto border-b border-neutral-200">
+    <div className="fixed z-40 w-full bg-white p-4 flex items-center mx-auto border-b border-neutral-200">
       {showLeftArrow && (
         <button
           className="absolute left-0 z-10 "
@@ -47,7 +47,7 @@ const CategoryTabs = ({
         ref={containerRef}
         onScroll={checkForScroll}
       >
-        {tabs.map((category) => (
+        {categories.map((category) => (
           <span
             key={category}
             onClick={() => onCategorySelect(category)}

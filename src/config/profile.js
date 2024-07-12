@@ -1,14 +1,7 @@
 import axiosInstance from "../utils/axiosInstance";
-
 export async function updateProfile(userId, data) {
-  console.log(data);
   try {
-    const response = await axiosInstance.patch(`/user/updateProfile`, data, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      userId: userId,
-    });
+    const response = await axiosInstance.patch(`/user/updateProfile/${userId}`, data);
     if (response.data.success) {
       console.log("Profile update response:", response);
       return response.data;
@@ -19,16 +12,17 @@ export async function updateProfile(userId, data) {
   }
 }
 
+
 export async function getUserData(userId) {
   try {
     const response = await axiosInstance.get(`/user/getUser`, {
       headers: {
         Authorization: localStorage.getItem("token"),
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      userId: userId
+      userId: userId,
     });
-    
+
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);

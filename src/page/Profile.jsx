@@ -19,40 +19,50 @@ export default function Profile() {
     type: "",
     message: "",
   });
-  
   const [formState, setFormState] = useState({
     fullName: "",
     userName: "",
+    email: "",
     description: "",
-    profilePic: null,
-    email:  "",
     categories: [],
     pronouns: "",
+    profilePic: null,
     photoPreview: null,
   });
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
         const response = await getUserData(userId);
-       
-        const { fullName, userName, email, categories, pronouns, profilePic, description, } = response.data;  
-        setFormState(prevState => ({
+
+        const {
+          fullName,
+          userName,
+          email,
+          categories,
+          pronouns,
+          profilePic,
+          description,
+        } = response.data;
+        setFormState((prevState) => ({
           ...prevState,
           fullName: fullName,
           userName: userName,
           email: email,
-          categories: categories, 
+          categories: categories,
           pronouns: pronouns,
           profilePic: profilePic,
           description: description,
-
         }));
-        setSelected(categories); 
+        setSelected(categories);
       } catch (err) {
         console.error("Error fetching user data:", err);
-        setNotification({ show: true, type: "error", message: "Failed to fetch user data." });
+        setNotification({
+          show: true,
+          type: "error",
+          message: "Failed to fetch user data.",
+        });
       } finally {
         setIsLoading(false);
       }
@@ -83,39 +93,44 @@ export default function Profile() {
       }));
     }
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Merge selected with formState before submission
-    const finalData = {
-      ...formState,
-      categories: selected.map((cat) => cat), 
-    };
-
     setIsLoading(true);
+  
+    const formData = new FormData();
+    Object.keys(formState).forEach(key => {
+      if (key === 'profilePic' && formState[key] instanceof File) {
+        formData.append(key, formState[key], formState[key].name);
+      } else if (key === 'categories') { 
+        formData.append(key, JSON.stringify(formState[key]));
+      } else {
+        formData.append(key, formState[key]);
+      }
+    });
+  
     try {
-      const result = await updateProfile(userId, finalData);
-      if (result) {
+      const result = await updateProfile(userId, formData);
+      if (result && result.success) {
         setNotification({
           show: true,
           type: "success",
           message: "Your profile has been successfully updated!",
         });
         console.log("Profile updated:", result);
-
+  
         // Update Redux store as needed
-        dispatch(setUser("name", finalData.fullName));
-        dispatch(setUser("userName", finalData.userName));
-        dispatch(setUser("email", finalData.email));
-        dispatch(setUser("categories", finalData.categories));
-        // dispatch(setUser("profilePic", finalData.profilePic));
+        dispatch(setUser("name", formState.fullName));
+        dispatch(setUser("userName", formState.userName));
+        dispatch(setUser("email", formState.email));
+        dispatch(setUser("categories", formState.categories));
+        if (result.data && result.data.profilePic) {
+          dispatch(setUser("profilePic", result.data.profilePic));
+        }
       } else {
         setNotification({
           show: true,
           type: "error",
-          message:
-            result.message || "Failed to update profile. Please try again.",
+          message: result.message || "Failed to update profile. Please try again.",
         });
       }
     } catch (err) {
@@ -129,7 +144,7 @@ export default function Profile() {
       setIsLoading(false);
     }
   };
-
+  
   const handleCategorySelect = (category) => {
     if (!selected.find((cat) => cat === category)) {
       const updatedCategories = [...selected, category];
@@ -258,7 +273,7 @@ export default function Profile() {
                           htmlFor="description"
                           className="block text-sm font-medium leading-6 text-neutral-900"
                         >
-                          Description
+                          Bio
                         </label>
                         <div className="mt-2">
                           <textarea
@@ -419,7 +434,6 @@ export default function Profile() {
                       </button>
                     </div>
                   </form>
-
                 </div>
               </div>
             </div>

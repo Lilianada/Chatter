@@ -12,6 +12,7 @@ import Signin from "./page/Auth/Signin";
 import Layout from "./components/Authorized/Layout";
 import MainContent from "./components/Authorized/MainContent";
 import PageNotFound from "./components/Utils/PageNotFound";
+import Activities from "./page/Activities";
 
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
             element={
               <ProtectedRoutes>
                 <Support />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="activities"
+            element={
+              <ProtectedRoutes>
+                <Activities />
               </ProtectedRoutes>
             }
           />

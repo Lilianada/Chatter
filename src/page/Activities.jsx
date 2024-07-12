@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Activities() {
     const [file, setFile] = useState(null); // State to hold the selected file
-    const [previewUrl, setPreviewUrl] = useState(''); // State to hold the URL for previewing the selected image
+    const [previewUrl, setPreviewUrl] = useState(''); 
 
     // Function to handle file selection
     const handleFileChange = (e) => {
@@ -19,19 +20,35 @@ export default function Activities() {
         }
     };
 
-    // Function to handle form submission
     const submitHandler = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("photo", file); // Append the selected file
-        // console.log("Form data:", formData);
+        if (!file) {
+            console.error("No file selected");
+            return;
+        }
+    
         try {
-            const response = await axiosInstance.post("/user/uploadImage", formData);
+            // Ensure firebase is properly imported and initialized
+            console.log("Uploading file:", file);
+            const storage = getStorage();
+            const storageRef = ref(storage, 'uploads/' + file.name);
+    
+            // Upload the file
+            await uploadBytes(storageRef, file);
+    
+            // Get the download URL
+            const downloadURL = await getDownloadURL(storageRef);
+            console.log("Download URL:", downloadURL);
+            setPreviewUrl(downloadURL);  // Assuming you have a state setter for updating the preview URL
+    
+            // Send the URL to the backend
+            const response = await axiosInstance.post("/user/uploadImage", { photoUrl: downloadURL });
             console.log("Response:", response);
         } catch (error) {
             console.error("Error uploading image:", error);
         }
     };
+    
 
     return (
         <div className='p-8'>

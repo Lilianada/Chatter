@@ -1,7 +1,12 @@
 import axiosInstance from "../utils/axiosInstance";
 export async function updateProfile(userId, data) {
   try {
-    const response = await axiosInstance.patch(`/user/updateProfile/${userId}`, data);
+    const response = await axiosInstance.patch(`/user/updateProfile`, data, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+      params: {userId: userId},
+    });
     if (response.data.success) {
       console.log("Profile update response:", response);
       return response.data;

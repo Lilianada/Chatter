@@ -16,8 +16,7 @@ export default function Header({ setSidebarOpen }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const profilepic = useSelector((state) => state.user.profilepic);
-
+  const profilepic = useSelector((state) => state.user.profilePic);
   const handleSignOut = () => {
     setIsOpen(true);
   };
@@ -75,7 +74,7 @@ export default function Header({ setSidebarOpen }) {
       <Menu as="div" className="relative flex gap-4">
         <Menu.Button className="-m-1.5 flex items-center p-1.5">
           <span className="sr-only">Open user menu</span>
-          { !profilepic ? <UserCircleIcon className="h-8 w-8 text-neutral-200" /> : 
+          { (!profilepic) ? <UserCircleIcon className="h-8 w-8 text-neutral-200" /> : 
             <img
             className="h-8 w-8 rounded-full bg-gray-50"
             src={profilepic}

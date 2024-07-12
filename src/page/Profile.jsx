@@ -7,12 +7,13 @@ import { useCategories } from "../context/CategoriesContext";
 import { UserCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const { categories } = useCategories();
   const userId = useSelector((state) => state.user.userId);
-  const [isLoadig, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState([]);
   const [notification, setNotification] = useState({
     show: false,
@@ -93,22 +94,37 @@ export default function Profile() {
       }));
     }
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-  
-    const formData = new FormData();
-    Object.keys(formState).forEach(key => {
-      if (key === 'profilePic' && formState[key] instanceof File) {
-        formData.append(key, formState[key], formState[key].name);
-      } else if (key === 'categories') { 
-        formData.append(key, JSON.stringify(formState[key]));
-      } else {
-        formData.append(key, formState[key]);
-      }
-    });
-  
+
+    const { fullName, userName, email, pronouns, description, profilePic } =
+      formState;
+
     try {
+      // Upload the profile picture to Firebase if it's available
+      let downloadURL = "";
+      if (profilePic && profilePic.name) {
+        const storage = getStorage();
+        const storageRef = ref(storage, "profilePictures/" + profilePic.name);
+
+        await uploadBytes(storageRef, profilePic);
+        downloadURL = await getDownloadURL(storageRef);
+        console.log("Download URL:", downloadURL);
+      }
+
+      // Prepare formData to send to the backend
+      const formData = {
+        fullName,
+        userName,
+        email,
+        categories: selected.map((cat) => cat),
+        pronouns,
+        description,
+        profilePic: downloadURL,
+      };
+
       const result = await updateProfile(userId, formData);
       if (result && result.success) {
         setNotification({
@@ -117,20 +133,19 @@ export default function Profile() {
           message: "Your profile has been successfully updated!",
         });
         console.log("Profile updated:", result);
-  
+
         // Update Redux store as needed
-        dispatch(setUser("name", formState.fullName));
-        dispatch(setUser("userName", formState.userName));
-        dispatch(setUser("email", formState.email));
-        dispatch(setUser("categories", formState.categories));
-        if (result.data && result.data.profilePic) {
-          dispatch(setUser("profilePic", result.data.profilePic));
-        }
+        dispatch(setUser("name", result.data.fullName));
+        dispatch(setUser("userName", result.data.userName));
+        dispatch(setUser("email", result.data.email));
+        dispatch(setUser("categories", result.data.categories));
+        dispatch(setUser("profilePic", result.data.profilePic));
       } else {
         setNotification({
           show: true,
           type: "error",
-          message: result.message || "Failed to update profile. Please try again.",
+          message:
+            result.message || "Failed to update profile. Please try again.",
         });
       }
     } catch (err) {
@@ -144,7 +159,7 @@ export default function Profile() {
       setIsLoading(false);
     }
   };
-  
+
   const handleCategorySelect = (category) => {
     if (!selected.find((cat) => cat === category)) {
       const updatedCategories = [...selected, category];
@@ -234,7 +249,7 @@ export default function Profile() {
                           Photo
                         </label>
                         <div className="mt-2 flex items-center">
-                          {!formState.photoPreview || !formState.profilePic ? (
+                          {!formState.photoPreview && !formState.profilePic ? (
                             <UserCircleIcon className="h-16 w-16 text-neutral-200" />
                           ) : (
                             <img
@@ -428,9 +443,10 @@ export default function Profile() {
                       </button>
                       <button
                         type="submit"
+                        disabled={isLoading}
                         className="inline-flex justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-chocolate shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
                       >
-                        {isLoadig ? "Updating" : "Update"}
+                        {isLoading ? "Updating" : "Update"}
                       </button>
                     </div>
                   </form>

@@ -9,6 +9,7 @@ import AuthContext from "./context/AuthContext";
 import { Provider } from "react-redux";
 import { ModalProvider } from "./context/ModalContext";
 import { UserProvider } from "./context/UserContext";
+import { ArticlesProvider } from "./context/ArticlesContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,10 +19,11 @@ root.render(
         <AuthContext>
         <ModalProvider>
           <CategoriesProvider>
+              <ArticlesProvider>
             <UserProvider>
               <App />
             </UserProvider>
-              
+              </ArticlesProvider>
           </CategoriesProvider>
           </ModalProvider>
         </AuthContext>

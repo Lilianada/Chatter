@@ -104,9 +104,14 @@ export async function saveDraft(article, userId) {
 
 export async function getAllArticles() {
   try {
-    const response = await axiosInstance.get(`/articles/getArticles`);
+    const response = await axiosInstance.get(`/article`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
     if (response.data.success) {
-      return { articles: response.data.articles };
+      console.log("Articles fetched successfully", response.data.data);
+      return { articles: response.data.data };
     }
   } catch (err) {
     console.error(err);

@@ -8,7 +8,6 @@ export async function updateProfile(userId, data) {
       params: {userId: userId},
     });
     if (response.data.success) {
-      console.log("Profile update response:", response);
       return response.data;
     }
   } catch (error) {

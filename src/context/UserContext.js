@@ -4,7 +4,7 @@ import { getUserData } from '../config/profile';
 
 export const UserContext = createContext(null);
 
-export const useUser = () => useContext(UserContext);
+export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);

@@ -11,12 +11,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import CustomModal from "../Utils/CustomModal";
 import { useSelector } from "react-redux";
+import { useUserContext } from "../../context/UserContext";
 
 export default function Header({ setSidebarOpen }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const profilepic = useSelector((state) => state.user.profilePic);
+  const {user} = useUserContext();
+  const profilepic = user.profilePic;
   const handleSignOut = () => {
     setIsOpen(true);
   };

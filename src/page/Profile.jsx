@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserData, updateProfile } from "../config/profile";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../config/profile";
 import Notification from "../components/Utils/Notification";
-import { setUser } from "../store/actions/userActions";
 import { useCategories } from "../context/CategoriesContext";
 import { UserCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { useUser } from "../context/UserContext";
+import { useUserContext } from "../context/UserContext";
 
 export default function Profile() {
-  const dispatch = useDispatch();
   const { categories } = useCategories();
-  const { userId } = useUser().user; 
+  const { user, isLoading: contextLoading, updateUser } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState([]);
   const [notification, setNotification] = useState({
@@ -22,79 +20,52 @@ export default function Profile() {
     message: "",
   });
   const [formState, setFormState] = useState({
-    fullName: "",
-    userName: "",
-    email: "",
-    description: "",
-    categories: [],
-    pronouns: "",
-    profilePic: null,
+    fullName: user.fullName || "",
+    userName: user.userName || "",
+    email: user.email || "",
+    description: user.description || "",
+    categories: user.categories || [],
+    pronouns: user.pronouns || "",
+    profilePic: user.profilePic || null,
     photoPreview: null,
   });
 
   useEffect(() => {
-    const fetchUser = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getUserData(userId);
-
-        const {
-          fullName,
-          userName,
-          email,
-          categories,
-          pronouns,
-          profilePic,
-          description,
-        } = response.data;
-        setFormState((prevState) => ({
-          ...prevState,
-          fullName: fullName,
-          userName: userName,
-          email: email,
-          categories: categories,
-          pronouns: pronouns,
-          profilePic: profilePic,
-          description: description,
-        }));
-        setSelected(categories);
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-        setNotification({
-          show: true,
-          type: "error",
-          message: "Failed to fetch user data.",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (userId) {
-      fetchUser();
-    }
-  }, [userId, categories]);
+    setFormState({
+      fullName: user.fullName || "",
+      userName: user.userName || "",
+      email: user.email || "",
+      description: user.description || "",
+      categories: user.categories || [],
+      pronouns: user.pronouns || "",
+      profilePic: user.profilePic || null,
+      photoPreview: null,
+    });
+    setSelected(user.categories)
+  }, [user]);
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    if (name === "profilePic" && files[0]) {
-      // Generate a URL for preview
-      const fileReader = new FileReader();
-      fileReader.onloadend = () => {
-        setFormState((prevState) => ({
-          ...prevState,
-          profilePic: files[0],
-          photoPreview: fileReader.result,
-        }));
-      };
-      fileReader.readAsDataURL(files[0]);
+
+    if (name === "profilePic" && files.length) {
+        // Use FileReader to generate a URL for preview
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+            setFormState(prevState => ({
+                ...prevState,
+                profilePic: files[0], 
+                photoPreview: fileReader.result,
+            }));
+        };
+        fileReader.readAsDataURL(files[0]);
     } else {
-      setFormState((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
+        // Handle changes for other inputs
+        setFormState(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
     }
-  };
+};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -126,7 +97,7 @@ export default function Profile() {
         profilePic: downloadURL,
       };
 
-      const result = await updateProfile(userId, formData);
+      const result = await updateProfile(user.userId, formData);
       if (result && result.success) {
         setNotification({
           show: true,
@@ -134,13 +105,7 @@ export default function Profile() {
           message: "Your profile has been successfully updated!",
         });
         console.log("Profile updated:", result);
-
-        // Update Redux store as needed
-        dispatch(setUser("name", result.data.fullName));
-        dispatch(setUser("userName", result.data.userName));
-        dispatch(setUser("email", result.data.email));
-        dispatch(setUser("categories", result.data.categories));
-        dispatch(setUser("profilePic", result.data.profilePic));
+       updateUser(formData);
       } else {
         setNotification({
           show: true,
@@ -346,7 +311,6 @@ export default function Profile() {
                               />
                             </Listbox.Button>
                             <Listbox.Options
-                              transition
                               className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             >
                               {categories

@@ -51,11 +51,13 @@ export default function Signin() {
       const user = await signinUser(formData.email, formData.password, db);
       
       if (user) {
-        dispatch(setUser('name', user.fullName));
-        dispatch(setUser('userId', user.uid));
-        dispatch(setUser('email', user.email));
-        dispatch(setUser('categories', user.categories))
-        console.log('users saved to store');
+        // dispatch(setUser('name', user.fullName));
+        // dispatch(setUser('userId', user.uid));
+        // dispatch(setUser('email', user.email));
+        // dispatch(setUser('categories', user.categories))
+        // console.log('users saved to store');
+        
+
         
         if (rememberMe) {
           localStorage.setItem("rememberMe", "true");

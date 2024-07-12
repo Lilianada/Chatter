@@ -8,6 +8,7 @@ import { persistor, store } from "./store/store";
 import AuthContext from "./context/AuthContext";
 import { Provider } from "react-redux";
 import { ModalProvider } from "./context/ModalContext";
+import { UserProvider } from "./context/UserContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,7 +18,10 @@ root.render(
         <AuthContext>
         <ModalProvider>
           <CategoriesProvider>
+            <UserProvider>
               <App />
+            </UserProvider>
+              
           </CategoriesProvider>
           </ModalProvider>
         </AuthContext>

@@ -1,10 +1,10 @@
 import { SET_CATEGORIES, SET_USER} from '../actions/userActions';
 
 const initialState = {
+  userId: '',
   name: '',
   usernane: '',
   email: '',
-  userId: '',
   profilePic: '',
   categories: []
 };

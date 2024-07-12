@@ -8,11 +8,12 @@ import { UserCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useUser } from "../context/UserContext";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const { categories } = useCategories();
-  const userId = useSelector((state) => state.user.userId);
+  const { userId } = useUser().user; 
   const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState([]);
   const [notification, setNotification] = useState({

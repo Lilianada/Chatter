@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { updateProfile } from "../config/profile";
 import Notification from "../components/Utils/Notification";
 import { useCategories } from "../context/CategoriesContext";
 import { UserCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useUserContext } from "../context/UserContext";
 import DotLoader from "../components/Utils/DotLoader";
 
@@ -76,18 +74,6 @@ export default function Profile() {
       formState;
 
     try {
-      // Upload the profile picture to Firebase if it's available
-      let downloadURL = "";
-      if (profilePic && profilePic.name) {
-        const storage = getStorage();
-        const storageRef = ref(storage, "profilePictures/" + profilePic.name);
-
-        await uploadBytes(storageRef, profilePic);
-        downloadURL = await getDownloadURL(storageRef);
-        console.log("Download URL:", downloadURL);
-      }
-
-      // Prepare formData to send to the backend
       const formData = {
         fullName,
         userName,
@@ -95,7 +81,7 @@ export default function Profile() {
         categories: selected.map((cat) => cat),
         pronouns,
         description,
-        profilePic: downloadURL,
+        profilePic,
       };
 
       const result = await updateProfile(user.userId, formData);

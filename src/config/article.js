@@ -11,15 +11,15 @@ async function uploadImage(imageBase64, userId) {
   await uploadString(storageRef, imageBase64, 'data_url');
   return await getDownloadURL(storageRef);
 }
-
 export function convertTimestampToDate(timestamp) {
-  // Ensure the input is a valid Firebase Timestamp object
-  if (!timestamp || typeof timestamp.toDate !== 'function') {
+  // Parse the timestamp string into a JavaScript Date object
+  const dateObject = new Date(timestamp);
+
+  // Check if the date is valid
+  if (isNaN(dateObject.getTime())) {
     console.error('Invalid timestamp provided');
     return null;
   }
-
-  const dateObject = timestamp.toDate(); // Convert to JavaScript Date object
 
   // Format the date as you like
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -38,6 +38,7 @@ export function convertTimestampToDate(timestamp) {
     datetime: formattedDateTime
   };
 }
+
 
 export function formatNumber(num) {
   if (num >= 1000000) {
@@ -110,7 +111,6 @@ export async function getAllArticles() {
       },
     });
     if (response.data.success) {
-      console.log("Articles fetched successfully", response.data.data);
       return { articles: response.data.data };
     }
   } catch (err) {

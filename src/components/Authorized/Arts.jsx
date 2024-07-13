@@ -55,7 +55,7 @@ export default function Arts() {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-x-4 text-xs leading-6">
                   <time dateTime={post.updatedAt} className="text-gray-500">
-                    {convertTimestampToDate(post.updatedAt)}
+                    {convertTimestampToDate(post.updatedAt).date}
                   </time>
                 </div>
                 <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-36 lg:shrink-0 h-28">

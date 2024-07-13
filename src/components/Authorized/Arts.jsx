@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useArticles } from "../../context/ArticlesContext";
+import { convertTimestampToDate } from "../../config/article";
 
 export default function Arts() {
   const {articles} = useArticles();
@@ -36,20 +37,25 @@ export default function Arts() {
                     </a>
                   </h3>
                   <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
-                    {post.description}
+                    {post.subtitle}
                   </p>
-
-                  <Link
-                    to={post.category.href}
-                    className="relative z-10 mt-2 py-1.5 font-medium text-xs leading-6 text-neutral-400 "
-                  >
-                    {post.category.title}
-                  </Link>
+                  <div className="flex gap-2">
+                    {
+                      post.category.map((category) => (
+                        <span
+                          key={category}
+                          className="font-medium text-xs leading-6 text-neutral-400 "
+                        >
+                          {category}
+                        </span>
+                      ))
+                    }
+                  </div>
                 </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-x-4 text-xs leading-6">
-                  <time dateTime={post.datetime} className="text-gray-500">
-                    {post.date}
+                  <time dateTime={post.updatedAt} className="text-gray-500">
+                    {convertTimestampToDate(post.updatedAt)}
                   </time>
                 </div>
                 <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-36 lg:shrink-0 h-28">

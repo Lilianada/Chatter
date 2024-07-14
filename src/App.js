@@ -13,6 +13,7 @@ import Layout from "./components/Authorized/Layout";
 import MainContent from "./components/Authorized/MainContent";
 import PageNotFound from "./components/Utils/PageNotFound";
 import Activities from "./page/Activities";
+import List from "./page/List";
 
 function App() {
   return (
@@ -74,6 +75,14 @@ function App() {
             element={
               <ProtectedRoutes>
                 <Activities />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="list"
+            element={
+              <ProtectedRoutes>
+                <List />
               </ProtectedRoutes>
             }
           />

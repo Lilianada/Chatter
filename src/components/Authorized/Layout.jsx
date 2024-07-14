@@ -7,6 +7,7 @@ import {
   PencilSquareIcon,
   BellIcon,
   QuestionMarkCircleIcon,
+  QueueListIcon,
 } from "@heroicons/react/24/outline";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -15,12 +16,12 @@ import Footer from "./Footer";
 
 const navigation = [
   { name: "Home", to: "/dashboard/", icon: HomeIcon, current: true },
-  {
-    name: "Profile",
-    to: "/dashboard/profile",
-    icon: UserCircleIcon,
-    current: false,
-  },
+  // {
+  //   name: "Profile",
+  //   to: "/dashboard/profile",
+  //   icon: UserCircleIcon,
+  //   current: false,
+  // },
   {
     name: "New Article",
     to: "/dashboard/new-article",
@@ -28,15 +29,21 @@ const navigation = [
     current: false,
   },
   {
-    name: "Settings",
-    to: "/dashboard/settings",
-    icon: Cog6ToothIcon,
+    name: "List",
+    to: "/dashboard/list",
+    icon: QueueListIcon,
     current: false,
   },
   {
     name: "Activities",
     to: "/dashboard/activities",
     icon: BellIcon,
+    current: false,
+  },
+  {
+    name: "Settings",
+    to: "/dashboard/settings",
+    icon: Cog6ToothIcon,
     current: false,
   },
   {

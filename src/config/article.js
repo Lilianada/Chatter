@@ -1,6 +1,6 @@
 import { addDoc, collection, deleteDoc,} from "firebase/firestore";
-import { db, storage } from "./firebase";
-import { ref, uploadString, getDownloadURL, getStorage, uploadBytes } from "firebase/storage";
+import { db } from "./firebase";
+import { ref, getDownloadURL, getStorage, uploadBytes } from "firebase/storage";
 import axiosInstance from "../utils/axiosInstance";
 
 const USERS = "users";
@@ -18,7 +18,6 @@ async function uploadImage(image, folderName) {
 
       await uploadBytes(storageRef, image);
       downloadURL = await getDownloadURL(storageRef);
-      console.log("Download URL:", downloadURL);
     }
     return downloadURL;
 }
@@ -85,8 +84,8 @@ export const postArticle = async (articleData, token) => {
       const imageUrl = await uploadImage(articleData.coverImage, 'articleImages');
       articleWithStatus.coverImage = imageUrl;
     }
-    
-    const response = await axiosInstance.post(`article/addArticle`, articleData, config);
+    console.log(articleWithStatus);
+    const response = await axiosInstance.post(`article/addArticle`, articleWithStatus, config);
     return response.data;
   } catch (error) {
     if (error.response) {

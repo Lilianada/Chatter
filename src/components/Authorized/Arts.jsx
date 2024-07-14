@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useArticles } from "../../context/ArticlesContext";
 import { convertTimestampToDate } from "../../config/article";
 

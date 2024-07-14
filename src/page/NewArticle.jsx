@@ -28,8 +28,8 @@ export default function NewArticle() {
       name: '',
       email: '',
       image: '',
+      userId: '',
     },
-    userId: '',
     status: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -94,8 +94,7 @@ export default function NewArticle() {
       data.description &&
       data.content &&
       data.coverImage &&
-      data.author &&
-      data.userId
+      data.author
     );
   };
 
@@ -119,9 +118,9 @@ export default function NewArticle() {
         name: user.fullName,
         email: user.email,
         image: user.profilePic,
+        userId: user.userId
       },
       status: "published",
-      userId: user.userId
     };
     
         if (!isValidArticle(newArticle)) {
@@ -184,19 +183,19 @@ export default function NewArticle() {
         { ...articleData, status: "draft" },
         token
       );
-      if (response) {
-        customModal({
-          showModal,
-          title: "Draft Saved",
-          text: "Your draft has been saved successfully.",
-          icon: CheckIcon,
-          iconBgColor: "bg-green-100",
-          iconTextColor: "text-green-400",
-          buttonBgColor: "bg-green-400",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-      }
+      // if (response) {
+      //   customModal({
+      //     showModal,
+      //     title: "Draft Saved",
+      //     text: "Your draft has been saved successfully.",
+      //     icon: CheckIcon,
+      //     iconBgColor: "bg-green-100",
+      //     iconTextColor: "text-green-400",
+      //     buttonBgColor: "bg-green-400",
+      //     showConfirmButton: false,
+      //     timer: 3000,
+      //   });
+      // }
     } catch (error) {
       console.error("Error saving draft:", error);
     } finally {

@@ -3,10 +3,13 @@ import { convertTimestampToDate } from "../../config/article";
 
 export default function Arts() {
   const {articles} = useArticles();
+  const publishedArticles = articles.filter(article => article.status === "published");
+
+  console.log(articles);
   return (
     <div className="mx-auto max-w-6xl lg:px-8">
       <div className="mx-auto max-w-2xl divide-neutral-200 divide-y">
-        {articles.map((post) => (
+      {publishedArticles.map((post) => (
           <article
             key={post._id}
             className="flex mx-auto max-w-xl flex-col items-start justify-between pt-6 p-4 cursor-pointer hover:bg-neutral-100"

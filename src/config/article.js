@@ -1,16 +1,28 @@
 import { addDoc, collection, deleteDoc,} from "firebase/firestore";
 import { db, storage } from "./firebase";
-import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { ref, uploadString, getDownloadURL, getStorage, uploadBytes } from "firebase/storage";
 import axiosInstance from "../utils/axiosInstance";
 
 const USERS = "users";
 const ARTICLE = "article";
 
-async function uploadImage(imageBase64, userId) {
-  const storageRef = ref(storage, `users/${userId}/images/${Date.now()}.jpg`);
-  await uploadString(storageRef, imageBase64, 'data_url');
-  return await getDownloadURL(storageRef);
+async function uploadImage(image, folderName) {
+
+  let downloadURL = "";
+    if (image && image.name) {
+      const storage = getStorage();
+      const storageRef = ref(
+        storage,
+          `${folderName}/` + image.name
+      );
+
+      await uploadBytes(storageRef, image);
+      downloadURL = await getDownloadURL(storageRef);
+      console.log("Download URL:", downloadURL);
+    }
+    return downloadURL;
 }
+
 export function convertTimestampToDate(timestamp) {
   // Parse the timestamp string into a JavaScript Date object
   const dateObject = new Date(timestamp);
@@ -58,50 +70,58 @@ export function truncateText(text, limit = 40) {
   return text;
 }
 
-export async function postArticle(article, userId) {
-  try {
-    const articleWithStatus = { ...article, status: 'published' };
+export const postArticle = async (articleData, token) => {
+    
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  };
 
-    // Upload image to Firebase Storage
-    if (article.coverImage) {
-      const imageUrl = await uploadImage(article.coverImage, userId);
+  const articleWithStatus = { ...articleData, status: 'published' };
+  
+  try {
+    if (articleData.coverImage) {
+      const imageUrl = await uploadImage(articleData.coverImage, 'articleImages');
       articleWithStatus.coverImage = imageUrl;
     }
-
-    const postRequestRef = collection(db, 'users', userId, 'articles');
-    const postArticleRef = collection(db, 'articles', userId, 'articles');
-    const postRef = await addDoc(postRequestRef, articleWithStatus);
-    await addDoc(postArticleRef, articleWithStatus);
-    console.log("Document written with ID: ", postRef.id, postRef);
-    return {
-      success: true,
-      id: postRef.id,
-      message: "Article posted successfully",
-      article: postRef,
-    };
-  } catch (e) {
-    console.error("Error adding document: ", e);
-    return { success: false, message: e.message };
+    
+    const response = await axiosInstance.post(`article/addArticle`, articleData, config);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error data:", error.response.data);
+      console.error("Error status:", error.response.status);
+      console.error("Error headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("Error request:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error message:", error.message);
+    }
+    console.error("Error config:", error.config);
+    throw error;
   }
-}
+  
+};
 
-export async function saveDraft(article, userId) {
+export const saveDraft = async (draftData) => {
+  const token = localStorage.getItem('token');
+  const config = {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  };
+
   try {
-    const articleWithStatus = { ...article, status: 'draft' };
-    const draftRequestRef = collection(db, 'USERS', userId, 'ARTICLE');
-    const draftRef = await addDoc(draftRequestRef, articleWithStatus);
-    console.log("Document written with ID: ", draftRef.id, draftRef);
-    return {
-      success: true,
-      id: draftRef.id,
-      message: "Draft saved successfully",
-      article: draftRef,
-    };
-  } catch (e) {
-    console.error("Error adding document: ", e);
-    return { success: false, message: e.message };
+      const response = await axiosInstance.post(`article/savedrafts`, draftData, config);
+      return response.data;
+  } catch (error) {
+      console.error("Error saving draft:", error);
+      throw error;
   }
-}
+};
 
 export async function getAllArticles() {
   try {

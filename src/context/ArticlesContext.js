@@ -18,7 +18,6 @@ export const ArticlesProvider = ({ children }) => {
         try {
             const response = await getAllArticles();
             setArticles(response.articles);
-            console.log(response);
         } catch (err) {
             console.error("Error fetching articles:", err);
         } finally {

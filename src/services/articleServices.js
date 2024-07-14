@@ -1,24 +1,22 @@
 import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 const API_URL = `${process.env.REACT_APP_API_URL}/article`;
 
 export const postArticle = async (articleData, token) => {
-    console.log(API_URL);
+    
   const config = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   };
-  console.log("Sending data:", articleData);
-  console.log("Config headers:", config.headers);
   
   try {
-    const response = await axios.post(`${API_URL}/addArticle`, articleData, config);
+    
+    const response = await axiosInstance.post(`article/addArticle`, articleData, config);
     return response.data;
   } catch (error) {
     if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
       console.error("Error data:", error.response.data);
       console.error("Error status:", error.response.status);
       console.error("Error headers:", error.response.headers);
@@ -36,7 +34,7 @@ export const postArticle = async (articleData, token) => {
 };
 
 export const saveDraft = async (draftData) => {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
     const config = {
         headers: {
             'Authorization': `Bearer ${token}`

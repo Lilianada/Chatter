@@ -2,7 +2,6 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import axiosInstance from "../utils/axiosInstance";
 
 export async function updateProfile(userId, data) {
-  console.log(data);
   try {
     let downloadURL = "";
     if (data.profilePic && data.profilePic.name) {
@@ -14,7 +13,6 @@ export async function updateProfile(userId, data) {
 
       await uploadBytes(storageRef, data.profilePic);
       downloadURL = await getDownloadURL(storageRef);
-      console.log("Download URL:", downloadURL);
     }
     const formData = {
       fullName: data.fullName,

@@ -12,23 +12,24 @@ import {
   ExclamationCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { postArticle, saveDraft } from "../services/articleServices";
+import { postArticle, saveDraft } from "../config/article";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { useUserContext } from "../context/UserContext";
 
 export default function NewArticle() {
   const { showModal } = useModal();
-  const userData = useSelector((state) => state.user);
+  const { user } = useUserContext();
   const [articleData, setArticleData] = useState({
     title: "",
     categories: [],
     description: "",
     content: "",
     author: {
-      name: userData.name,
-      email: userData.email,
-      // image: userData.photoURL,
+      name: '',
+      email: '',
+      image: '',
     },
-    userId: userData.userId,
+    userId: '',
     status: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -59,16 +60,17 @@ export default function NewArticle() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-        setArticleData((prevData) => ({
-          ...prevData,
-          coverImage: reader.result,
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      setSelectedImage(fileReader.result);
+      setArticleData(prevState => ({
+            ...prevState,
+            coverImage: file, 
         }));
-      };
-      reader.readAsDataURL(file);
+    };
+    fileReader.readAsDataURL(file);
     }
+    
   };
 
   const handleCheckboxChange = (event) => {
@@ -84,33 +86,31 @@ export default function NewArticle() {
     setArticleData((prevData) => ({ ...prevData, [key]: value }));
   };
 
-  const isValidArticle = (data) => {
-    console.log(data);
-    return (
-      data.title &&
-      data.categories &&
-      data.description &&
-      data.content &&
-      data.coverImage &&
-      data.author &&
-      data.userId
-    );
-  };
+  // const isValidArticle = (data) => {
+  //   console.log(data);
+  //   return (
+  //     data.title &&
+  //     data.categories &&
+  //     data.description &&
+  //     data.content &&
+  //     data.coverImage &&
+  //     data.author &&
+  //     data.userId
+  //   );
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const auth = getAuth();
-    const token = await auth.currentUser.getIdToken(true);
-    console.log(auth.currentUser)
+    const token = localStorage.getItem("token");
     if (!token) {
       console.error("User is not authenticated.");
       return;
     }
 
-    if (!isValidArticle(articleData)) {
-      console.error("All fields are required to publish an article.");
-      return;
-    }
+    // if (!isValidArticle(articleData)) {
+    //   console.error("All fields are required to publish an article.");
+    //   return;
+    // }
 
     setIsLoading(true);
 
@@ -120,10 +120,15 @@ export default function NewArticle() {
       description: articleData.description,
       content: articleData.content,
       coverImage: articleData.coverImage,
-      author: articleData.author,
+      author: {
+        name: user.fullName,
+        email: user.email,
+        image: user.profilePic,
+      },
       status: "published",
+      userId: user.userId
     };
-    console.log(newArticle);
+    console.log(newArticle, 'newArticle');
     try {
       const response = await postArticle(newArticle, token);
       console.log(response);

@@ -84,41 +84,45 @@ export const postArticle = async (articleData, token) => {
       const imageUrl = await uploadImage(articleData.coverImage, 'articleImages');
       articleWithStatus.coverImage = imageUrl;
     }
-    console.log(articleWithStatus);
     const response = await axiosInstance.post(`article/addArticle`, articleWithStatus, config);
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error("Error data:", error.response.data);
-      console.error("Error status:", error.response.status);
-      console.error("Error headers:", error.response.headers);
+      console.error("Error:", error.response);
     } else if (error.request) {
-      // The request was made but no response was received
       console.error("Error request:", error.request);
     } else {
-      // Something happened in setting up the request that triggered an Error
       console.error("Error message:", error.message);
     }
-    console.error("Error config:", error.config);
-    throw error;
   }
   
 };
 
-export const saveDraft = async (draftData) => {
-  const token = localStorage.getItem('token');
+export const saveDraft = async (articleData, token) => {
+   
   const config = {
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   };
 
+  const articleWithStatus = { ...articleData, status: 'draft' };
+  
   try {
-      const response = await axiosInstance.post(`article/savedrafts`, draftData, config);
-      return response.data;
+    if (articleData.coverImage) {
+      const imageUrl = await uploadImage(articleData.coverImage, 'draftImages');
+      articleWithStatus.coverImage = imageUrl;
+    }
+    const response = await axiosInstance.post(`article/saveDraft`, articleWithStatus, config);
+    return response.data;
   } catch (error) {
-      console.error("Error saving draft:", error);
-      throw error;
+    if (error.response) {
+      console.error("Error:", error.response);
+    } else if (error.request) {
+      console.error("Error request:", error.request);
+    } else {
+      console.error("Error message:", error.message);
+    }
   }
 };
 

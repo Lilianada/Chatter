@@ -3,7 +3,6 @@ import { convertTimestampToDate } from "../../config/article";
 
 export default function Arts() {
   const {articles} = useArticles();
-  console.log(articles);
   return (
     <div className="mx-auto max-w-6xl lg:px-8">
       <div className="mx-auto max-w-2xl divide-neutral-200 divide-y">

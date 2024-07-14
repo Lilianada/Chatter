@@ -23,10 +23,8 @@ async function uploadImage(image, folderName) {
 }
 
 export function convertTimestampToDate(timestamp) {
-  // Parse the timestamp string into a JavaScript Date object
   const dateObject = new Date(timestamp);
 
-  // Check if the date is valid
   if (isNaN(dateObject.getTime())) {
     console.error('Invalid timestamp provided');
     return null;
@@ -36,19 +34,33 @@ export function convertTimestampToDate(timestamp) {
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   const formattedDate = dateObject.toLocaleDateString('en-US', dateOptions);
 
-  // Format the datetime as you like
-  const dateTimeOptions = { 
-    year: 'numeric', month: 'numeric', day: 'numeric', 
-    hour: '2-digit', minute: '2-digit', second: '2-digit', 
-    hour12: false // Use 24-hour format
-  };
-  const formattedDateTime = dateObject.toLocaleString('en-US', dateTimeOptions);
+  // Calculate the difference in time from now
+  const now = new Date();
+  const difference = now.getTime() - dateObject.getTime();
 
-  return { 
+  // Convert difference to an appropriate format (days, hours, minutes, seconds)
+  let formattedDateTime;
+  const seconds = Math.floor(difference / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) {
+    formattedDateTime = days === 1 ? '1 day ago' : `${days} days ago`;
+  } else if (hours > 0) {
+    formattedDateTime = hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+  } else if (minutes > 0) {
+    formattedDateTime = minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
+  } else {
+    formattedDateTime = seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
+  }
+
+  return {
     date: formattedDate,
     datetime: formattedDateTime
   };
 }
+
 
 
 export function formatNumber(num) {

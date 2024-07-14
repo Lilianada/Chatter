@@ -1,66 +1,81 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useArticles } from "../context/ArticlesContext";
+import { convertTimestampToDate } from "../config/article";
 
-const tabs = [
-    { name: 'Published', href: '#', count: '52', current: false },
-    { name: 'Drafts', href: '#', count: '6', current: false },
-  ]
-  
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
-  
-  export default function List() {
-    return (
-      <div>
-        <div className="sm:hidden">
-          <label htmlFor="tabs" className="sr-only">
-            Select a tab
-          </label>
-          {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-          <select
-            id="tabs"
-            name="tabs"
-            defaultValue={tabs.find((tab) => tab.current).name}
-            className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-          >
+
+export default function List() {
+  const { articles } = useArticles();
+  const [activeTab, setActiveTab] = useState('Published');
+
+  const publishedArticles = articles.filter(
+    (article) => article.status === "published"
+  );
+  const publishedCount = publishedArticles.length;
+
+  const drafts = articles.filter(
+    (article) => article.status.trim().toLowerCase() === "draft"
+  );
+  const draftCount = drafts.length;
+
+  const tabs = [
+    { name: "Published", count: publishedCount },
+    { name: "Drafts", count: draftCount },
+  ];
+
+  return (
+    <div className="mx-auto max-w-6xl  px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+      <div className="mx-auto max-w-2xl divide-neutral-200 divide-y">
+        {/* Tabs */}
+        <div className="border-b border-gray-200">
+          <nav aria-label="Tabs" className="-mb-px flex space-x-8">
             {tabs.map((tab) => (
-              <option key={tab.name}>{tab.name}</option>
-            ))}
-          </select>
-        </div>
-        <div className="hidden sm:block">
-          <div className="border-b border-gray-200">
-            <nav aria-label="Tabs" className="-mb-px flex space-x-8">
-              {tabs.map((tab) => (
-                <Link
-                  key={tab.name}
-                  href="#"
-                  aria-current={tab.current ? 'page' : undefined}
-                  className={classNames(
-                    tab.current
-                      ? 'border-indigo-500 text-indigo-600'
-                      : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700',
-                    'flex whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium',
-                  )}
+              <button
+                key={tab.name}
+                onClick={() => setActiveTab(tab.name)}
+                aria-current={activeTab === tab.name ? "page" : undefined}
+                className={`flex whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium 
+                  ${activeTab === tab.name ? 'border-yellow-600 text-yellow-600' : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'}`}
+              >
+                {tab.name}
+                <span
+                  className={`ml-3 rounded-full px-2.5 py-0.5 text-xs font-medium md:inline-block 
+                    ${activeTab === tab.name ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-900'}`}
                 >
-                  {tab.name}
-                  {tab.count ? (
-                    <span
-                      className={classNames(
-                        tab.current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-900',
-                        'ml-3 hidden rounded-full px-2.5 py-0.5 text-xs font-medium md:inline-block',
-                      )}
-                    >
-                      {tab.count}
-                    </span>
-                  ) : null}
-                </Link>
-              ))}
-            </nav>
-          </div>
+                  {tab.count}
+                </span>
+              </button>
+            ))}
+          </nav>
+        </div>
+        {/* Content */}
+        <div className="mx-auto divide-neutral-200 divide-y">
+          {(activeTab === 'Published' ? publishedArticles : drafts).map((post) => (
+            <article
+              key={post._id}
+              className="flex mx-auto flex-col items-start justify-between py-6 cursor-pointer hover:bg-neutral-100"
+            >
+              <h3 className="text-base font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                <a href={post.href}>{post.title}</a>
+              </h3>
+              <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
+                {post.description}
+              </p>
+              <div className="flex items-center gap-x-4 text-xs leading-6">
+                <time dateTime={post.updatedAt} className="text-gray-500">
+                  {convertTimestampToDate(post.updatedAt).datetime}
+                </time>
+              </div>
+              <div className="flex gap-2">
+                {post.categories.map((category) => (
+                  <span key={category} className="font-medium text-xs leading-6 text-neutral-400">
+                    {category}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
-    )
-  }
-  
+    </div>
+  );
+}

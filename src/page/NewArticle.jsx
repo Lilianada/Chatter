@@ -86,18 +86,18 @@ export default function NewArticle() {
     setArticleData((prevData) => ({ ...prevData, [key]: value }));
   };
 
-  // const isValidArticle = (data) => {
-  //   console.log(data);
-  //   return (
-  //     data.title &&
-  //     data.categories &&
-  //     data.description &&
-  //     data.content &&
-  //     data.coverImage &&
-  //     data.author &&
-  //     data.userId
-  //   );
-  // };
+  const isValidArticle = (data) => {
+    console.log(data);
+    return (
+      data.title &&
+      data.categories &&
+      data.description &&
+      data.content &&
+      data.coverImage &&
+      data.author &&
+      data.userId
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,12 +106,7 @@ export default function NewArticle() {
       console.error("User is not authenticated.");
       return;
     }
-
-    // if (!isValidArticle(articleData)) {
-    //   console.error("All fields are required to publish an article.");
-    //   return;
-    // }
-
+    
     setIsLoading(true);
 
     const newArticle = {
@@ -128,10 +123,14 @@ export default function NewArticle() {
       status: "published",
       userId: user.userId
     };
-    console.log(newArticle, 'newArticle');
+    
+        if (!isValidArticle(newArticle)) {
+          console.error("All fields are required to publish an article.");
+          return;
+        }
+
     try {
       const response = await postArticle(newArticle, token);
-      console.log(response);
       if (response) {
         customModal({
           showModal,
@@ -242,7 +241,7 @@ export default function NewArticle() {
               {savingDraft ? (
                 <span className="text-green-400">Saving...</span>
               ) : (
-                "Save Draft"
+                "Save draft"
               )}
             </button>
             <button
@@ -270,7 +269,7 @@ export default function NewArticle() {
             handleCheckboxChange={handleCheckboxChange}
             selectedCategories={selectedCategories}
             handleDeleteImage={handleDeleteImage}
-            sele
+            selectedImage={selectedImage}
           />
           <form className="w-full max-w-3xl mt-4">
             <div className="mt-2 flex items-center">

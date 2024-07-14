@@ -16,13 +16,6 @@ function AddButtons({
   return (
     <div className="mt-0 flex gap-2">
       <div className="flex items-center space-x-4">
-        <label className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200">
-          <button onClick={() => setOpenCategory(true)}>
-            <PlusIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
-          </button>
-        </label>
-      </div>
-      <div className="flex items-center space-x-4">
         <label
           htmlFor="image-upload"
           className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200"
@@ -36,6 +29,13 @@ function AddButtons({
             onChange={handleImageChange}
             title="Cover Image"
           />
+        </label>
+      </div>
+      <div className="flex items-center space-x-4">
+        <label className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-300 hover:bg-gray-200">
+          <button onClick={() => setOpenCategory(true)}>
+            <PlusIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
+          </button>
         </label>
       </div>
       {selectedImage && (

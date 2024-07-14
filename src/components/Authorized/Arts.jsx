@@ -8,14 +8,14 @@ export default function Arts() {
       <div className="mx-auto max-w-2xl divide-neutral-200 divide-y">
         {articles.map((post) => (
           <article
-            key={post.id}
+            key={post._id}
             className="flex mx-auto max-w-xl flex-col items-start justify-between pt-6 p-4 cursor-pointer hover:bg-neutral-100"
           >
             <div className="flex gap-4">
                 <div className="group relative">
                   <div className="relative mb-2 flex items-center gap-x-2">
                     <img
-                      src={post.author.imageUrl}
+                      src={post.author.image}
                       alt=""
                       className="h-6 w-6 rounded-lg bg-gray-50"
                     />
@@ -35,11 +35,11 @@ export default function Arts() {
                     </a>
                   </h3>
                   <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
-                    {post.subtitle}
+                    {post.description}
                   </p>
                   <div className="flex gap-2">
                     {
-                      post.category.map((category) => (
+                      post.categories.map((category) => (
                         <span
                           key={category}
                           className="font-medium text-xs leading-6 text-neutral-400 "
@@ -58,7 +58,7 @@ export default function Arts() {
                 </div>
                 <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-36 lg:shrink-0 h-28">
                   <img
-                    src={post.imageUrl}
+                    src={post.coverImage}
                     alt=""
                     className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
                   />

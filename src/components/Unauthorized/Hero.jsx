@@ -97,7 +97,7 @@ export default function Hero() {
                     <span className="rounded-full bg-yellow-500 px-3 py-0.5 text-sm font-semibold leading-5 text-neutral-800">
                       Write articles
                     </span>
-                    <Link to="/signin" className="ml-4 text-sm">Read articles</Link>
+                    <div className="ml-4 text-sm">Read articles</div>
                     <ChevronRightIcon
                       className="ml-2 h-5 w-5 text-gray-500"
                       aria-hidden="true"

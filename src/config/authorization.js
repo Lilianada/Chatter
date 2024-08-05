@@ -42,7 +42,6 @@ export async function registerUser(email, password, fullName) {
   }
 }
 
-
 export async function signinUser(email, password) {
   try {
     const auth = getAuth();

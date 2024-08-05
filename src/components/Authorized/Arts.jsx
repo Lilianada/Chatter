@@ -5,7 +5,7 @@ export default function Arts() {
   const {articles} = useArticles();
   const publishedArticles = articles.filter(article => article.status === "published");
 
-  console.log(articles);
+  // console.log(articles);
   return (
     <div className="mx-auto max-w-6xl lg:px-8">
       <div className="mx-auto max-w-2xl divide-neutral-200 divide-y">

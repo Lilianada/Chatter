@@ -15,7 +15,6 @@ import {
 import { postArticle, saveDraft } from "../config/article";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useUserContext } from "../context/UserContext";
-import { set } from "mongoose";
 
 export default function NewArticle() {
   const { showModal } = useModal();
@@ -38,6 +37,7 @@ export default function NewArticle() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [draftSaved, setDraftSaved] = useState(false);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -195,19 +195,11 @@ export default function NewArticle() {
         { ...articleData, status: "draft" },
         token
       );
-      // if (response) {
-      //   customModal({
-      //     showModal,
-      //     title: "Draft Saved",
-      //     text: "Your draft has been saved successfully.",
-      //     icon: CheckIcon,
-      //     iconBgColor: "bg-green-100",
-      //     iconTextColor: "text-green-400",
-      //     buttonBgColor: "bg-green-400",
-      //     showConfirmButton: false,
-      //     timer: 3000,
-      //   });
-      // }
+      if (response) {
+       setTimeout(() => {
+        setDraftSaved(true);
+       }, 3000);
+      }
     } catch (error) {
       console.error("Error saving draft:", error);
     } finally {
@@ -251,9 +243,9 @@ export default function NewArticle() {
             >
               {savingDraft ? (
                 <span className="text-green-400">Saving...</span>
-              ) : (
-                "Save draft"
-              )}
+              ) : 
+                draftSaved ? ( <span className="text-green-400">Saved</span>
+              ) : "Save draft"}
             </button>
             <button
               type="button"

@@ -1,4 +1,4 @@
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../constants/axiosInstance";
 
 export async function getAllCategories() {
   try {

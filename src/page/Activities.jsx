@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../utils/axiosInstance';
+import axiosInstance from '../constants/axiosInstance';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Activities() {

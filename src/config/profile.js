@@ -1,5 +1,5 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../constants/axiosInstance";
 
 export async function updateProfile(userId, data) {
   try {

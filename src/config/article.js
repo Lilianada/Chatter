@@ -1,7 +1,7 @@
 import { addDoc, collection, deleteDoc,} from "firebase/firestore";
 import { db } from "./firebase";
 import { ref, getDownloadURL, getStorage, uploadBytes } from "firebase/storage";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../constants/axiosInstance";
 
 const USERS = "users";
 const ARTICLE = "article";

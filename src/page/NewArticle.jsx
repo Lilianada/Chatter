@@ -15,6 +15,7 @@ import {
 import { postArticle, saveDraft } from "../config/article";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useUserContext } from "../context/UserContext";
+import { set } from "mongoose";
 
 export default function NewArticle() {
   const { showModal } = useModal();
@@ -124,7 +125,18 @@ export default function NewArticle() {
     };
     
         if (!isValidArticle(newArticle)) {
-          console.error("All fields are required to publish an article.");
+          setIsLoading(false);
+          customModal({
+            showModal,
+            title: "Alert",
+            text: "All fields are required to publish an article.",
+            icon: ExclamationCircleIcon,
+            iconBgColor: "bg-red-100",
+            iconTextColor: "text-red-400",
+            buttonBgColor: "bg-red-400",
+            showConfirmButton: false,
+            timer: 3000,
+          });
           return;
         }
 

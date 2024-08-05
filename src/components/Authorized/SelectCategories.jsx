@@ -1,23 +1,10 @@
 import React from "react";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useCategories } from "../../context/CategoriesContext";
 
-function SelectCategories({
-  selectedCategories,
-  handleCheckboxChange,
-  close,
-}) {
-  const {categories} = useCategories();
+function SelectCategories({ selectedCategories, handleCheckboxChange, close }) {
+  const { categories } = useCategories();
   return (
     <div className="mt-0 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl px-6 py-4">
-      <div className="flex justify-end mb-4">
-        <button
-          className="p-1 bg-neutral-200 rounded-lg border-1 border-neutral-300 "
-          onClick={close}
-        >
-          <XMarkIcon className="h-6 w-6 text-gray-500" aria-hidden="true" />
-        </button>
-      </div>
       <div className="flex justify-between items-start">
         <div className="pb-4 text-left">
           <h3 className="text-lg font-semibold leading-6 text-gray-900">
@@ -34,11 +21,11 @@ function SelectCategories({
         {categories.map((item) => (
           <div
             key={item._id}
-            className={`relative flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-2 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-indigo-400 cursor-pointer 
+            className={`relative flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-2 py-3 shadow-sm focus-within:ring-2 focus-within:ring-green-400 focus-within:ring-offset-2 hover:border-green-400 cursor-pointer 
               ${
                 selectedCategories.includes(item._id)
-                  ? "border-indigo-400 bg-indigo-50 focus-within:ring-indigo-400"
-                  : "border-gray-300 bg-white focus-within:ring-indigo-500"
+                  ? "border-green-400 bg-green-100 focus-within:ring-green-400"
+                  : "border-gray-300 bg-white focus-within:ring-green-400"
               }`}
           >
             <div className="flex-shrink-0">
@@ -48,7 +35,7 @@ function SelectCategories({
                 value={item.name}
                 checked={selectedCategories.includes(item.name)}
                 onChange={handleCheckboxChange}
-                className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-400"
               />
             </div>
             <div className="min-w-0 flex-1">
@@ -60,6 +47,15 @@ function SelectCategories({
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-end mt-4">
+        <button
+          onClick={close}
+          type="button"
+          className="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 w-28"
+        >
+          Done
+        </button>
       </div>
     </div>
   );

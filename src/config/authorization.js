@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { deleteDoc, doc } from "firebase/firestore";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../constants/axiosInstance";
 
 // Authenticated user
 export function getAuthUser() {

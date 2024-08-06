@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import BalloonEditor from "@ckeditor/ckeditor5-build-balloon";
 import { getAuth } from "firebase/auth";
 import { getAllCategories } from "../config/categories";
 import AddButtons from "../components/Authorized/AddButtons";
-import { useSelector } from "react-redux";
 import { useModal } from "../context/ModalContext";
 import { customModal } from "../utils/modalUtils";
 import {
@@ -16,19 +15,35 @@ import { postArticle, saveDraft } from "../config/article";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useUserContext } from "../context/UserContext";
 
+// Define debounce delay in milliseconds
+const AUTO_SAVE_DELAY = 5000; // 5 seconds
+
+const autoSaveDraft = async (articleData, token) => {
+  if (!articleData.title && !articleData.content) {
+    return; // Do not auto-save if there's no content
+  }
+
+  try {
+    await saveDraft({ ...articleData, status: "draft" }, token);
+  } catch (error) {
+    console.error("Error auto-saving draft:", error);
+  }
+};
+
 export default function NewArticle() {
   const { showModal } = useModal();
   const { user } = useUserContext();
+  const token = localStorage.getItem("token");
   const [articleData, setArticleData] = useState({
     title: "",
     categories: [],
     description: "",
     content: "",
     author: {
-      name: '',
-      email: '',
-      image: '',
-      userId: '',
+      name: "",
+      email: "",
+      image: "",
+      userId: "",
     },
     status: "",
   });
@@ -38,6 +53,18 @@ export default function NewArticle() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [draftSaved, setDraftSaved] = useState(false);
+
+  function debounce(func, delay) {
+    let timerId;
+    class debounced {
+      constructor(...args) {
+        if (timerId) clearTimeout(timerId);
+        timerId = setTimeout(() => func.apply(this, args), delay);
+      }
+      static cancel() { return clearTimeout(timerId); }
+    }
+    return debounced;
+  }
 
   useEffect(() => {
     async function fetchCategories() {
@@ -58,20 +85,37 @@ export default function NewArticle() {
     }));
   }, [selectedCategories]);
 
+  // Debounced auto-save function
+  const debouncedAutoSave = useCallback(
+    debounce(async (data) => {
+      if (token) {
+        await autoSaveDraft(data, token);
+      }
+    }, AUTO_SAVE_DELAY),
+    [token]
+  );
+
+  // Effect to trigger auto-save
+  useEffect(() => {
+    if (token) {
+      debouncedAutoSave(articleData);
+    }
+    return () => debouncedAutoSave.cancel(); // Cancel the debounce on unmount or when dependencies change
+  }, [articleData, token, debouncedAutoSave]);
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-    const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      setSelectedImage(fileReader.result);
-      setArticleData(prevState => ({
-            ...prevState,
-            coverImage: file, 
+      const fileReader = new FileReader();
+      fileReader.onloadend = () => {
+        setSelectedImage(fileReader.result);
+        setArticleData((prevState) => ({
+          ...prevState,
+          coverImage: file,
         }));
-    };
-    fileReader.readAsDataURL(file);
+      };
+      fileReader.readAsDataURL(file);
     }
-    
   };
 
   const handleCheckboxChange = (event) => {
@@ -101,12 +145,12 @@ export default function NewArticle() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+
     if (!token) {
       console.error("User is not authenticated.");
       return;
     }
-    
+
     setIsLoading(true);
 
     const newArticle = {
@@ -119,26 +163,26 @@ export default function NewArticle() {
         name: user.fullName,
         email: user.email,
         image: user.profilePic,
-        userId: user.userId
+        userId: user.userId,
       },
       status: "published",
     };
-    
-        if (!isValidArticle(newArticle)) {
-          setIsLoading(false);
-          customModal({
-            showModal,
-            title: "Alert",
-            text: "All fields are required to publish an article.",
-            icon: ExclamationCircleIcon,
-            iconBgColor: "bg-red-100",
-            iconTextColor: "text-red-400",
-            buttonBgColor: "bg-red-400",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          return;
-        }
+
+    if (!isValidArticle(newArticle)) {
+      setIsLoading(false);
+      customModal({
+        showModal,
+        title: "Alert",
+        text: "All fields are required to publish an article.",
+        icon: ExclamationCircleIcon,
+        iconBgColor: "bg-red-100",
+        iconTextColor: "text-red-400",
+        buttonBgColor: "bg-red-400",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+      return;
+    }
 
     try {
       const response = await postArticle(newArticle, token);
@@ -196,9 +240,9 @@ export default function NewArticle() {
         token
       );
       if (response) {
-       setTimeout(() => {
-        setDraftSaved(true);
-       }, 3000);
+        setTimeout(() => {
+          setDraftSaved(true);
+        }, 3000);
       }
     } catch (error) {
       console.error("Error saving draft:", error);
@@ -225,7 +269,7 @@ export default function NewArticle() {
     e.preventDefault();
     setSelectedImage(null);
     setArticleData((prevData) => ({ ...prevData, coverImage: null }));
-  }
+  };
 
   return (
     <div className="flex-1 xl:overflow-y-auto mt-[4.5rem] md:mt-0">
@@ -243,9 +287,11 @@ export default function NewArticle() {
             >
               {savingDraft ? (
                 <span className="text-green-400">Saving...</span>
-              ) : 
-                draftSaved ? ( <span className="text-green-400">Saved</span>
-              ) : "Save draft"}
+              ) : draftSaved ? (
+                <span className="text-green-400">Saved</span>
+              ) : (
+                "Save draft"
+              )}
             </button>
             <button
               type="button"
@@ -321,21 +367,18 @@ export default function NewArticle() {
                 <div className="flex w-full flex-wrap sm:w-full gap-2">
                   {selectedCategories.map((category) => (
                     <span
-                    key={category}
-                    className="m-1 inline-flex items-center capitalize rounded-full border border-gray-200 bg-gray-100 py-1 px-1.5 text-xs font-medium text-gray-900"
-                  >
-                    {category}
-                    <button
-                      type="button"
-                      className="ml-1 inline-flex flex-shrink-0 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500"
-                      onClick={(e) => deleteCategory(e, category)}
+                      key={category}
+                      className="m-1 inline-flex items-center capitalize rounded-full border border-gray-200 bg-gray-100 py-1 px-1.5 text-xs font-medium text-gray-900"
                     >
-                      <XMarkIcon
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </button>
-                  </span>
+                      {category}
+                      <button
+                        type="button"
+                        className="ml-1 inline-flex flex-shrink-0 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                        onClick={(e) => deleteCategory(e, category)}
+                      >
+                        <XMarkIcon className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </span>
                   ))}
                   {selectedCategories.length > 0 && (
                     <div className="flex items-center space-x-4">
